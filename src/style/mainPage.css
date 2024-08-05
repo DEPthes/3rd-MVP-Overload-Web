@@ -1,0 +1,40 @@
+
+.total{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gnb{
+    display: flex;
+    background-color: aqua;
+}
+.banner{
+    display: flex;
+    background-color: black;
+}
+
+.post-preview{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.post-preview ul{
+    list-style: none;
+    padding: 0;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 리스트 항목 오른쪽 정렬 (또는 'center'로 중앙 정렬 가능) */
+    background-color: pink;
+    margin: auto;
+    margin-top: 20px; /* banner와의 간격 */
+}
+
+/* .post-preview ul li { */
+    /* width: 100%; li 항목이 ul의 너비에 맞도록 설정 */ */
+    /* margin-bottom: 10px; /* 리스트 항목 간의 간격 */
+    /* box-sizing: border-box; 패딩과 보더를 width에 포함 */ */
+    /* overflow-wrap: break-word; /* 긴 단어가 컨테이너 너비를 넘을 때 줄바꿈 */
+/* } */
