@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './RegisterPage2.module.css';
+import styles from '../style/RegisterPage2.module.css';
 import deplogLogo from '../images/deplogLogo.png';
 import particon from '../images/particon.png';
 

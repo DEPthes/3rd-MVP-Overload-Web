@@ -207,6 +207,10 @@ input {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .cancelButton {
@@ -218,6 +222,10 @@ input {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .cancelButton:hover {

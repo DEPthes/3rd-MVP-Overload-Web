@@ -171,6 +171,10 @@ input {
     cursor: not-allowed;
     border-radius: 2px;
     gap: 3px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .checkButton.enabled {
@@ -193,6 +197,10 @@ input {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .nextButton {
@@ -204,6 +212,10 @@ input {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .inputWithButton input {
@@ -222,6 +234,6 @@ input {
 }
 
 .nextButton:disabled {
-    background-color: #ccc;
+    background-color: #858585;
     cursor: not-allowed;
 }

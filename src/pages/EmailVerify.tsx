@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./emailVerify.module.css";
+import styles from "../style/emailVerify.module.css";
 import deplogLogo from "../images/deplogLogo.png";
 
 const EmailVerify: React.FC = () => {

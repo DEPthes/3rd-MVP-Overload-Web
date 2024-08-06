@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./LoginForm.module.css";
+import styles from "../style/LoginForm.module.css";
 import checkboxChecked from "../images/checkbox.png";
 import checkboxUnchecked from "../images/checkboxempty.png";
 import deplogLogo from "../images/deplogLogo.png";
@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
   };
 
   const handlePasswordReset = () => {
-    navigate("/passwordReset");
+    navigate("/passwordResetMail");
   };
 
   const handleRegisterClick = () => {
