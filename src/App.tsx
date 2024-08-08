@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 
 function App() {
   const MainPage = lazy(() => import("./pages/MainPage.tsx"));
+  const ViewDetailPost = lazy(() => import("./pages/ViewDetailPostPage.tsx"));
   const RegisterPage = lazy(() => import("./pages/RegisterPage.tsx"));
   const RegisterPage2 = lazy(() => import("./pages/RegisterPage2.tsx"));
   // const EmailVerify = lazy(() = >import("./pages/EmailVerify.tsx"))
@@ -12,7 +13,8 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" Component={MainPage} />
+          <Route path="/mainPage" Component={MainPage} />
+          <Route path="/viewDetailPost/:id" Component={ViewDetailPost} />
           <Route path="/register" Component={RegisterPage} />
           <Route path="/register2" Component={RegisterPage2} />
           {/* <Route path="/emailVerify" Component={EmailVerify} /> */}
