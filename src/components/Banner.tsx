@@ -1,12 +1,14 @@
 
-type banner = {
-    id:string;
-    picture: string;
-}
+import banner from "../images/DEPthLogo.png"
+import "../style/banner.css"
 
-const Banner:React.FC<banner> = (props) => {
+// 메인페이지의 banner component
+const Banner:React.FC = () => {
     return(
         <>
+        <a className="banner" href="https://depth-mju.co.kr/">
+            <img src={banner}/>
+        </a>
         </>
     );
 }
