@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../style/emailVerify.module.css";
 import deplogLogo from "../images/deplogLogo.png";
+import { constants } from "../constants";
 
 const EmailVerify: React.FC = () => {
   const [verificationMessage, setVerificationMessage] = useState("");
@@ -13,22 +14,10 @@ const EmailVerify: React.FC = () => {
     let interval: number | null = null;
     if (!resendEnabled) {
       interval = window.setInterval(() => {
-        setTime((prevTime) => {
-          if (prevTime > 0) {
-            return prevTime - 1;
-          } else {
-            clearInterval(interval!);
-            setResendEnabled(true);
-            return 180;
-          }
-        });
+        setTime((prevTime) => prevTime > 0 ? prevTime - 1 : (clearInterval(interval!), setResendEnabled(true), 180));
       }, 1000);
     }
-    return () => {
-      if (interval !== null) {
-        clearInterval(interval);
-      }
-    };
+    return () => { interval !== null && clearInterval(interval); };
   }, [resendEnabled]);
 
   const formatTime = (seconds: number) => {
@@ -37,51 +26,24 @@ const EmailVerify: React.FC = () => {
     return `${minutes}:${secs}`;
   };
 
-  const handleVerify = () => {
-    setVerificationMessage("메일함의 링크 클릭 후 완료 버튼을 눌러주세요.");
-  };
-
-  const handleResend = () => {
-    setResendEnabled(false);
-    setTime(180); // Reset timer to 3 minutes
-  };
-
+  const handleVerify = () => { setVerificationMessage(constants.verifyCompleteMessage); };
+  const handleResend = () => { setResendEnabled(false); setTime(180); };
+  //aaaaa@gmail.com부분 바꾸기. and 질문
   return (
     <div className={styles.centeredContainer}>
       <div className={styles.verifyForm}>
-        <div className={styles.logoContainer}>
-          <img src={deplogLogo} className={styles.logo} alt="Logo" />
-        </div>
-        <div className={styles.titleContainer}>
-          <label className={styles.title}>인증 메일 전송</label>
-        </div>
+        <div className={styles.logoContainer}><img src={deplogLogo} className={styles.logo} alt={constants.logoAltText} /></div>
+        <div className={styles.titleContainer}><label className={styles.title}>{constants.verifyEmailTitle}</label></div>
         <div className={styles.subtitleContainer}>
           <label className={styles.subtitle}>
-            aaaaa@gmail.com 으로 가입 인증 메일을 전송하였습니다.
-            <br />
-            메일함을 확인하시고, 인증을 완료해 주세요.
+            {"aaaaa@gmail.com" + constants.verifyEmailSubtitle} <br/> {constants.verifyEmailSubtitle2}
           </label>
         </div>
         <div className={styles.buttonGroup}>
-          <button
-            type="button"
-            className={styles.verifyButton}
-            onClick={handleVerify}
-          >
-            인증완료
-          </button>
-          <div className={styles.errorMessageContainer}>
-            <span className={styles.errorMessage}>{verificationMessage}</span>
-          </div>
-          <button
-            type="button"
-            className={
-              resendEnabled ? styles.resendButton : styles.resendButtonDisabled
-            }
-            onClick={handleResend}
-            disabled={!resendEnabled}
-          >
-            {resendEnabled ? "인증 메일 다시 받기" : formatTime(time)}
+          <button type="button" className={styles.verifyButton} onClick={handleVerify}>인증완료</button>
+          <div className={styles.errorMessageContainer}><span className={styles.errorMessage}>{verificationMessage}</span></div>
+          <button type="button" className={resendEnabled ? styles.resendButton : styles.resendButtonDisabled} onClick={handleResend} disabled={!resendEnabled}>
+            {resendEnabled ? constants.resendEmailButtonText : formatTime(time)}
           </button>
         </div>
       </div>

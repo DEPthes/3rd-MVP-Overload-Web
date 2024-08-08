@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../style/resetSuccess.module.css';
 import jwamulswaeIcon from '../images/jwamulswaeIcon.png';
+import { constants } from '../constants';
 
 const ResetSuccess: React.FC = () => {
     const navigate = useNavigate();
@@ -17,15 +18,9 @@ const ResetSuccess: React.FC = () => {
                     <img src={jwamulswaeIcon} className={styles.icon} alt="Lock Icon" />
                 </div>
                 <div className={styles.messageContainer}>
-                    <label className={styles.message}>비밀번호 변경 완료</label>
+                    <label className={styles.message}>{constants.resetSuccessMessage}</label>
                 </div>
-                <button 
-                    type="button" 
-                    className={styles.loginButton} 
-                    onClick={handleLoginRedirect}
-                >
-                    로그인 화면으로 이동
-                </button>
+                <button type="button" className={styles.loginButton} onClick={handleLoginRedirect}>{constants.loginRedirectButtonText}</button>
             </div>
         </div>
     );

@@ -133,8 +133,8 @@ html, body {
     border-top-right-radius: 2px;
     background-color: white;
     color: #000000;
+    font-size: 16px;
     font-weight: 400;
-    size: 16px;
     line-height: 25.6px;
     font-family: 'Noto Sans KR', sans-serif;
 }

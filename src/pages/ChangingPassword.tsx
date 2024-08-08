@@ -4,6 +4,7 @@ import styles from '../style/changingPassword.module.css';
 import deplogLogo from '../images/deplogLogo.png';
 import eyeimg from '../images/eyecon.png';
 import eyeimgslash from '../images/eyeconslash.png';
+import { constants } from '../constants';
 
 const ChangePasswordPage: React.FC = () => {
     const [password, setPassword] = useState('');
@@ -16,40 +17,25 @@ const ChangePasswordPage: React.FC = () => {
     const navigate = useNavigate();
 
     const validatePassword = (password: string) => {
-        const passwordPattern = /^[A-Za-z0-9@]{8,20}$/;
-        return passwordPattern.test(password);
+        return constants.passwordPattern.test(password);
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
-        if (validatePassword(e.target.value)) {
-            setPasswordError('');
-        } else {
-            setPasswordError('영문, 숫자 포함 (8~20자)로 작성해주세요.');
-        }
+        setPasswordError(validatePassword(e.target.value) ? '' : constants.passwordError);
     };
 
     const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setConfirmPassword(e.target.value);
-        if (password === e.target.value) {
-            setConfirmPasswordError('');
-        } else {
-            setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
-        }
+        setConfirmPasswordError(password === e.target.value ? '' : constants.confirmPasswordError);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!validatePassword(password)) {
-            setPasswordError('영문, 숫자 포함 (8~20자)로 작성해주세요.');
-        }
-        if (password !== confirmPassword) {
-            setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
-        }
-        if (validatePassword(password) && password === confirmPassword) {
-            navigate('/PasswordResetSuccess');
-            // api 연결하기
-        }
+        !validatePassword(password) && setPasswordError(constants.passwordError);
+        password !== confirmPassword && setConfirmPasswordError(constants.confirmPasswordError);
+        validatePassword(password) && password === confirmPassword && navigate('/PasswordResetSuccess');
+        // api 연결하기
     };
 
     const togglePasswordVisibility = () => {
@@ -68,22 +54,22 @@ const ChangePasswordPage: React.FC = () => {
         <div className={styles.centeredContainer}>
             <div className={styles.registerForm}>
                 <div className={styles.logoContainer}>
-                    <img src={deplogLogo} className={styles.logo} alt="Logo" />
+                    <img src={deplogLogo} className={styles.logo} alt={constants.logoAltText} />
                 </div>
                 <div className={styles.titleContainer}>
-                    <label className={styles.title}>비밀번호 변경</label>
+                    <label className={styles.title}>{constants.changePasswordTitle}</label>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>
-                            <label htmlFor="password">새 비밀번호</label>
+                            <label htmlFor="password">{constants.newPasswordLabel}</label>
                         </div>
                         <div className={styles.passwordContainer}>
                             <input
                                 type={passwordVisible ? "text" : "password"}
                                 id="password"
                                 value={password}
-                                placeholder='영문, 숫자(8~20자)'
+                                placeholder={constants.passwordPlaceholder}
                                 onChange={handlePasswordChange}
                                 className={passwordError ? styles.error : ''}
                             />
@@ -97,14 +83,14 @@ const ChangePasswordPage: React.FC = () => {
                     </div>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>
-                            <label htmlFor="confirmPassword">새 비밀번호 확인</label>
+                            <label htmlFor="confirmPassword">{constants.newPasswordConfirmLabel}</label>
                         </div>
                         <div className={styles.passwordContainer}>
                             <input
                                 type={confirmPasswordVisible ? "text" : "password"}
                                 id="confirmPassword"
                                 value={confirmPassword}
-                                placeholder='영문, 숫자(8~20자)'
+                                placeholder={constants.passwordPlaceholder}
                                 onChange={handleConfirmPasswordChange}
                                 className={confirmPasswordError ? styles.error : ''}
                             />
@@ -117,9 +103,9 @@ const ChangePasswordPage: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.buttonGroup}>
-                        <button type="button" className={styles.cancelButton} onClick={handleCancel}>취소</button>
+                        <button type="button" className={styles.cancelButton} onClick={handleCancel}>{constants.cancelButtonText}</button>
                         <button type="submit" className={styles.nextButton} disabled={!password || !confirmPassword || !!passwordError || !!confirmPasswordError}>
-                            비밀번호 변경
+                            {constants.changePasswordTitle}
                         </button>
                     </div>
                 </form>
