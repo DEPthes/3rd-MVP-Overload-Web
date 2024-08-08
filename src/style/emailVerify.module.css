@@ -112,6 +112,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .resendButton {
@@ -125,6 +126,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .resendButtonDisabled {
@@ -142,5 +144,5 @@ body {
 
 .verifyButton:hover,
 .resendButton:hover {
-  background-color: #303030;
+  
 }
