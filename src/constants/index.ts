@@ -40,5 +40,8 @@ export const constants = {
     capsLockWarning: "CapsLock이 켜져 있어요.",
     loginSuccessMessage: "로그인 성공!",
     passwordResetLinkText: "비밀번호 재설정",
-    registerLinkText: "회원가입"
+    registerLinkText: "회원가입",
+    emailSuccessMessage: "이메일 인증 완료",
+    emailSuccessMessageSub: "회원가입 승인 요청중",
+    goHome: "홈으로 이동"
 };

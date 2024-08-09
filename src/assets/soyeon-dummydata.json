@@ -2,24 +2,27 @@
     {
         "id": "p1",
         "title": "hello",
-        "content":"contenttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        "content":"contentttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
         "date": "2024-12-12",
         "writer": "soyeon",
         "view": 12,
         "like": 13,
         "scrap": 14,
-        "picture": "link"
+        "picture": "src/images/eyecon.png",
+        "category": "기획",
+        "tag": ["기획 스터디", "재미있어요", "짱"]
     },
     {
         "id": "p2",
         "title": "hello2",
-        "content":"content2",
+        "content":"게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기 게시글 미리보기",
         "date": "2024-12-12",
         "writer": "soyeon2",
         "view": 122,
         "like": 132,
         "scrap": 142,
-        "picture": "link2"
+        "category": "기획",
+        "tag": ["짱구", "유리"]
     },
     {
         "id": "p3",
@@ -30,7 +33,8 @@
         "view": 123,
         "like": 133,
         "scrap": 143,
-        "picture": "link3"
+        "category": "디자인",
+        "tag": ["웹 짱"]
     },
     {
         "id": "p4",
@@ -41,6 +45,83 @@
         "view": 124,
         "like": 134,
         "scrap": 144,
-        "picture": "link4"
+        "category": "개발"
+    },
+    {
+        "id": "p5",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
+    },
+    {
+        "id": "p6",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
+    },
+    {
+        "id": "p7",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
+    },
+    {
+        "id": "p8",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
+    },
+    {
+        "id": "p9",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
+    },
+    {
+        "id": "p10",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
+    },
+    {
+        "id": "p11",
+        "title": "hello4",
+        "content":"content4",
+        "date": "2024-12-12",
+        "writer": "soyeon4",
+        "view": 124,
+        "like": 134,
+        "scrap": 144,
+        "category": "개발"
     }
 ]
