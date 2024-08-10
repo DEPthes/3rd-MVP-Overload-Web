@@ -64,6 +64,7 @@ const MainPage: React.FC = () => {
                                     view={item.view}
                                     like={item.like}
                                     scrap={item.scrap}
+                                    profile={item.profile}
                                     picture={item.picture ? item.picture : undefined}
                                 />
                             </li>
