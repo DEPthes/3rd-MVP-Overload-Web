@@ -43,5 +43,7 @@ export const constants = {
     registerLinkText: "회원가입",
     emailSuccessMessage: "이메일 인증 완료",
     emailSuccessMessageSub: "회원가입 승인 요청중",
-    goHome: "홈으로 이동"
+    goHome: "홈으로 이동",
+    searchMent: "검색어를 입력해주세요.",
+    searchResultMent: "검색 결과가 없습니다."
 };

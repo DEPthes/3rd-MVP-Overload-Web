@@ -4,15 +4,18 @@
 
 .preview-total {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: flex-start;
     width: 55vw;
     margin-bottom: 25px;
+    color: #3C3C3C;
 }
 
 /* 그림을 제외한 왼쪽 부분 */
 .preview-left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     flex: 1;
     max-width: 100%;
 }
@@ -40,7 +43,6 @@
     word-wrap: break-word;
     word-break: break-all;
     font-size: 1rem;
-    color: #3C3C3C;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -52,7 +54,6 @@
 .preview-middle {
     display: flex;
     font-size: 1rem;
-    color: #3C3C3C;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -66,6 +67,8 @@
     height: 20px;
     margin-top: 3px;
     margin-right: 5px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 /* view, like, scrap */
@@ -90,19 +93,25 @@
 .preview-bottom div {
     display: flex;
     margin-right: 20px;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 /* 오른쪽 섹선, 이미지 */
 .preview-right {
-    width: 120px;
-    height: 120px;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 190px;
     margin-left: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid black;
 }
 
 .preview-right img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    overflow: hidden;
 }

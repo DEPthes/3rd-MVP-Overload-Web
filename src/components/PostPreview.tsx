@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import heart from "../images/heart.png";
@@ -20,6 +20,7 @@ type PostPreviewProps = {
     like: number;
     scrap: number;
     picture?: string;
+    profile: string;
 };
 
 // 게시글 간단하게 보는 Component
@@ -51,7 +52,8 @@ const PostPreview: React.FC<PostPreviewProps> = (props) => {
 
                 <div className="preview-middle">
                     <div>{props.date}</div>
-                    <img src={defaultProfile} />
+                    {/* 수정 필요 */}
+                    <img src={props.profile} />
                     <div>{props.writer}</div>
                 </div>
 

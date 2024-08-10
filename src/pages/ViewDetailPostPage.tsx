@@ -11,7 +11,13 @@ import "../style/viewDetailPost.css";
 const ViewDetailPost: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const post = dummy.find(item => item.id === id);
+
+    const handleSearch = (term: string) => {
+        setSearchTerm(term);
+        setIsSearchModalOpen(false);
+    };
 
     if (!post) {
         return <div>Post not found</div>;
@@ -39,7 +45,7 @@ const ViewDetailPost: React.FC = () => {
                 </div>
             </div>
 
-            {isSearchModalOpen && <SearchModal onClose={() => setIsSearchModalOpen(false)} />}
+            {isSearchModalOpen && <SearchModal onClose={() => setIsSearchModalOpen(false)} onSearch={handleSearch}/>}
         </>
     );
 };
