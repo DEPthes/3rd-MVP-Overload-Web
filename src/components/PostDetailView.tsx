@@ -1,11 +1,13 @@
 
 import React, { useState } from 'react';
+
 import heart from "../images/heart.png";
 import view from "../images/View.png";
 import bookmark from "../images/bookmark.png";
 import checkBookmark from "../images/checkBookmark.png";
 import checkHeart from "../images/checkHeart.png";
 import menu from "../images/menu.png";
+
 import "../style/postDetailView.css";
 
 type post = {
@@ -15,6 +17,7 @@ type post = {
     part: string;
     content: string;
     profile: string;
+
     picture?: string;
     view: number;
     like: number;
@@ -58,6 +61,7 @@ const PostDetailView: React.FC<post> = (props) => {
                     )}
                 </div>
             </div>
+
             <hr/>
             <div className="detail-info">
                 <div>{props.date}</div>
@@ -71,6 +75,7 @@ const PostDetailView: React.FC<post> = (props) => {
                     <img src={props.picture}/>
                 </div>
             )}
+
             <div className="detail-tags">
                 {props.tag.map((t, index) => (
                     <button key={index}>#{t}</button>
@@ -103,8 +108,10 @@ const PostDetailView: React.FC<post> = (props) => {
                 </div>
             </div>
             <hr/>
+
         </div>
     );
 };
 
 export default PostDetailView;
+

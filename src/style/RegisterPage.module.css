@@ -145,6 +145,10 @@ input {
     border: solid 1px #ADBBC8;
     border-radius: 2px;
     background-color: white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .passwordToggleIcon {
@@ -171,6 +175,10 @@ input {
     cursor: not-allowed;
     border-radius: 2px;
     gap: 3px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .checkButton.enabled {
@@ -193,6 +201,10 @@ input {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .nextButton {
@@ -204,6 +216,10 @@ input {
     border: none;
     border-radius: 2px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .inputWithButton input {
@@ -215,6 +231,10 @@ input {
     border: solid 1px #ADBBC8;
     border-radius: 2px;
     background-color: white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .cancelButton:hover {
@@ -222,6 +242,6 @@ input {
 }
 
 .nextButton:disabled {
-    background-color: #ccc;
+    background-color: #858585;
     cursor: not-allowed;
 }

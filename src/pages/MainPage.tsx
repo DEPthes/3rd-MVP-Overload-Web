@@ -5,6 +5,7 @@ import Banner from "../components/Banner";
 import PostType from '../components/PostType';
 import PostPreview from "../components/PostPreview";
 import Footer from '../components/Footer';
+
 import dummy from "../assets/soyeon-dummydata.json";
 import "../style/mainPage.css";
 
@@ -13,6 +14,7 @@ import "../style/mainPage.css";
 const MainPage: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>('전체');
     const [selectedPage, setSelectedPage] = useState<number>(1);
+
     const postsPerPage = 10;
 
     const handleCategoryChange = (category: string) => {
@@ -39,6 +41,7 @@ const MainPage: React.FC = () => {
             <div className="main-total">
                 {/* navbar */}
                 <Nav />
+
 
                 {/* banner */}
                 <Banner />
@@ -79,6 +82,7 @@ const MainPage: React.FC = () => {
                     selectedPage={selectedPage} 
                     onPageChange={handlePageChange}
                 />
+
             </div>
         </>
     );

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './RegisterPage.module.css';
+import styles from '../style/RegisterPage.module.css';
 import deplogLogo from '../images/deplogLogo.png';
 import eyeimg from '../images/eyecon.png';
 import eyeimgslash from '../images/eyeconslash.png';
-
+import { constants } from '../constants';
 
 const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -19,13 +19,11 @@ const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
 
     const validateEmail = (email: string) => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(email);
+        return constants.emailPattern.test(email);
     };
 
     const validatePassword = (password: string) => {
-        const passwordPattern = /^[A-Za-z0-9@]{8,20}$/;
-        return passwordPattern.test(password);
+        return constants.passwordPattern.test(password);
     };
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +31,7 @@ const RegisterPage: React.FC = () => {
         if (validateEmail(e.target.value)) {
             setEmailError('');
         } else {
-            setEmailError('이메일 주소 형식이 맞지 않습니다.');
+            setEmailError(constants.invalidEmailError);
         }
     };
 
@@ -42,7 +40,7 @@ const RegisterPage: React.FC = () => {
         if (validatePassword(e.target.value)) {
             setPasswordError('');
         } else {
-            setPasswordError('영문, 숫자 포함 (8~20자)로 작성해주세요.');
+            setPasswordError(constants.passwordError);
         }
     };
 
@@ -51,20 +49,20 @@ const RegisterPage: React.FC = () => {
         if (password === e.target.value) {
             setConfirmPasswordError('');
         } else {
-            setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
+            setConfirmPasswordError(constants.confirmPasswordError);
         }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!validateEmail(email)) {
-            setEmailError('이메일 주소 형식이 맞지 않습니다.');
+            setEmailError(constants.invalidEmailError);
         }
         if (!validatePassword(password)) {
-            setPasswordError('영문, 숫자 포함 (8~20자)로 작성해주세요.');
+            setPasswordError(constants.passwordError);
         }
         if (password !== confirmPassword) {
-            setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
+            setConfirmPasswordError(constants.confirmPasswordError);
         }
         if (validateEmail(email) && validatePassword(password) && password === confirmPassword) {
             alert('회원가입 성공!');
@@ -92,25 +90,25 @@ const RegisterPage: React.FC = () => {
         <div className={styles.centeredContainer}>
             <div className={styles.registerForm}>
                 <div className={styles.logoContainer}>
-                    <img src={deplogLogo} className={styles.logo} alt="Logo" />
+                    <img src={deplogLogo} className={styles.logo} alt={constants.logoAltText} />
                 </div>
                 <div className={styles.titleContainer}>
-                    <label className={styles.title}>회원가입</label>
+                    <label className={styles.title}>{constants.registerTitle}</label>
                 </div>
                 <div className={styles.subtitleContainer}>
-                    <label className={styles.subtitle}>매일 계정 인증 및 승인 이후 추가 회원가입이 완료됩니다.</label>
+                    <label className={styles.subtitle}>{constants.registerSubtitle}</label>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>
-                            <label htmlFor="email">이메일 주소</label>
+                            <label htmlFor="email">{constants.emailLabel}</label>
                         </div>
                         <div className={styles.inputWithButton}>
                             <input
                                 type="email"
                                 id="email"
                                 value={email}
-                                placeholder='예)abcd@gmail.com'
+                                placeholder={constants.emailPlaceholder}
                                 onChange={handleEmailChange}
                                 className={emailError ? styles.error : ''}
                             />
@@ -119,7 +117,7 @@ const RegisterPage: React.FC = () => {
                                 className={`${styles.checkButton} ${validateEmail(email) ? styles.enabled : ''}`}
                                 disabled={!validateEmail(email)}
                             >
-                                중복 확인
+                                {constants.emailCheckButtonText}
                             </button>
                         </div>
                         <div className={styles.errorMessageContainer}>
@@ -128,14 +126,14 @@ const RegisterPage: React.FC = () => {
                     </div>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>
-                            <label htmlFor="password">비밀번호</label>
+                            <label htmlFor="password">{constants.passwordLabel}</label>
                         </div>
                         <div className={styles.passwordContainer}>
                             <input
                                 type={passwordVisible ? "text" : "password"}
                                 id="password"
                                 value={password}
-                                placeholder='영문, 숫자(8~20자)'
+                                placeholder={constants.passwordPlaceholder}
                                 onChange={handlePasswordChange}
                                 className={passwordError ? styles.error : ''}
                             />
@@ -143,17 +141,20 @@ const RegisterPage: React.FC = () => {
                                 <img src={passwordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
                             </span>
                         </div>
+                        <div className={styles.errorMessageContainer}>
+                            <span className={styles.errorMessage}>{passwordError}</span>
+                        </div>
                     </div>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>
-                            <label htmlFor="confirmPassword">비밀번호 확인</label>
+                            <label htmlFor="confirmPassword">{constants.confirmPasswordLabel}</label>
                         </div>
                         <div className={styles.passwordContainer}>
                             <input
                                 type={confirmPasswordVisible ? "text" : "password"}
                                 id="confirmPassword"
                                 value={confirmPassword}
-                                placeholder='영문, 숫자(8~20자)'
+                                placeholder={constants.passwordPlaceholder}
                                 onChange={handleConfirmPasswordChange}
                                 className={confirmPasswordError ? styles.error : ''}
                             />
@@ -166,9 +167,9 @@ const RegisterPage: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.buttonGroup}>
-                        <button type="button" className={styles.cancelButton} onClick={handleCancel}>취소</button>
+                        <button type="button" className={styles.cancelButton} onClick={handleCancel}>{constants.cancelButtonText}</button>
                         <button type="submit" onClick={handleNextClick} className={styles.nextButton} disabled={!email || !password || !confirmPassword || !!emailError || !!passwordError || !!confirmPasswordError}>
-                            다음
+                            {constants.nextButtonText}
                         </button>
                     </div>
                 </form>

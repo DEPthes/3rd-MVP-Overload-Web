@@ -12,6 +12,7 @@ const Nav: React.FC<{ profile?: string }> = (props) => {
   return (
     <nav className="navbar">
         {/* 로고 부분 */}
+
       <div className="navbar-left">
         <Link to="/mainPage">
           <img className="logo" src={logo} alt="Logo" />
@@ -26,6 +27,7 @@ const Nav: React.FC<{ profile?: string }> = (props) => {
         <a href='#'><img className="nav-icon write-button" src={ writeBtn }/></a>
         
         {/* 프로필 부분, 프로필 있을 시 자신의 프로필을, 없을 시 프로필 아이콘 */}
+
         <img 
           className="profile-icon" 
           src={props.profile ? props.profile : defaultProfile}  

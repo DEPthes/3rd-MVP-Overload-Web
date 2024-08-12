@@ -7,6 +7,7 @@ import Comment from "../components/Comment";
 import dummy from "../assets/soyeon-dummydata.json";
 import dummyProfile from "../assets/profileInfo-dummydata.json";
 import dummyComment from "../assets/comment-dummydata.json";
+
 import "../style/viewDetailPost.css";
 
 // 상세 게시글 페이지
@@ -15,6 +16,7 @@ const ViewDetailPost: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const post = dummy.find(item => item.id === id);
 
+
     if (!post) {
         return <div>Post not found</div>;
     }
@@ -22,6 +24,7 @@ const ViewDetailPost: React.FC = () => {
     return (
         <>
             <Nav />
+
             <div className="total">
                 <div className="detail-post">
                     <PostDetailView
@@ -31,6 +34,7 @@ const ViewDetailPost: React.FC = () => {
                         writer={post.writer}
                         part={post.part}
                         profile={post.profile}
+
                         view={post.view}
                         like={post.like}
                         scrap={post.scrap}
@@ -62,6 +66,7 @@ const ViewDetailPost: React.FC = () => {
                     </ul>
                 </div>
             </div>
+
         </>
     );
 };
