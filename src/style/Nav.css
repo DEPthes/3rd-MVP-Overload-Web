@@ -1,0 +1,73 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 60px;
+    padding: 0 250px;
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    right: 0;
+    z-index: 1000; 
+}
+
+.navbar-left, .navbar-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-left {
+    justify-content: flex-start;
+}
+
+.navbar-right {
+    justify-content: flex-end;
+}
+
+/* 왼쪽 뎁스 로고 */
+.logo {
+    height: 30px;
+    cursor: pointer;
+}
+
+/* 검색, 인스타, 글작성, 프로필 */
+.nav-icon {
+    margin: 0 10px;
+}
+
+.search-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    cursor: pointer;
+}
+
+.instagram-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    cursor: pointer;
+}
+
+/* 글쓰기 버튼 */
+.write-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+/* 프로필 아이콘 */
+.profile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    cursor: pointer;
+}
