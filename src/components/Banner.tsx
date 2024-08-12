@@ -1,5 +1,6 @@
 
-import banner from "../images/DEPthLogo.png"
+import banner from "../images/DEPlog_Banner.png"
+
 import "../style/banner.css"
 
 // 메인페이지의 banner component

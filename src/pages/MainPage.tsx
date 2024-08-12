@@ -1,10 +1,11 @@
+
 import React, { useState } from 'react';
 import Nav from "../components/Nav";
 import Banner from "../components/Banner";
 import PostType from '../components/PostType';
 import PostPreview from "../components/PostPreview";
 import Footer from '../components/Footer';
-import SearchModal from '../components/SearchModal';
+
 import dummy from "../assets/soyeon-dummydata.json";
 import "../style/mainPage.css";
 
@@ -13,18 +14,12 @@ import "../style/mainPage.css";
 const MainPage: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>('전체');
     const [selectedPage, setSelectedPage] = useState<number>(1);
-    const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
-    const [searchTerm, setSearchTerm] = useState<string>('');
+
     const postsPerPage = 10;
 
     const handleCategoryChange = (category: string) => {
         setSelectedCategory(category);
         setSelectedPage(1);
-    };
-
-    const handleSearch = (term: string) => {
-        setSearchTerm(term);
-        setIsSearchModalOpen(false);
     };
 
     // 카테고리에 따라 필터링된 게시물을 역순으로 배열
@@ -45,7 +40,8 @@ const MainPage: React.FC = () => {
         <>
             <div className="main-total">
                 {/* navbar */}
-                <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+                <Nav />
+
 
                 {/* banner */}
                 <Banner />
@@ -87,12 +83,6 @@ const MainPage: React.FC = () => {
                     onPageChange={handlePageChange}
                 />
 
-                {isSearchModalOpen && (
-                    <SearchModal 
-                        onClose={() => setIsSearchModalOpen(false)} 
-                        onSearch={handleSearch} 
-                    />
-                )}
             </div>
         </>
     );

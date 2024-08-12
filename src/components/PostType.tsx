@@ -36,3 +36,4 @@ const PostType: React.FC<postType> = (props) => {
 };
 
 export default PostType;
+

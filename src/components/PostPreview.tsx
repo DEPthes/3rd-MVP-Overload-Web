@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +7,7 @@ import view from "../images/View.png";
 import bookmark from "../images/bookmark.png";
 import checkBookmark from "../images/checkBookmark.png";
 import checkHeart from "../images/checkHeart.png";
-import defaultProfile from "../images/defaultProfile.png";
+
 
 import "../style/postPreview.css";
 
@@ -86,3 +87,4 @@ const PostPreview: React.FC<PostPreviewProps> = (props) => {
 };
 
 export default PostPreview;
+

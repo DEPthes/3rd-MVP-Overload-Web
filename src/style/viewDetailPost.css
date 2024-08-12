@@ -2,3 +2,26 @@
 .detail-post{
     margin-top: 130px;
 }
+
+.detail-mycomment{
+    display: flex;
+    width: 55vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-comment{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-mycomment .mycomment-total{
+    width: 55vw;
+}
+
+.detail-comment ul{
+    list-style: none;
+
+}

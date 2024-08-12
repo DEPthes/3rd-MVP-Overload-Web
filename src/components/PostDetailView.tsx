@@ -1,18 +1,23 @@
 
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
+
 import heart from "../images/heart.png";
 import view from "../images/View.png";
 import bookmark from "../images/bookmark.png";
 import checkBookmark from "../images/checkBookmark.png";
 import checkHeart from "../images/checkHeart.png";
-import defaultProfile from "../images/defaultProfile.png"
+import menu from "../images/menu.png";
+
 import "../style/postDetailView.css";
 
 type post = {
     title: string;
     date: string;
     writer: string;
+    part: string;
     content: string;
+    profile: string;
+
     picture?: string;
     view: number;
     like: number;
@@ -26,6 +31,11 @@ const PostDetailView: React.FC<post> = (props) => {
 
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScarp, setSelectedScarp] = useState<boolean>(false);
+    const [selecteMenu, setSelecteMenu] = useState<boolean>(false);
+
+    const handleMenuClick = () => {
+        setSelecteMenu(!selecteMenu);
+    }
 
     const handleHeartClick = () => {
         setSelectedHeart(!selectedHeart);
@@ -37,16 +47,35 @@ const PostDetailView: React.FC<post> = (props) => {
 
     return (
         <div className="detail-total">
-            <div className="detail-title">{props.title}</div>
+            <div className="detail-title">
+                {props.title}
+                {/* 메뉴 선텍인데 만약 자신의 글이라면 보이고 아니면 안보이게 */}
+                {/* {isOwner && ()} */}
+                <div className='detail-menu-container'>
+                    <button className="detail-menu" onClick={handleMenuClick}><img src={menu}/></button>
+                    {selecteMenu && (
+                        <div className='detail-menu-options'>
+                            <button className='detail-menu-option'>게시글 수정</button>
+                            <button className='detail-menu-option'>게시글 삭제</button>
+                        </div>
+                    )}
+                </div>
+            </div>
+
             <hr/>
             <div className="detail-info">
                 <div>{props.date}</div>
                 {/* 수정 필요 */}
-                <img src={ defaultProfile }/>
+                <img src={ props.profile }/>
                 <div>{props.writer}</div>
             </div>
             <div className="detail-content">{props.content}</div>
-            {props.picture && <div className="detail-image"><img src={props.picture}/></div>}
+            {props.picture && (
+                <div className="detail-image">
+                    <img src={props.picture}/>
+                </div>
+            )}
+
             <div className="detail-tags">
                 {props.tag.map((t, index) => (
                     <button key={index}>#{t}</button>
@@ -70,8 +99,19 @@ const PostDetailView: React.FC<post> = (props) => {
                     {props.scrap}
                 </div>
             </div>
+            <div className='detail-bottom'>
+                {/* 수정필요 */}
+                <img src={props.profile}/>
+                <div>
+                    <p className='detail-profile-name'>{props.writer}</p>
+                    <p className='detail-profile-part'>{props.part}</p>
+                </div>
+            </div>
+            <hr/>
+
         </div>
     );
 };
 
 export default PostDetailView;
+

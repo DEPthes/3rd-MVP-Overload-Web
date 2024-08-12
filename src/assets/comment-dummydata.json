@@ -1,0 +1,30 @@
+[
+    {
+        "commentid": "co1",
+        "profile": "src/images/eyecon.png",
+        "nickname": "soyeon",
+        "date": "2024년 7월 19일",
+        "comment": "게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용"
+    },
+    {
+        "commentid": "co2",
+        "profile": "src/images/eyecon.png",
+        "nickname": "soyeon2",
+        "date": "2024년 7월 19일",
+        "comment": "게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용"
+    },
+    {
+        "commentid": "co3",
+        "profile": "src/images/eyecon.png",
+        "nickname": "soyeon3",
+        "date": "2024년 7월 19일",
+        "comment": "게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용 게시글 내용"
+    },
+    {
+        "commentid": "co4",
+        "profile": "src/images/eyecon.png",
+        "nickname": "soyeon4",
+        "date": "2024년 7월 19일",
+        "comment": "게시글 내용"
+    }
+]
