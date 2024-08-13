@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/mainPage" Component={MainPage} />
+          <Route path="/" Component={MainPage} />
           <Route path="/viewDetailPost/:id" Component={ViewDetailPost} />
           <Route path="/register" Component={RegisterPage} />
           <Route path="/register2" Component={RegisterPage2} />
