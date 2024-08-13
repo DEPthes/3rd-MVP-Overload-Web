@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../style/Nav.css";
 import defaultProfile from "../images/defaultProfile.png";
 import logo from "../images/deplogLogo.png";
@@ -6,9 +6,15 @@ import searchImg from "../images/search.png";
 import insta from "../images/Insta.png";
 import writeBtn from "../images/writePostBtn.png";
 import devider from "../images/Devider.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Nav: React.FC<{ profile?: string }> = (props) => {
+  const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+      navigate(`/logIn`);
+  }
+
   return (
     <nav className="navbar">
       {/* 로고 부분 */}
@@ -32,13 +38,9 @@ const Nav: React.FC<{ profile?: string }> = (props) => {
           <img className="nav-icon write-button" src={writeBtn} />
         </a>
 
-        {/* 프로필 부분, 프로필 있을 시 자신의 프로필을, 없을 시 프로필 아이콘 */}
-
-        <img
-          className="profile-icon"
-          src={props.profile ? props.profile : defaultProfile}
-          alt="Profile"
-        />
+          {props.profile ? 
+          <img className="profile-icon" src={props.profile}/> : <img className="profile-icon" src={defaultProfile} onClick={handleProfileClick}
+          />}
       </div>
     </nav>
   );
