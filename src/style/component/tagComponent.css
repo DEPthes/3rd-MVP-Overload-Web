@@ -1,0 +1,25 @@
+.addButton {
+  display: flex;
+  width: 128px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  color: #0258fe;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background-color: #efefef;
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+
+.addButton:hover {
+  background-color: #0258fe;
+  color: white;
+}

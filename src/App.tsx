@@ -13,6 +13,7 @@ function App() {
   const ResetSuccess = lazy(() => import("./pages/ResetSuccess.tsx"));
   const EmailSuccess = lazy(() => import("./pages/EmailSuccess.tsx"));
   const SearchResults = lazy(() => import("./pages/SearchResult.tsx"));
+  const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
 
   return (
     <BrowserRouter>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/passwordResetSuccess" Component={ResetSuccess} />
           <Route path="/emailSuccess" Component={EmailSuccess} />
           <Route path="searchResults" Component={SearchResults} />
+          <Route path="/post" Component={PostPage} />
         </Routes>
       </Suspense>
     </BrowserRouter>
