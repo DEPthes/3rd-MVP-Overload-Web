@@ -1,4 +1,4 @@
-
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "../components/Nav";
 import PostDetailView from "../components/PostDetailView";
@@ -7,6 +7,7 @@ import Comment from "../components/Comment";
 import dummy from "../assets/soyeon-dummydata.json";
 import dummyProfile from "../assets/profileInfo-dummydata.json";
 import dummyComment from "../assets/comment-dummydata.json";
+import SearchModal from '../components/SearchModal';
 
 import "../style/viewDetailPost.css";
 
@@ -14,8 +15,14 @@ import "../style/viewDetailPost.css";
 
 const ViewDetailPost: React.FC = () => {
     const { id } = useParams<{ id: string }>();
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const post = dummy.find(item => item.id === id);
 
+    const handleSearch = (term: string) => {
+        setSearchTerm(term);
+        setIsSearchModalOpen(false);
+    };
 
     if (!post) {
         return <div>Post not found</div>;
@@ -23,7 +30,7 @@ const ViewDetailPost: React.FC = () => {
 
     return (
         <>
-            <Nav />
+            <Nav onSearchClick={() => setIsSearchModalOpen(true)}/>
 
             <div className="total">
                 <div className="detail-post">
@@ -66,7 +73,8 @@ const ViewDetailPost: React.FC = () => {
                     </ul>
                 </div>
             </div>
-
+            
+            {isSearchModalOpen && <SearchModal onClose={() => setIsSearchModalOpen(false)} onSearch={handleSearch}/>}
         </>
     );
 };

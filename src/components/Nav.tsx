@@ -8,7 +8,7 @@ import writeBtn from "../images/writePostBtn.png";
 import devider from "../images/Devider.png";
 import { Link, useNavigate } from "react-router-dom";
 
-const Nav: React.FC<{ profile?: string }> = (props) => {
+const Nav: React.FC<{ profile?: string, onSearchClick: () => void }> = (props) => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
@@ -27,9 +27,7 @@ const Nav: React.FC<{ profile?: string }> = (props) => {
 
       {/* 검색, 인스타, 글작성, 프로필 부분 */}
       <div className="navbar-right">
-        <a href="/mainPage">
-          <img className="nav-icon search-icon" src={searchImg} />
-        </a>
+      <a onClick={props.onSearchClick}><img className="nav-icon search-icon" src={searchImg} alt="Search" /></a>
         <a href="https://www.instagram.com/depth_mju.co.kr/">
           <img className="nav-icon instagram-icon" src={insta} />
         </a>
