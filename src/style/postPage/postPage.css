@@ -1,0 +1,31 @@
+.postContainer {
+  margin: 72px 20%;
+}
+
+.inputBox {
+  width: 100%;
+  height: 117px;
+  border: none;
+  border-bottom: 1px solid black;
+  font-family: "Noto Sans KR";
+  font-size: 37.897px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 53.056px */
+}
+
+.inputBox::placeholder {
+  font-family: "Noto Sans KR";
+  font-size: 37.897px;
+  color: black;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+}
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; 
+  margin-top: 10px; /
+}
