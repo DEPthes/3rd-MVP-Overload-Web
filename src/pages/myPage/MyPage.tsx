@@ -1,4 +1,6 @@
+import CircleAvatarComponent from "../../components/CircleAvatarComponent";
 import MyPageNav from "../../components/myPage/MyPageNav";
+import { AVATARANIMALLIST } from "../../constants/avatar";
 import "../../style/myPage/myPage.css";
 
 const MyPage = () => {
@@ -10,6 +12,15 @@ const MyPage = () => {
         <div className="myInfoContainer">
           <div className="myPageLeftOption">
             {/* 아바타 */}
+            <CircleAvatarComponent
+              width="154px"
+              height="154px"
+              body={AVATARANIMALLIST.body[0]}
+              eyes={AVATARANIMALLIST.eyes[0]}
+              face={AVATARANIMALLIST.face[0]}
+              mouth={AVATARANIMALLIST.mouth[0]}
+              nose={AVATARANIMALLIST.nose[0]}
+            />
             <div className="myPageInfo">
               <span className="myPageName">Name</span>
               <span className="myPageSpan">part</span>
