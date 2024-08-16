@@ -28,6 +28,27 @@ const AvatarPage = () => {
     setCurrentPage(0); // Reset to first page when header changes
   };
 
+  const handleRandomAvatar = () => {
+    setAvatar({
+      body: AVATARANIMALLIST.body[
+        Math.floor(Math.random() * AVATARANIMALLIST.body.length)
+      ],
+      eyes: AVATARANIMALLIST.eyes[
+        Math.floor(Math.random() * AVATARANIMALLIST.eyes.length)
+      ],
+      face: AVATARANIMALLIST.face[
+        Math.floor(Math.random() * AVATARANIMALLIST.face.length)
+      ],
+      mouth:
+        AVATARANIMALLIST.mouth[
+          Math.floor(Math.random() * AVATARANIMALLIST.mouth.length)
+        ],
+      nose: AVATARANIMALLIST.nose[
+        Math.floor(Math.random() * AVATARANIMALLIST.nose.length)
+      ],
+    });
+  };
+
   const handleSelectAvatar = (value: string) => {
     setAvatar((prevAvatar) => ({
       ...prevAvatar,
@@ -83,7 +104,9 @@ const AvatarPage = () => {
                 </div>
               ))}
             </div>
-            <span className="avatarRandomButton">{AVATARRANDOMBUTTONSPAN}</span>
+            <span className="avatarRandomButton" onClick={handleRandomAvatar}>
+              {AVATARRANDOMBUTTONSPAN}
+            </span>
           </div>
           <div
             className={`avatarCardWrap ${

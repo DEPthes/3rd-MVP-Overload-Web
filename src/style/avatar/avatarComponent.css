@@ -1,5 +1,5 @@
 .avatarComponentContainer {
-  border-radius: 10%;
+  border-radius: 20%;
   border: 1px solid #000;
   background: var(--Contents-BgTransparent, rgba(173, 187, 200, 0.25));
   padding: 0;
