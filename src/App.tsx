@@ -14,6 +14,8 @@ function App() {
   const EmailSuccess = lazy(() => import("./pages/EmailSuccess.tsx"));
   const SearchResults = lazy(() => import("./pages/SearchResult.tsx"));
   const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
+  const AvatarPage = lazy(() => import("./pages/avatar/AvatarPage.tsx"));
+  const MyPage = lazy(() => import("./pages/mypage/MyPage.tsx"));
 
   return (
     <BrowserRouter>
@@ -31,6 +33,8 @@ function App() {
           <Route path="/emailSuccess" Component={EmailSuccess} />
           <Route path="searchResults" Component={SearchResults} />
           <Route path="/post" Component={PostPage} />
+          <Route path="/avatar" Component={AvatarPage} />
+          <Route path="/myPage" Component={MyPage} />
         </Routes>
       </Suspense>
     </BrowserRouter>

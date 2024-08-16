@@ -1,0 +1,29 @@
+.avatarNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  height: 60px;
+  padding: 0 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.avatarSubmitButton {
+  display: flex;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 200px;
+  border: 1px solid #000;
+  background: #000;
+  color: white;
+  cursor: pointer;
+}
+.logo {
+  height: 30px;
+  cursor: pointer;
+}
