@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "../../images/deplogLogo.png";
 import "../../style/avatar/avatarNav.css";
 
@@ -6,7 +7,9 @@ const AvatarNav = () => {
 
   return (
     <nav className="avatarNav">
-      <img className="logo" src={logo} alt="Logo" />
+      <Link to="/">
+        <img className="logo" src={logo} alt="Logo" />
+      </Link>
       <button className="avatarSubmitButton" onClick={handleSubmit}>
         적용하기
       </button>
