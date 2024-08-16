@@ -10,6 +10,7 @@ import matchAvatarHeader from "../../util/matchAvatarHeader";
 import { NextButton } from "../../assets";
 import AvatarCard from "../../components/avatarPage/AvatarCard";
 import AvatarComponent from "../../components/avatarPage/AvatarComponent";
+import AvatarNav from "../../components/avatarPage/AvatarNav";
 
 const AvatarPage = () => {
   const [avatarHeader, setAvatarHeader] = useState<string>(AVATARHEADER[0]);
@@ -55,69 +56,72 @@ const AvatarPage = () => {
   };
 
   return (
-    <div className="avatarMainContainer">
-      <AvatarComponent
-        width="270px"
-        height="270px"
-        face={avatar.face}
-        body={avatar.body}
-        eyes={avatar.eyes}
-        nose={avatar.nose}
-        mouth={avatar.mouth}
-      />
-      <div className="avatarSelectContainer">
-        <div className="avatarHeader">
-          <div className="avatarHeaderLeftOption">
-            {AVATARHEADER.map((header, index) => (
-              <div
-                className={`menu ${
-                  avatarHeader === header ? "activate" : "inactivate"
-                }`}
-                key={index}
-                onClick={() => handleHeaderChange(header)}
-              >
-                {header}
-              </div>
-            ))}
+    <>
+      <AvatarNav />
+      <div className="avatarMainContainer">
+        <AvatarComponent
+          width="270px"
+          height="270px"
+          face={avatar.face}
+          body={avatar.body}
+          eyes={avatar.eyes}
+          nose={avatar.nose}
+          mouth={avatar.mouth}
+        />
+        <div className="avatarSelectContainer">
+          <div className="avatarHeader">
+            <div className="avatarHeaderLeftOption">
+              {AVATARHEADER.map((header, index) => (
+                <div
+                  className={`menu ${
+                    avatarHeader === header ? "activate" : "inactivate"
+                  }`}
+                  key={index}
+                  onClick={() => handleHeaderChange(header)}
+                >
+                  {header}
+                </div>
+              ))}
+            </div>
+            <span className="avatarRandomButton">{AVATARRANDOMBUTTONSPAN}</span>
           </div>
-          <span className="avatarRandomButton">{AVATARRANDOMBUTTONSPAN}</span>
-        </div>
-        <div
-          className={`avatarCardWrap ${
-            currentPage === 0 && "avatarSecondPage"
-          }`}
-        >
-          {currentPage !== 0 && (
-            <NextButton
-              className="avatarPrevButton"
-              onClick={handlePrevPage}
-              style={{
-                cursor: "pointer",
-              }}
-            />
-          )}
+          <div
+            className={`avatarCardWrap ${
+              currentPage === 0 && "avatarSecondPage"
+            }`}
+          >
+            {currentPage !== 0 && (
+              <NextButton
+                className="avatarPrevButton"
+                onClick={handlePrevPage}
+                style={{
+                  cursor: "pointer",
+                }}
+              />
+            )}
 
-          {currentImages.map((image, index) => (
-            <AvatarCard
-              key={index}
-              image={image}
-              onclick={handleSelectAvatar}
-              selected={isImageSelected(image)}
-            />
-          ))}
-          {currentPage !== maxPage && (
-            <NextButton
-              className="avatarPrevButton"
-              style={{
-                transform: "rotate(180deg)", // Inline style to rotate 180 degrees
-                cursor: "pointer",
-              }}
-              onClick={handleNextPage}
-            />
-          )}
+            {currentImages.map((image, index) => (
+              <AvatarCard
+                key={index}
+                image={image}
+                onclick={handleSelectAvatar}
+                selected={isImageSelected(image)}
+              />
+            ))}
+            {currentPage !== maxPage && (
+              <NextButton
+                className="avatarPrevButton"
+                style={{
+                  transform: "rotate(180deg)", // Inline style to rotate 180 degrees
+                  cursor: "pointer",
+                }}
+                onClick={handleNextPage}
+              />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
