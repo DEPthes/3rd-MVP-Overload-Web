@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from '../style/RegisterPage2.module.css';
 import deplogLogo from '../images/deplogLogo.png';
 import particon from '../images/particon.png';
 import { constants } from '../constants';
+import { sendMail } from '../api/RegisterReq';
 
 const RegisterPage2: React.FC = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [part, setPart] = useState('');
     const [count, setCount] = useState('');
@@ -13,8 +16,23 @@ const RegisterPage2: React.FC = () => {
     const [partError, setPartError] = useState('');
     const [countError, setCountError] = useState('');
     const [isPartDropdownOpen, setIsPartDropdownOpen] = useState(false);
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-    const navigate = useNavigate();
+    const partMapping: { [key: string]: string } = {
+        "기획": "PLAN",
+        "서버": "SERVER",
+        "웹": "WEB",
+        "디자인": "DESIGN",
+        "안드로이드": "ANDROID"
+    };
+
+    useEffect(() => {
+        if (!name || !part || !count || nameError || partError || countError) {
+            setIsSubmitDisabled(true);
+        } else {
+            setIsSubmitDisabled(false);
+        }
+    }, [name, part, count, nameError, partError, countError]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -22,19 +40,37 @@ const RegisterPage2: React.FC = () => {
     };
 
     const handlePartChange = (part: string) => {
-        setPart(part);
+        const mappedPart = partMapping[part];
+        setPart(mappedPart || '');
         setPartError('');
         setIsPartDropdownOpen(false);
     };
 
     const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCount(e.target.value);
-        setCountError('');
+        const value = e.target.value;
+        setCount(value);
+        if (parseInt(value) > 3) {
+            setCountError('처음 DEPth에 가입한 기수를 입력해주세요.');
+        } else {
+            setCountError('');
+        }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        name && part && count && navigate('/emailVerify');
+        const { email, password } = location.state as { email: string; password: string };
+        if (name && part && count && !nameError && !partError && !countError) {
+            try {
+                await sendMail(email);
+                navigate('/emailVerify', { state: { email, password, name, part, generation: count } });
+            } catch (error) {
+                alert('메일 전송 중 오류가 발생했습니다.');
+            }
+        } else {
+            if (!name) setNameError('이름을 입력하세요.');
+            if (!part) setPartError('부서를 선택하세요.');
+            if (!count) setCountError('기수를 입력하세요.');
+        }
     };
 
     const handleCancel = () => navigate('/');
@@ -54,12 +90,12 @@ const RegisterPage2: React.FC = () => {
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}><label htmlFor="part">{constants.partLabel}</label></div>
                         <div className={styles.inputWithButton}>
-                            <input type="text" id="part" value={part} placeholder={constants.partPlaceholder} readOnly />
+                            <input type="text" id="part" value={Object.keys(partMapping).find(key => partMapping[key] === part) || ''} placeholder={constants.partPlaceholder} readOnly />
                             <img src={particon} alt="Part Icon" className={styles.partIcon} onClick={() => setIsPartDropdownOpen(!isPartDropdownOpen)} />
                         </div>
                         {isPartDropdownOpen && (
                             <div className={styles.dropdown}>
-                                {constants.partOptions.map(option => (
+                                {Object.keys(partMapping).map(option => (
                                     <div key={option} onClick={() => handlePartChange(option)}>{option}</div>
                                 ))}
                             </div>
@@ -72,7 +108,7 @@ const RegisterPage2: React.FC = () => {
                     </div>
                     <div className={styles.buttonGroup}>
                         <button type="button" className={styles.cancelButton} onClick={handleCancel}>{constants.previousButtonText}</button>
-                        <button type="submit" className={styles.nextButton} disabled={!name || !part || !count || !!nameError || !!partError || !!countError}>{constants.nextButtonText}</button>
+                        <button type="submit" className={styles.nextButton} disabled={isSubmitDisabled}>{constants.nextButtonText}</button>
                     </div>
                 </form>
             </div>

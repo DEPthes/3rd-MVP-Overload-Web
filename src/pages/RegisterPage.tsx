@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import styles from '../style/RegisterPage.module.css';
 import deplogLogo from '../images/deplogLogo.png';
 import eyeimg from '../images/eyecon.png';
 import eyeimgslash from '../images/eyeconslash.png';
 import { constants } from '../constants';
+import { checkEmailDuplicate } from '../api/RegisterReq'; 
 
 const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -15,6 +17,8 @@ const RegisterPage: React.FC = () => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+    const [isEmailChecked, setIsEmailChecked] = useState(false);
+    const [isEmailAvailable, setIsEmailAvailable] = useState(false); 
 
     const navigate = useNavigate();
 
@@ -26,47 +30,108 @@ const RegisterPage: React.FC = () => {
         return constants.passwordPattern.test(password);
     };
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-        if (validateEmail(e.target.value)) {
-            setEmailError('');
-        } else {
-            setEmailError(constants.invalidEmailError);
+    const { mutate: checkEmail, isLoading: isCheckingEmail } = useMutation(checkEmailDuplicate, {
+        onSuccess: (isAvailable: any) => {
+            console.log('isAvailable:', isAvailable);
+            if (isAvailable) {
+                alert('사용 가능한 이메일입니다.');
+                setIsEmailAvailable(true);
+            } else {
+                setEmailError('사용 불가능한 이메일입니다.');
+                setIsEmailAvailable(false);
+            }
+            setIsEmailChecked(true);
+        },
+        onError: () => {
+            setEmailError('이메일 중복 확인 중 오류가 발생했습니다.');
+            setIsEmailAvailable(false);
+            setIsEmailChecked(false);
         }
-    };
+    });
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-        if (validatePassword(e.target.value)) {
-            setPasswordError('');
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const emailValue = e.target.value;
+        setEmail(emailValue);
+        setIsEmailAvailable(false);
+        setIsEmailChecked(false);
+        
+        if (!validateEmail(emailValue)) {
+            setEmailError(constants.invalidEmailError);
         } else {
-            setPasswordError(constants.passwordError);
+            setEmailError('');
         }
+    
+        console.log('Email Change:', {
+            email: emailValue,
+            emailError,
+            isEmailChecked,
+            isEmailAvailable
+        });
+    };
+    
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const passwordValue = e.target.value;
+        setPassword(passwordValue);
+    
+        if (!validatePassword(passwordValue)) {
+            setPasswordError('영문, 숫자 포함 (8~20자)로 작성해주세요.');
+        } else {
+            setPasswordError('');
+        }
+    
+        console.log('Password Change:', {
+            password: passwordValue,
+            passwordError,
+        });
     };
 
     const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setConfirmPassword(e.target.value);
-        if (password === e.target.value) {
+        const confirmPasswordValue = e.target.value;
+        setConfirmPassword(confirmPasswordValue);
+    
+        // 공백 제거 후 비교
+        const trimmedPassword = password.trim();
+        const trimmedConfirmPassword = confirmPasswordValue.trim();
+    
+        console.log('Password:', trimmedPassword);
+        console.log('Confirm Password:', trimmedConfirmPassword);
+    
+        if (trimmedPassword === trimmedConfirmPassword) {
             setConfirmPasswordError('');
         } else {
-            setConfirmPasswordError(constants.confirmPasswordError);
+            setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
         }
+    
+        console.log('Confirm Password Change:', {
+            confirmPassword: trimmedConfirmPassword,
+            confirmPasswordError,
+        });
     };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!validateEmail(email)) {
+    
+    
+    const handleCheckEmail = () => {
+        if (validateEmail(email)) {
+            checkEmail(email);
+        } else {
             setEmailError(constants.invalidEmailError);
         }
-        if (!validatePassword(password)) {
-            setPasswordError(constants.passwordError);
-        }
-        if (password !== confirmPassword) {
-            setConfirmPasswordError(constants.confirmPasswordError);
-        }
-        if (validateEmail(email) && validatePassword(password) && password === confirmPassword) {
-            alert('회원가입 성공!');
-            // 회원가입 성공 로직 추가
+    
+        console.log('Check Email:', {
+            email,
+            emailError,
+            isEmailChecked,
+            isEmailAvailable
+        });
+    };
+    
+    const handleNextClick = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validateEmail(email) && validatePassword(password) && password === confirmPassword && isEmailAvailable && isEmailChecked) {
+            navigate('/register2', { state: { email, password } });
+        } else {
+            if (!isEmailChecked) {
+                setEmailError('이메일 중복 확인이 필요합니다.');
+            }
         }
     };
 
@@ -77,10 +142,6 @@ const RegisterPage: React.FC = () => {
     const toggleConfirmPasswordVisibility = () => {
         setConfirmPasswordVisible(!confirmPasswordVisible);
     };
-
-    const handleNextClick = () => {
-        navigate('/register2');
-    }
 
     const handleCancel = () => {
         navigate('/');
@@ -98,7 +159,7 @@ const RegisterPage: React.FC = () => {
                 <div className={styles.subtitleContainer}>
                     <label className={styles.subtitle}>{constants.registerSubtitle}</label>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleNextClick}>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>
                             <label htmlFor="email">{constants.emailLabel}</label>
@@ -111,11 +172,13 @@ const RegisterPage: React.FC = () => {
                                 placeholder={constants.emailPlaceholder}
                                 onChange={handleEmailChange}
                                 className={emailError ? styles.error : ''}
+                                disabled={isCheckingEmail}
                             />
                             <button
                                 type="button"
+                                onClick={handleCheckEmail}
                                 className={`${styles.checkButton} ${validateEmail(email) ? styles.enabled : ''}`}
-                                disabled={!validateEmail(email)}
+                                disabled={!validateEmail(email) || isCheckingEmail}
                             >
                                 {constants.emailCheckButtonText}
                             </button>
@@ -167,8 +230,23 @@ const RegisterPage: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.buttonGroup}>
-                        <button type="button" className={styles.cancelButton} onClick={handleCancel}>{constants.cancelButtonText}</button>
-                        <button type="submit" onClick={handleNextClick} className={styles.nextButton} disabled={!email || !password || !confirmPassword || !!emailError || !!passwordError || !!confirmPasswordError}>
+                        <button type="button" className={styles.cancelButton} onClick={handleCancel}>
+                            {constants.cancelButtonText}
+                        </button>
+                        <button
+                            type="submit"
+                            className={styles.nextButton}
+                            disabled={
+                                !email || 
+                                !password || 
+                                !confirmPassword || 
+                                password !== confirmPassword || 
+                                !!emailError || 
+                                !!passwordError || 
+                                !!confirmPasswordError || 
+                                !isEmailAvailable
+                            }
+                        >
                             {constants.nextButtonText}
                         </button>
                     </div>

@@ -16,7 +16,7 @@ export const constants = {
     confirmPasswordError: "비밀번호가 일치하지 않습니다.",
     cancelButtonText: "취소",
     nextButtonText: "다음",
-    passwordPattern: /^[A-Za-z0-9@]{8,20}$/,
+    passwordPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
     nameLabel: "이름",
     namePlaceholder: "본명을 입력해주세요.",
     partLabel: "파트",
