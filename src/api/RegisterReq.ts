@@ -18,7 +18,7 @@ export const RegisterReq = async ({ email, password, name, part, generation }: {
   return response.data;
 };
 
-//메일인증
+//메일 인증
 export const sendMail = async (email: string): Promise<void> => {
   await api.get(`/mails?email=${email}`);
 };

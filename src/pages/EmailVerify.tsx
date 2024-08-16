@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import styles from "../style/emailVerify.module.css";
 import deplogLogo from "../images/deplogLogo.png";
 import { constants } from "../constants";
-import { RegisterReq } from '../api/RegisterReq'; // RegisterReq import
+import { RegisterReq } from '../api/RegisterReq';
 import { sendMail } from '../api/RegisterReq';
 
 const EmailVerify: React.FC = () => {
@@ -17,7 +17,7 @@ const EmailVerify: React.FC = () => {
 
   const { mutate: registerUser } = useMutation(RegisterReq, {
     onSuccess: () => {
-      navigate('/emailSuccess'); // Navigate to the success page
+      navigate('/emailSuccess'); 
     },
     onError: (error: any) => {
       setVerificationMessage('회원가입 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
@@ -42,7 +42,7 @@ const EmailVerify: React.FC = () => {
 
   const handleVerify = async () => {
     try {
-      registerUser({ email, password, name, part, generation }); // 회원가입 요청 보내기
+      registerUser({ email, password, name, part, generation });
     } catch (error) {
       setVerificationMessage('인증 중 오류가 발생했습니다.');
     }
@@ -52,7 +52,7 @@ const EmailVerify: React.FC = () => {
     setResendEnabled(false);
     setTime(180);
     try {
-      await sendMail(email); // Resend verification email
+      await sendMail(email);
     } catch (error) {
       setVerificationMessage('메일 재전송 중 오류가 발생했습니다.');
     }

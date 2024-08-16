@@ -89,8 +89,7 @@ const RegisterPage: React.FC = () => {
         const confirmPasswordValue = e.target.value;
         setConfirmPassword(confirmPasswordValue);
     
-        // 공백 제거 후 비교
-        const trimmedPassword = password.trim();
+        const trimmedPassword = password.trim(); //공백제거
         const trimmedConfirmPassword = confirmPasswordValue.trim();
     
         console.log('Password:', trimmedPassword);

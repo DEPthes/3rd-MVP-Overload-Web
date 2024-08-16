@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 import styles from "../style/LoginForm.module.css";
 import checkboxChecked from "../images/checkbox.png";
 import checkboxUnchecked from "../images/checkboxempty.png";
@@ -7,6 +8,7 @@ import deplogLogo from "../images/deplogLogo.png";
 import eyeimg from "../images/eyecon.png";
 import eyeimgslash from "../images/eyeconslash.png";
 import { constants } from "../constants";
+import { LogInReq } from "../api/LogInReq"; // 로그인 API 호출을 위한 함수
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -41,15 +43,42 @@ const LoginPage: React.FC = () => {
     setCapsLockOn(e.getModifierState("CapsLock"));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    !validateEmail(email) ? setEmailError(constants.invalidEmailError) : setEmailError("");
-    !validatePassword(password) ? setPasswordError(constants.passwordError) : setPasswordError("");
-    validateEmail(email) && validatePassword(password) && alert(constants.loginSuccessMessage);
-  };
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const toggleAutoLogin = () => {
+    setAutoLogin(!autoLogin);
+  };
+
+  const { mutate: logIn, isLoading } = useMutation(LogInReq, {
+    onSuccess: (data) => {
+      // JWT 토큰 처리
+      const token = data.accessToken;
+      if (token) {
+        if (autoLogin) {
+          localStorage.setItem("token", token); //자동로그인일때 계속 토큰보관(로컬스토리지)  ...토큰 어떻게 처리할지 질문
+        } else {
+          sessionStorage.setItem("token", token); //자동로그인 아니면 일시보관(세션처리)
+        }
+        alert(constants.loginSuccessMessage);
+        navigate("/"); 
+      }
+    },
+    onError: (error: any) => {
+      setPasswordError("아이디 또는 비밀번호가 잘못되었습니다.");
+      console.error("로그인 에러:", error);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateEmail(email) && validatePassword(password)) {
+      logIn({ email, password });
+    } else {
+      if (!validateEmail(email)) setEmailError(constants.invalidEmailError);
+      if (!validatePassword(password)) setPasswordError(constants.passwordError);
+    }
   };
 
   const handlePasswordReset = () => {
@@ -58,10 +87,6 @@ const LoginPage: React.FC = () => {
 
   const handleRegisterClick = () => {
     navigate("/register");
-  };
-
-  const toggleAutoLogin = () => {
-    setAutoLogin(!autoLogin);
   };
 
   return (
@@ -75,7 +100,14 @@ const LoginPage: React.FC = () => {
             <div className={styles.labelContainer}>
               <label htmlFor="email">{constants.emailLabel}</label>
             </div>
-            <input type="email" id="email" value={email} placeholder={constants.emailPlaceholder} onChange={handleEmailChange} className={emailError ? styles.error : ""} />
+            <input
+              type="email"
+              id="email"
+              value={email}
+              placeholder={constants.emailPlaceholder}
+              onChange={handleEmailChange}
+              className={emailError ? styles.error : ""}
+            />
             <div className={styles.errorMessageContainer}>
               <span className={styles.errorMessage}>{emailError}</span>
             </div>
@@ -85,7 +117,15 @@ const LoginPage: React.FC = () => {
               <label htmlFor="password">{constants.passwordLabel}</label>
             </div>
             <div className={styles.passwordContainer}>
-              <input type={passwordVisible ? "text" : "password"} id="password" value={password} placeholder={constants.passwordPlaceholder} onChange={handlePasswordChange} onKeyUp={handleCapsLock} className={passwordError ? styles.error : ""} />
+              <input
+                type={passwordVisible ? "text" : "password"}
+                id="password"
+                value={password}
+                placeholder={constants.passwordPlaceholder}
+                onChange={handlePasswordChange}
+                onKeyUp={handleCapsLock}
+                className={passwordError ? styles.error : ""}
+              />
               <span onClick={togglePasswordVisibility} className={styles.passwordToggleIcon}>
                 <img src={passwordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
               </span>
@@ -95,7 +135,12 @@ const LoginPage: React.FC = () => {
             </div>
           </div>
           <div className={`${styles.autoLoginContainer} ${capsLockOn ? styles.noPaddingBottom : ""}`}>
-            <img src={autoLogin ? checkboxChecked : checkboxUnchecked} alt="auto login checkbox" className={styles.checkbox} onClick={toggleAutoLogin} />
+            <img
+              src={autoLogin ? checkboxChecked : checkboxUnchecked}
+              alt="auto login checkbox"
+              className={styles.checkbox}
+              onClick={toggleAutoLogin}
+            />
             <span onClick={toggleAutoLogin} className={styles.autoLoginLabel}>{constants.autoLoginText}</span>
           </div>
           {capsLockOn && (
@@ -105,7 +150,7 @@ const LoginPage: React.FC = () => {
               </div>
             </div>
           )}
-          <button type="submit" className={styles.loginButton} disabled={!email || !password}>
+          <button type="submit" className={styles.loginButton} disabled={isLoading || !email || !password}>
             {constants.loginTitle}
           </button>
         </form>
