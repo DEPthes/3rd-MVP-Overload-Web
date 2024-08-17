@@ -62,7 +62,7 @@ const RegisterPage2: React.FC = () => {
         if (name && part && count && !nameError && !partError && !countError) {
             try {
                 await sendMail(email);
-                navigate('/emailVerify', { state: { email, password, name, part, generation: count } });
+                navigate('/registerEmailVerify', { state: { email, password, name, part, generation: count } });
             } catch (error) {
                 alert('메일 전송 중 오류가 발생했습니다.');
             }

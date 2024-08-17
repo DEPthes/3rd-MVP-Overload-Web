@@ -82,7 +82,7 @@ const LoginPage: React.FC = () => {
   };
 
   const handlePasswordReset = () => {
-    navigate("/passwordResetMail");
+    navigate("/passResetEmail");
   };
 
   const handleRegisterClick = () => {

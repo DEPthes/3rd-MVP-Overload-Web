@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from '../style/changingPassword.module.css';
 import deplogLogo from '../images/deplogLogo.png';
 import eyeimg from '../images/eyecon.png';
 import eyeimgslash from '../images/eyeconslash.png';
 import { constants } from '../constants';
+import { PassReset } from '../api/PassReset';       //이메일전송=>인증완료버튼(인증했는지 여부 판단안됨) 질문하기
 
 const ChangePasswordPage: React.FC = () => {
+    const location = useLocation();
+    const { email } = location.state as { email: string }; // 전달된 이메일 받기
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -30,25 +33,26 @@ const ChangePasswordPage: React.FC = () => {
         setConfirmPasswordError(password === e.target.value ? '' : constants.confirmPasswordError);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        !validatePassword(password) && setPasswordError(constants.passwordError);
-        password !== confirmPassword && setConfirmPasswordError(constants.confirmPasswordError);
-        validatePassword(password) && password === confirmPassword && navigate('/PasswordResetSuccess');
-        // api 연결하기
+        if (validatePassword(password) && password === confirmPassword) {
+            try {
+                await PassReset({ email, password }); // 전달받은 이메일과 함께 비밀번호 전송
+                navigate('/passResetSuccess');
+            } catch (error) {
+                console.error("Failed to reset password", error);
+                alert('비밀번호 변경에 실패했습니다.');
+            }
+        } else {
+            !validatePassword(password) && setPasswordError(constants.passwordError);
+            password !== confirmPassword && setConfirmPasswordError(constants.confirmPasswordError);
+        }
     };
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+    const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
+    const toggleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
 
-    const toggleConfirmPasswordVisibility = () => {
-        setConfirmPasswordVisible(!confirmPasswordVisible);
-    };
-
-    const handleCancel = () => {
-        navigate('/');
-    };
+    const handleCancel = () => navigate('/');
 
     return (
         <div className={styles.centeredContainer}>
