@@ -8,13 +8,15 @@ import cocomentdummy from "../assets/cocoment-dummydata.json";
 import "../style/comment.css";
 
 type comment = {
-    id: string;
+    id: number;
     profile: string;
     nickname: string;
     date: string;
     comment: string;
     myProfile:string;
     myName:string;
+    postId: number;
+
 };
 
 const Comment: React.FC<comment> = (props) => {
@@ -72,6 +74,8 @@ const Comment: React.FC<comment> = (props) => {
                      <MyComment
                          profile={props.myProfile}
                          name={props.myName}
+                         postId={props.postId}
+                         parentPostId={props.id}
                          />)}
                  </div>
              </div>)}

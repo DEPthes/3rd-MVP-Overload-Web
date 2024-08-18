@@ -17,13 +17,13 @@ const ViewDetailPost: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [post, setPost] = useState<any | null>(null);
     const [member, setMember] = useState<any | null>(null);
-    const [comments, setComments] = useState<any[]>([]);
+    const [comments, setComments] = useState<any[] | null>([]);
     const [isToken, setIsToken] = useState(false);
 
     useEffect(() => {
         const token = sessionStorage.getItem("accessToken");
         if(token){
-            setIsToken(!isToken);
+            setIsToken(true);
         }
         
         const numericPostId = Number(postId);
@@ -40,15 +40,15 @@ const ViewDetailPost: React.FC = () => {
                 console.error("Error fetching post data:", error);
             });
 
-        // api.get(`/members`)
-        //     .then((response)=>{
-        //         const member = response.data;
-        //         console.log(member);
-        //         setMember(member);
-        //     })
-        //     .catch((error)=>{
-        //         console.error("Error fetching post data:", error);
-        //     })
+        api.get(`/members`)
+            .then((response)=>{
+                const member = response.data;
+                console.log(member);
+                setMember(member);
+            })
+            .catch((error)=>{
+                console.error("Error fetching post data:", error);
+            })
 
         api.get(`/comments/posts/${numericPostId}`)
             .then((response3)=>{
@@ -59,6 +59,7 @@ const ViewDetailPost: React.FC = () => {
                 console.log("Error")
             }
         )
+
     }, [postId]);
 
     const handleSearch = (term: string) => {
@@ -90,31 +91,33 @@ const ViewDetailPost: React.FC = () => {
                 />
 
                 </div>
-                {/* {isToken && (
+                {isToken && (
                     <div className="detail-mycomment">
                         <MyComment
-                            profile={member.avatar || []? member.avatar || []:defaultProfile}
-                            name={member.memberName}
+                            profile={member?.avatar || defaultProfile}
+                            name={member?.memberName || ""}
+                            postId={post.id} // postId 전달
                         />
                     </div>
-                )} */}
-                {/* <div className="detail-comment">
+                )}
+                <div className="detail-comment">
                     <ul>
-                        {comments.map((c, index) => (
+                        {comments? comments.map((c, index) => (
                             <li key={index}>
                                 <Comment
-                                    id={comments.commentid}
-                                    profile={c.profile}
-                                    nickname={c.nickname}
-                                    date={c.date}
-                                    comment={c.comment}
-                                    myProfile={profile?.profile}
-                                    myName={profile?.name}
+                                    id={c.commentId}
+                                    profile={c.avatar ? c.avatar : defaultProfile}
+                                    nickname={c.nickname? c.nickname : c.name}
+                                    date={c.createDate}
+                                    comment={c.content}
+                                    myProfile={member?.avatar || defaultProfile}
+                                    myName={member?.memberName || ""}
+                                    postId={post.id}
                                 />
                             </li>
-                        ))}
+                        )) : undefined}
                     </ul>
-                </div> */}
+                </div>
             </div>
             
             {isSearchModalOpen && <SearchModal onClose={() => setIsSearchModalOpen(false)} onSearch={handleSearch}/>}
