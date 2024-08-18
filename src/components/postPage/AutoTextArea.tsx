@@ -1,7 +1,8 @@
 import React, { useRef, useCallback, useEffect } from "react";
 import "../../style/postPage/autoTextArea.css";
+import { InputAreaProps } from "../../types/post";
 
-const AutoTextArea: React.FC = () => {
+const AutoTextArea: React.FC<InputAreaProps> = ({ onChange }) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
 
   const TextareaAutoResize = useCallback(() => {
@@ -18,7 +19,10 @@ const AutoTextArea: React.FC = () => {
   return (
     <textarea
       ref={textRef}
-      onInput={TextareaAutoResize}
+      onInput={(e) => {
+        TextareaAutoResize();
+        if (onChange) onChange(e as React.ChangeEvent<HTMLTextAreaElement>);
+      }}
       placeholder="내용을 입력하세요"
       className="textBox"
     />

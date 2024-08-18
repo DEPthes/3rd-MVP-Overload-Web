@@ -1,13 +1,8 @@
 import { DUPLICATETAGCOMMENT } from "../../constants/postPage";
 import "../../style/postPage/tagInput.css";
+import { InputProps } from "../../types/post";
 
-interface TagInputProps {
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isDuplicate: boolean;
-}
-
-const TagInput = ({ value, onChange, isDuplicate }: TagInputProps) => {
+const TagInput = ({ value, onChange, isDuplicate }: InputProps) => {
   return (
     <div className="tagInputContainer">
       <input
