@@ -50,7 +50,7 @@ const RegisterPage2: React.FC = () => {
         const value = e.target.value;
         setCount(value);
         if (parseInt(value) > 3) {
-            setCountError('처음 DEPth에 가입한 기수를 입력해주세요.');
+            setCountError(constants.countError);
         } else {
             setCountError('');
         }
@@ -64,12 +64,12 @@ const RegisterPage2: React.FC = () => {
                 await sendMail(email);
                 navigate('/registerEmailVerify', { state: { email, password, name, part, generation: count } });
             } catch (error) {
-                alert('메일 전송 중 오류가 발생했습니다.');
+                alert(constants.sendMailError);
             }
         } else {
-            if (!name) setNameError('이름을 입력하세요.');
-            if (!part) setPartError('부서를 선택하세요.');
-            if (!count) setCountError('기수를 입력하세요.');
+            if (!name) setNameError(constants.noName);
+            if (!part) setPartError(constants.noPart);
+            if (!count) setCountError(constants.noCount);
         }
     };
 

@@ -41,7 +41,7 @@ const ResetEmailEnterPage: React.FC = () => {
                     <img src={deplogLogo} className={styles.logo} alt={constants.logoAltText} />
                 </div>
                 <div className={styles.titleContainer}>
-                    <label className={styles.title}>{constants.titleText}</label>
+                    <label className={styles.title}>{constants.sendMailButtonText}</label>
                 </div>
                 <div className={styles.subtitleContainer}>
                     <label className={styles.subtitle}>{email + constants.verifyEmailSubtitle} <br /> {constants.verifyEmailSubtitle2}</label>

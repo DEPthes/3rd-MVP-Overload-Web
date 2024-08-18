@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
       }
     },
     onError: (error: any) => {
-      setPasswordError("아이디 또는 비밀번호가 잘못되었습니다.");
+      setPasswordError(constants.IdOrPasswordError);
       console.error("로그인 에러:", error);
     },
   });
@@ -127,7 +127,7 @@ const LoginPage: React.FC = () => {
                 className={passwordError ? styles.error : ""}
               />
               <span onClick={togglePasswordVisibility} className={styles.passwordToggleIcon}>
-                <img src={passwordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
+                <img src={passwordVisible ? eyeimgslash : eyeimg} alt={constants.eyeAltText} />
               </span>
             </div>
             <div className={styles.errorMessageContainer}>
@@ -137,7 +137,7 @@ const LoginPage: React.FC = () => {
           <div className={`${styles.autoLoginContainer} ${capsLockOn ? styles.noPaddingBottom : ""}`}>
             <img
               src={autoLogin ? checkboxChecked : checkboxUnchecked}
-              alt="auto login checkbox"
+              alt={constants.autoLoginBoxAltText}
               className={styles.checkbox}
               onClick={toggleAutoLogin}
             />

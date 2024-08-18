@@ -7,13 +7,14 @@ import { sendMail, checkMail } from '../api/PassReset';
 
 const ResetEmailCheck: React.FC = () => {
   const location = useLocation();
-  const { email } = location.state as { email: string }; // 전달된 이메일 받기
+  const { email } = location.state as { email: string }; 
   const [verificationMessage, setVerificationMessage] = useState("");
   const [resendEnabled, setResendEnabled] = useState(true);
   const [time, setTime] = useState<number>(180);
   const navigate = useNavigate();
 
   useEffect(() => {
+    //JS 타이머 로직
     let interval: number | null = null;
     if (!resendEnabled) {
       interval = window.setInterval(() => {
@@ -33,14 +34,14 @@ const ResetEmailCheck: React.FC = () => {
     try {
       const response = await checkMail(email);
       if (response.verified) {
-        alert('이메일 인증 성공!');
-        navigate('/changingPassword', { state: { email } }); // 이메일을 state로 전달하여 비밀번호 변경 페이지로 이동
+        alert(constants.emailSuccessMessage);
+        navigate('/changingPassword', { state: { email } }); // 이메일을 state로 전달하고 비밀번호 변경 페이지로 이동
       } else {
         setVerificationMessage(constants.verifyCompleteMessage);
       }
     } catch (error) {
       console.error("Failed to verify email", error);
-      alert('이메일 인증에 실패했습니다. 다시 시도하세요.');
+      alert(constants.emailFailMessage);
     }
   };
   
@@ -66,7 +67,7 @@ const ResetEmailCheck: React.FC = () => {
           </label>
         </div>
         <div className={styles.buttonGroup}>
-          <button type="button" className={styles.verifyButton} onClick={handleVerify}>인증완료</button>
+          <button type="button" className={styles.verifyButton} onClick={handleVerify}>{constants.verifyCompleteButttonText}</button>
           <div className={styles.errorMessageContainer}><span className={styles.errorMessage}>{verificationMessage}</span></div>
           <button type="button" className={resendEnabled ? styles.resendButton : styles.resendButtonDisabled} onClick={handleResend} disabled={!resendEnabled}>
             {resendEnabled ? constants.resendEmailButtonText : formatTime(time)}

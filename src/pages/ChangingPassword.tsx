@@ -41,7 +41,7 @@ const ChangePasswordPage: React.FC = () => {
                 navigate('/passResetSuccess');
             } catch (error) {
                 console.error("Failed to reset password", error);
-                alert('비밀번호 변경에 실패했습니다.');
+                alert('비밀번호 변경에 실패했습니다.'); //alert 처리 어떻게 할지 질문
             }
         } else {
             !validatePassword(password) && setPasswordError(constants.passwordError);

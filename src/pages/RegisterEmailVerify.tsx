@@ -45,7 +45,7 @@ const RegisterEmailVerify: React.FC = () => {
     try {
       registerUser({ email, password, name, part, generation });
     } catch (error) {
-      alert('인증 중 오류가 발생했습니다.');
+      alert(constants.verifyErrorMessage);
     }
   };
 
@@ -55,7 +55,7 @@ const RegisterEmailVerify: React.FC = () => {
     try {
       await sendMail(email);
     } catch (error) {
-      alert('메일 재전송 중 오류가 발생했습니다.');
+      alert(constants.resendMailErrorMessage);
     }
   };
 
@@ -70,7 +70,7 @@ const RegisterEmailVerify: React.FC = () => {
           </label>
         </div>
         <div className={styles.buttonGroup}>
-          <button type="button" className={styles.verifyButton} onClick={handleVerify}>인증완료</button>
+          <button type="button" className={styles.verifyButton} onClick={handleVerify}>{constants.verifyCompleteButttonText}</button>
           <div className={styles.errorMessageContainer}><span className={styles.errorMessage}>{verificationMessage}</span></div>
           <button type="button" className={resendEnabled ? styles.resendButton : styles.resendButtonDisabled} onClick={handleResend} disabled={!resendEnabled}>
             {resendEnabled ? constants.resendEmailButtonText : formatTime(time)}

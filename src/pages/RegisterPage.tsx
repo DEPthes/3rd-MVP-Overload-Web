@@ -34,16 +34,16 @@ const RegisterPage: React.FC = () => {
         onSuccess: (isAvailable: any) => {
             console.log('isAvailable:', isAvailable);
             if (isAvailable) {
-                alert('사용 가능한 이메일입니다.');
+                alert(constants.emailAvailableMessage);
                 setIsEmailAvailable(true);
             } else {
-                setEmailError('사용 불가능한 이메일입니다.');
+                setEmailError(constants.emailNotAvailableMessage);
                 setIsEmailAvailable(false);
             }
             setIsEmailChecked(true);
         },
         onError: () => {
-            setEmailError('이메일 중복 확인 중 오류가 발생했습니다.');
+            setEmailError(constants.emailCheckErrorMessage);
             setIsEmailAvailable(false);
             setIsEmailChecked(false);
         }
@@ -74,7 +74,7 @@ const RegisterPage: React.FC = () => {
         setPassword(passwordValue);
     
         if (!validatePassword(passwordValue)) {
-            setPasswordError('영문, 숫자 포함 (8~20자)로 작성해주세요.');
+            setPasswordError(constants.passwordError);
         } else {
             setPasswordError('');
         }
@@ -92,13 +92,13 @@ const RegisterPage: React.FC = () => {
         const trimmedPassword = password.trim(); //공백제거
         const trimmedConfirmPassword = confirmPasswordValue.trim();
     
-        console.log('Password:', trimmedPassword);
+        console.log('Password:', trimmedPassword);      //디버깅용
         console.log('Confirm Password:', trimmedConfirmPassword);
     
         if (trimmedPassword === trimmedConfirmPassword) {
             setConfirmPasswordError('');
         } else {
-            setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
+            setConfirmPasswordError(constants.confirmPasswordError);
         }
     
         console.log('Confirm Password Change:', {
@@ -129,7 +129,7 @@ const RegisterPage: React.FC = () => {
             navigate('/register2', { state: { email, password } });
         } else {
             if (!isEmailChecked) {
-                setEmailError('이메일 중복 확인이 필요합니다.');
+                setEmailError(constants.emailCheckRequiredMessage);
             }
         }
     };
