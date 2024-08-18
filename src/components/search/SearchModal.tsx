@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../style/searchModal.module.css';
-import searchImg from '../images/search.png';
-import closeIcon from '../images/Vector.svg';
-import { constants } from "../constants";
+import styles from '../../style/search/searchModal.module.css';
+import searchImg from '../../images/search.png';
+import closeIcon from '../../images/Vector.svg';
+import { constants } from "../../constants/logIn";
 
 type SearchModalProps = {
     onClose: () => void;

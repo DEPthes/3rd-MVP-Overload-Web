@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import PostDetailView from "../components/PostDetailView";
 import MyComment from "../components/MyComment";
 import Comment from "../components/Comment";
-import SearchModal from '../components/SearchModal';
+import SearchModal from '../components/search/SearchModal';
 import "../style/viewDetailPost.css";
 import api from "../api";
 

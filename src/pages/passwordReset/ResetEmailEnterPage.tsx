@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { constants } from '../constants'; // 상수 불러오기
-import deplogLogo from "../images/deplogLogo.png";
-import styles from '../style/passwordResetPage.module.css'; // 기존 CSS 파일 유지
-import { sendMail } from '../api/PassReset';
+import { constants } from '../../constants/logIn'; 
+import deplogLogo from "../../images/deplogLogo.png";
+import styles from '../../style/passwordReset/passwordResetPage.module.css'; 
+import { sendMail } from '../../api/PassReset';
 
 const ResetEmailEnterPage: React.FC = () => {
     const [email, setEmail] = useState<string>('');

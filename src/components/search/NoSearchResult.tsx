@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from "../style/searchResultsPage.module.css";
-import { constants } from "../constants";
+import styles from "../../style/search/searchResultsPage.module.css";
+import { constants } from "../../constants/logIn";
 
 const NoSearchResults: React.FC = () => {
     return (

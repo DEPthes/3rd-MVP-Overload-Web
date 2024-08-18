@@ -5,25 +5,25 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // 페이지 컴포넌트들을 lazy 로딩
 const MainPage = lazy(() => import("./pages/MainPage.tsx"));
 const ViewDetailPost = lazy(() => import("./pages/ViewDetailPostPage.tsx"));
-const RegisterPage = lazy(() => import("./pages/RegisterPage.tsx"));
-const RegisterPage2 = lazy(() => import("./pages/RegisterPage2.tsx"));
+const RegisterPage = lazy(() => import("./pages/register/RegisterPage.tsx"));
+const RegisterPage2 = lazy(() => import("./pages/register/RegisterPage2.tsx"));
 const RegisterEmailVerify = lazy(
-  () => import("./pages/RegisterEmailVerify.tsx")
+  () => import("./pages/register/RegisterEmailVerify.tsx")
 );
-const ChangingPassword = lazy(() => import("./pages/ChangingPassword.tsx"));
+const ChangingPassword = lazy(() => import("./pages/passwordReset/ChangingPassword.tsx"));
 const PasswordResetMailEnter = lazy(
-  () => import("./pages/ResetEmailEnterPage.tsx")
+  () => import("./pages/passwordReset/ResetEmailEnterPage.tsx")
 );
 const PasswordResetMailCheck = lazy(
-  () => import("./pages/ResetEmailCheck.tsx")
+  () => import("./pages/passwordReset/ResetEmailCheck.tsx")
 );
-const LogInPage = lazy(() => import("./pages/LoginPage.tsx"));
-const ResetSuccess = lazy(() => import("./pages/ResetSuccess.tsx"));
-const EmailSuccess = lazy(() => import("./pages/EmailSuccess.tsx"));
-const SearchResults = lazy(() => import("./pages/SearchResult.tsx"));
+const LogInPage = lazy(() => import("./pages/logIn/LoginPage.tsx"));
+const ResetSuccess = lazy(() => import("./pages/passwordReset/ResetSuccess.tsx"));
+const EmailSuccess = lazy(() => import("./pages/register/EmailSuccess.tsx"));
+const SearchResults = lazy(() => import("./pages/search/SearchResult.tsx"));
 const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
 const AvatarPage = lazy(() => import("./pages/avatar/AvatarPage.tsx"));
-const MyPage = lazy(() => import("./pages/mypage/MyPage.tsx"));
+const MyPage = lazy(() => import("./pages/myPage/MyPage.tsx"));
 
 const queryClient = new QueryClient();
 

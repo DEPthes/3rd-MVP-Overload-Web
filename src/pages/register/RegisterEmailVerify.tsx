@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import styles from "../style/emailVerify.module.css";
-import deplogLogo from "../images/deplogLogo.png";
-import { constants } from "../constants";
-import { sendMail, checkMail } from '../api/PassReset';
+import { useNavigate, useLocation } from "react-router-dom";
+import { useMutation } from "react-query";
+import styles from "../../style/email/emailVerify.module.css";
+import deplogLogo from "../../images/deplogLogo.png";
+import { constants } from "../../constants/logIn";
+import { RegisterReq } from '../../api/RegisterReq';
+import { sendMail } from '../../api/RegisterReq';
 
-const ResetEmailCheck: React.FC = () => {
-  const location = useLocation();
-  const { email } = location.state as { email: string }; 
+const RegisterEmailVerify: React.FC = () => {
   const [verificationMessage, setVerificationMessage] = useState("");
   const [resendEnabled, setResendEnabled] = useState(true);
   const [time, setTime] = useState<number>(180);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { email, password, name, part, generation } = location.state as { email: string; password: string; name: string; part: string; generation: number }; // Get all necessary data from state
+
+  const { mutate: registerUser } = useMutation(RegisterReq, {
+    onSuccess: () => {
+      navigate('/emailSuccess'); 
+    },
+    onError: (error: any) => {
+      setVerificationMessage(constants.verifyCompleteMessage);
+      //setVerificationMessage('회원가입 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message)); 
+    }
+  });
 
   useEffect(() => {
-    //JS 타이머 로직
     let interval: number | null = null;
     if (!resendEnabled) {
       interval = window.setInterval(() => {
@@ -32,27 +43,19 @@ const ResetEmailCheck: React.FC = () => {
 
   const handleVerify = async () => {
     try {
-      const response = await checkMail(email);
-      if (response.data.verified) {
-        alert(constants.emailSuccessMessage);
-        navigate('/changingPassword', { state: { email } }); // 이메일을 state로 전달하고 비밀번호 변경 페이지로 이동
-      } else {
-        setVerificationMessage(constants.verifyCompleteMessage);
-      }
+      registerUser({ email, password, name, part, generation });
     } catch (error) {
-      console.error("Failed to verify email", error);
-      alert(constants.emailFailMessage);
+      alert(constants.verifyErrorMessage);
     }
   };
-  
 
   const handleResend = async () => {
     setResendEnabled(false);
     setTime(180);
     try {
-      await sendMail(email); // 전달받은 이메일로 재전송
+      await sendMail(email);
     } catch (error) {
-      console.error("Failed to resend email", error);
+      alert(constants.resendMailErrorMessage);
     }
   };
 
@@ -78,4 +81,4 @@ const ResetEmailCheck: React.FC = () => {
   );
 };
 
-export default ResetEmailCheck;
+export default RegisterEmailVerify;

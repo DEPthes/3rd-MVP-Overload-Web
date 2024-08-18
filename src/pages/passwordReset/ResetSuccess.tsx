@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../style/resetSuccess.module.css';
-import jwamulswaeIcon from '../images/jwamulswaeIcon.png';
-import { constants } from '../constants';
+import styles from '../../style/passwordReset/resetSuccess.module.css';
+import jwamulswaeIcon from '../../images/jwamulswaeIcon.png';
+import { constants } from '../../constants/logIn';
 
 const ResetSuccess: React.FC = () => {
     const navigate = useNavigate();
