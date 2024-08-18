@@ -23,7 +23,7 @@ const EmailSuccess = lazy(() => import("./pages/EmailSuccess.tsx"));
 const SearchResults = lazy(() => import("./pages/SearchResult.tsx"));
 const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
 const AvatarPage = lazy(() => import("./pages/avatar/AvatarPage.tsx"));
-const MyPage = lazy(() => import("./pages/mypage/MyPage.tsx"));
+const MyPage = lazy(() => import("./pages/myPage/MyPage.tsx"));
 
 const queryClient = new QueryClient();
 

@@ -7,7 +7,7 @@ import view from "../images/View.png";
 import bookmark from "../images/bookmark.png";
 import checkBookmark from "../images/checkBookmark.png";
 import checkHeart from "../images/checkHeart.png";
-
+import defaultProfile from "../images/defaultProfile.png";
 
 import "../style/postPreview.css";
 
@@ -21,23 +21,20 @@ type PostPreviewProps = {
     like: number;
     scrap: number;
     picture?: string;
-    // profile: string;
+    profile: string;
+    handleHeartClick?: ()=>boolean
+    selectedHeart?: boolean;
+    handleScrapClick?: ()=>boolean
+    selectedScrap?: boolean;
 };
 
 // 게시글 간단하게 보는 Component
 
 const PostPreview: React.FC<PostPreviewProps> = (props) => {
-    const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
-    const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
+    
     const navigate = useNavigate();
 
-    const handleHeartClick = () => {
-        setSelectedHeart(!selectedHeart);
-    };
-
-    const handleScrapClick = () => {
-        setSelectedScrap(!selectedScrap);
-    };
+    
 
     const handleTitleClick = () => {
         navigate(`/viewDetailPost/${props.id}`);
@@ -53,8 +50,7 @@ const PostPreview: React.FC<PostPreviewProps> = (props) => {
 
                 <div className="preview-middle">
                     <div>{props.date}</div>
-                    {/* 수정 필요 */}
-                    {/*<img src={props.profile} /> */}
+                    <img src={props.profile? props.profile:defaultProfile} />
                     <div>{props.writer}</div>
                 </div>
 
@@ -64,14 +60,14 @@ const PostPreview: React.FC<PostPreviewProps> = (props) => {
                         {props.view}
                     </div>
                     <div>
-                        <button onClick={handleHeartClick}>
-                            <img src={selectedHeart ? checkHeart : heart} alt="Likes" />
+                        <button onClick={props.handleHeartClick}>
+                            <img src={props.selectedHeart ? checkHeart : heart} />
                         </button>
                         {props.like}
                     </div>
                     <div>
-                        <button onClick={handleScrapClick}>
-                            <img src={selectedScrap ? checkBookmark : bookmark} alt="Scraps" />
+                        <button onClick={props.handleScrapClick}>
+                            <img src={props.selectedScrap ? checkBookmark : bookmark} />
                         </button>
                         {props.scrap}
                     </div>

@@ -2,6 +2,7 @@
 import "../style/mycomment.css"
 import noncheck from "../images/squareCheckboxEmpty.png";
 import check from "../images/squareCheckbox.png";
+import defaultProfile from "../images/defaultProfile.png";
 import { useState } from "react";
 
 type myComment = {
@@ -35,7 +36,7 @@ const MyComment:React.FC<myComment> = (props) => {
             <div className="mycomment-writerinfo">
                 {props.profile && (
                     <div className="mycomment-profile">
-                        <img src={props.profile}/>
+                        <img src={props.profile?props.profile:defaultProfile}/>
                     </div>
                 )}
                 <div className="mycomment-writerinfo-nickname">

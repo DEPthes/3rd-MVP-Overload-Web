@@ -5,6 +5,7 @@ import PostDetailView from "../components/PostDetailView";
 import MyComment from "../components/MyComment";
 import Comment from "../components/Comment";
 import SearchModal from '../components/SearchModal';
+import defaultProfile from "../images/defaultProfile.png";
 import "../style/viewDetailPost.css";
 import api from "../api";
 
@@ -15,12 +16,15 @@ const ViewDetailPost: React.FC = () => {
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [post, setPost] = useState<any | null>(null);
-    const [profile, setProfile] = useState<any | null>(null);
+    const [member, setMember] = useState<any | null>(null);
     const [comments, setComments] = useState<any[]>([]);
+    const [isToken, setIsToken] = useState(false);
 
     useEffect(() => {
-        // sessionStorage.setItem("accessToken",'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsInJvbGUiOiJzaTE0NDQ0QG5hdmVyLmNvbSIsImlkIjoic2kxNDQ0NEBuYXZlci5jb20iLCJleHAiOjE3MjM5MTc1MjMsImVtYWlsIjoic2kxNDQ0NEBuYXZlci5jb20ifQ.EXrQj2WHKf5veTt2Jioowx2RC70XJI1sJa027ArwmdWNLlt1lSl0BOGPYZgQW1ibG9LIlxljKlTnfTHXwGOljA')
-        // sessionStorage.getItem("accessToken", token);
+        const token = sessionStorage.getItem("accessToken");
+        if(token){
+            setIsToken(!isToken);
+        }
         
         const numericPostId = Number(postId);
         // 상세 게시글 데이터 가져오기
@@ -28,15 +32,33 @@ const ViewDetailPost: React.FC = () => {
             .then((response) => {
                 const data = response.data.data;
                 console.log(data);
-                setPost(data.post || {});
-                setProfile(data.profile || {});
-                setComments(data.comments || []);
+                setPost(data);
             })
             .catch((error) => {
                 console.log(typeof(numericPostId))
                 console.log(sessionStorage.getItem("token"));
                 console.error("Error fetching post data:", error);
             });
+
+        // api.get(`/members`)
+        //     .then((response)=>{
+        //         const member = response.data;
+        //         console.log(member);
+        //         setMember(member);
+        //     })
+        //     .catch((error)=>{
+        //         console.error("Error fetching post data:", error);
+        //     })
+
+        api.get(`/comments/posts/${numericPostId}`)
+            .then((response3)=>{
+                const comment = response3.data.data;
+                console.log(comment);
+                setComments(comment);
+            }).catch((error)=>{
+                console.log("Error")
+            }
+        )
     }, [postId]);
 
     const handleSearch = (term: string) => {
@@ -54,36 +76,34 @@ const ViewDetailPost: React.FC = () => {
 
             <div className="total">
                 <div className="detail-post">
-                    <PostDetailView
-                        title={post.title}
-                        content={post.content}
-                        date={post.createDate}
-                        writer={post.name}
-                        part={post.part}
-                        profile={post.writerInfo.avatar}
+                <PostDetailView
+                    title={post.title}
+                    content={post.content}
+                    date={post.createdDate} 
+                    writer={post.writerInfo.name}
+                    part={post.writerInfo.part} 
+                    profile={post.writerInfo.avatar?.avatarFace ? post.writerInfo.avatar.avatarFace : undefined}
+                    view={post.viewCount}
+                    like={post.likeCount}
+                    scrap={post.scrapCount}
+                    tag={post.tagNameList || []}
+                />
 
-                        view={post.viewCount}
-                        like={post.likeCount}
-                        scrap={post.scrapCount}
-                        tag={post.tagNameList || []}
-                        // 수정필요
-                        picture={post.writerInfo.avatar}
-                    />
                 </div>
-                {profile && (
+                {/* {isToken && (
                     <div className="detail-mycomment">
                         <MyComment
-                            profile={profile.profile}
-                            name={profile.name}
+                            profile={member.avatar || []? member.avatar || []:defaultProfile}
+                            name={member.memberName}
                         />
                     </div>
-                )}
-                <div className="detail-comment">
+                )} */}
+                {/* <div className="detail-comment">
                     <ul>
                         {comments.map((c, index) => (
                             <li key={index}>
                                 <Comment
-                                    id={c.commentid}
+                                    id={comments.commentid}
                                     profile={c.profile}
                                     nickname={c.nickname}
                                     date={c.date}
@@ -94,7 +114,7 @@ const ViewDetailPost: React.FC = () => {
                             </li>
                         ))}
                     </ul>
-                </div>
+                </div> */}
             </div>
             
             {isSearchModalOpen && <SearchModal onClose={() => setIsSearchModalOpen(false)} onSearch={handleSearch}/>}
