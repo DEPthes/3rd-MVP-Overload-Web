@@ -14,7 +14,15 @@ const PostPage = () => {
   const [tags, setTags] = useState<string[]>([""]);
   const navigate = useNavigate();
 
-  const { mutate: submitPost, isError, isSuccess, error } = usePost();
+  const handleSuccess = () => {
+    navigate(`/`);
+  };
+
+  const handleError = (error: unknown) => {
+    alert((error as any)?.message || "게시물 작성 중 오류가 발생했습니다.");
+  };
+
+  const { mutate: submitPost } = usePost(handleSuccess, handleError);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -39,16 +47,8 @@ const PostPage = () => {
     setTags([...tags, ""]);
   };
 
-  const handleSubmitPost = async () => {
-    try {
-      await submitPost({ title, content: text, tagNameList: tags });
-      // Wait for the submission to complete and then navigate
-      if (isSuccess) {
-        navigate(`/`);
-      }
-    } catch (err) {
-      alert(error?.message || "An error occurred while posting.");
-    }
+  const handleSubmitPost = () => {
+    submitPost({ title, content: text, tagNameList: tags });
   };
 
   return (
