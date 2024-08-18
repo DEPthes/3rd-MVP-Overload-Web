@@ -33,7 +33,7 @@ const ResetEmailCheck: React.FC = () => {
   const handleVerify = async () => {
     try {
       const response = await checkMail(email);
-      if (response.verified) {
+      if (response.data.verified) {
         alert(constants.emailSuccessMessage);
         navigate('/changingPassword', { state: { email } }); // 이메일을 state로 전달하고 비밀번호 변경 페이지로 이동
       } else {

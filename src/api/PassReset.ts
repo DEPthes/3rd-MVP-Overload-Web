@@ -15,10 +15,10 @@ export const sendMail = async (email: string): Promise<void> => {
   };
 
 //메일인증 확인
-export const checkMail = async (email: string): Promise<{ verified: boolean }> => {
-    const response = await api.get(`/mails/verified?email=${email}`);
-    return response.data;
-  };
+export const checkMail = async (email: string): Promise<{ success: boolean, data: { verified: boolean } }> => {
+  const response = await api.get(`/mails/verified?email=${email}`);
+  return response.data;
+};
   
 
   
