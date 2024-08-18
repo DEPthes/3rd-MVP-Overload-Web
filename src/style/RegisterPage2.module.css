@@ -233,7 +233,7 @@ input {
 }
 
 .nextButton:disabled {
-    background-color: #ccc;
+    background-color: #858585;
     cursor: not-allowed;
 }
 
@@ -242,4 +242,21 @@ input {
     size: 16px;
     line-height: 25.6px;
     font-family: 'Noto Sans KR', sans-serif;
+}
+
+.errorMessageContainer {
+    height: 27px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #e9ecef;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 19.2px;
+    font-weight: 400;
 }

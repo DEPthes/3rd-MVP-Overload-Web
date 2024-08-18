@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://www.deplog.kro.kr:8080",
+  baseURL: "https://www.deplog.kro.kr",
   // withCredentials: true,
   timeout: 2000,
 });
