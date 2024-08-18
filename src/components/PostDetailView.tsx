@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import heart from "../images/heart.png";
 import view from "../images/View.png";
@@ -28,6 +29,7 @@ type post = {
 // 상세 게시글 페이지에서 본문 부분 Component
 
 const PostDetailView: React.FC<post> = (props) => {
+    const navigate = useNavigate();
 
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScarp, setSelectedScarp] = useState<boolean>(false);
@@ -45,12 +47,14 @@ const PostDetailView: React.FC<post> = (props) => {
         setSelectedScarp(!selectedScarp);
     };
 
+    const handleTagClick = (tag: string) => {
+        navigate('/searchResults', { state: { searchTerm: tag, isTagSearch: true } });
+    };
+
     return (
         <div className="detail-total">
             <div className="detail-title">
                 {props.title}
-                {/* 메뉴 선텍인데 만약 자신의 글이라면 보이고 아니면 안보이게 */}
-                {/* {isOwner && ()} */}
                 <div className='detail-menu-container'>
                     <button className="detail-menu" onClick={handleMenuClick}><img src={menu}/></button>
                     {selecteMenu && (
@@ -65,7 +69,6 @@ const PostDetailView: React.FC<post> = (props) => {
             <hr/>
             <div className="detail-info">
                 <div>{props.date}</div>
-                {/* 수정 필요 */}
                 <img src={ props.profile }/>
                 <div>{props.writer}</div>
             </div>
@@ -78,7 +81,7 @@ const PostDetailView: React.FC<post> = (props) => {
 
             <div className="detail-tags">
                 {props.tag.map((t, index) => (
-                    <button key={index}>#{t}</button>
+                    <button key={index} onClick={() => handleTagClick(t)}>#{t}</button>
                 ))}
             </div>
             <div className="interaction">
@@ -88,7 +91,7 @@ const PostDetailView: React.FC<post> = (props) => {
                 </div>
                 <div>
                     <button onClick={handleHeartClick}>
-                        <img src={selectedHeart ?  checkHeart:  heart} alt="Likes"/>
+                        <img src={selectedHeart ? checkHeart : heart} alt="Likes"/>
                     </button>
                     {props.like}
                 </div>
@@ -100,7 +103,6 @@ const PostDetailView: React.FC<post> = (props) => {
                 </div>
             </div>
             <div className='detail-bottom'>
-                {/* 수정필요 */}
                 <img src={props.profile}/>
                 <div>
                     <p className='detail-profile-name'>{props.writer}</p>
@@ -108,7 +110,6 @@ const PostDetailView: React.FC<post> = (props) => {
                 </div>
             </div>
             <hr/>
-
         </div>
     );
 };

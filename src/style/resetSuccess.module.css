@@ -21,7 +21,8 @@ html, body {
 }
 
 .completeForm {
-    width: 400px;
+    width: 508px;
+    height: 425px;
     padding: 35px 23px;
     background-color: #e9ecef;
     border-radius: 8px;
