@@ -27,13 +27,14 @@ const SearchResults: React.FC = () => {
                     response = await SearchPosts(searchTerm, selectedPage, postsPerPage);
                 }
 
-                if (response && response.pageInfo && response.datalist && response.datalist.length > 0) {
-                    setResults(response.datalist);
-                    setTotalPosts(response.pageInfo.totalPage * postsPerPage);
+                if (response.data && response.data.pageInfo && response.data.dataList && response.data.dataList.length > 0) {
+                    setResults(response.data.dataList);
+                    setTotalPosts(response.data.pageInfo.totalPage * postsPerPage);
                 } else {
                     setResults([]);
                     setTotalPosts(0);
                 }
+
             } catch (error) {
                 console.error("검색 결과를 가져오는 데 실패했습니다.", error);
                 setResults([]);
