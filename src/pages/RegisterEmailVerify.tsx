@@ -20,7 +20,8 @@ const RegisterEmailVerify: React.FC = () => {
       navigate('/emailSuccess'); 
     },
     onError: (error: any) => {
-      setVerificationMessage('회원가입 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message));
+      setVerificationMessage(constants.verifyCompleteMessage);
+      //setVerificationMessage('회원가입 중 오류가 발생했습니다: ' + (error.response?.data?.message || error.message)); 
     }
   });
 
@@ -44,7 +45,7 @@ const RegisterEmailVerify: React.FC = () => {
     try {
       registerUser({ email, password, name, part, generation });
     } catch (error) {
-      setVerificationMessage('인증 중 오류가 발생했습니다.');
+      alert('인증 중 오류가 발생했습니다.');
     }
   };
 
@@ -54,7 +55,7 @@ const RegisterEmailVerify: React.FC = () => {
     try {
       await sendMail(email);
     } catch (error) {
-      setVerificationMessage('메일 재전송 중 오류가 발생했습니다.');
+      alert('메일 재전송 중 오류가 발생했습니다.');
     }
   };
 

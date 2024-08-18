@@ -13,4 +13,12 @@ export const PassReset = async ({ email, password }: { email: string; password: 
 export const sendMail = async (email: string): Promise<void> => {
     await api.get(`/mails?email=${email}`);
   };
+
+//메일인증 확인
+export const checkMail = async (email: string): Promise<{ verified: boolean }> => {
+    const response = await api.get(`/mails/verified?email=${email}`);
+    return response.data;
+  };
+  
+
   

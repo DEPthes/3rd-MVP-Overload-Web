@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../style/emailVerify.module.css";
 import deplogLogo from "../images/deplogLogo.png";
 import { constants } from "../constants";
-import { sendMail } from '../api/PassReset';
+import { sendMail, checkMail } from '../api/PassReset';
 
 const ResetEmailCheck: React.FC = () => {
   const location = useLocation();
@@ -29,10 +29,21 @@ const ResetEmailCheck: React.FC = () => {
     return `${minutes}:${secs}`;
   };
 
-  const handleVerify = () => {
-    setVerificationMessage(constants.verifyCompleteMessage);
-    navigate('/changingPassword', { state: { email } }); // 이메일을 state로 전달하여 비밀번호 변경 페이지로 이동
+  const handleVerify = async () => {
+    try {
+      const response = await checkMail(email);
+      if (response.verified) {
+        alert('이메일 인증 성공!');
+        navigate('/changingPassword', { state: { email } }); // 이메일을 state로 전달하여 비밀번호 변경 페이지로 이동
+      } else {
+        setVerificationMessage(constants.verifyCompleteMessage);
+      }
+    } catch (error) {
+      console.error("Failed to verify email", error);
+      alert('이메일 인증에 실패했습니다. 다시 시도하세요.');
+    }
   };
+  
 
   const handleResend = async () => {
     setResendEnabled(false);
