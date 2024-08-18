@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import Footer from '../components/Footer';
 import PostPreview from "../components/PostPreview";
 import SearchModal from '../components/SearchModal';
-import { SearchPosts } from '../api/Search';
+import { SearchPosts, TagSearchPosts } from '../api/Search';
 import NoSearchResult from '../components/NoSearchResult'; // 새로 만든 컴포넌트 가져오기
 import styles from "../style/searchResultsPage.module.css";
 
@@ -20,8 +20,13 @@ const SearchResults: React.FC = () => {
     useEffect(() => {
         const fetchResults = async () => {
             try {
-                const response = await SearchPosts(searchTerm, selectedPage, postsPerPage);
-                
+                let response;
+                if (location.state?.isTagSearch) {
+                    response = await TagSearchPosts(searchTerm, selectedPage, postsPerPage);
+                } else {
+                    response = await SearchPosts(searchTerm, selectedPage, postsPerPage);
+                }
+
                 if (response && response.pageInfo && response.datalist && response.datalist.length > 0) {
                     setResults(response.datalist);
                     setTotalPosts(response.pageInfo.totalPage * postsPerPage);
@@ -39,7 +44,7 @@ const SearchResults: React.FC = () => {
         if (searchTerm) {
             fetchResults();
         }
-    }, [searchTerm, selectedPage]);
+    }, [searchTerm, selectedPage, location.state?.isTagSearch]);
 
     const handleSearch = (term: string) => {
         setSearchTerm(term);
