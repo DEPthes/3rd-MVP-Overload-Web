@@ -16,14 +16,14 @@ function App() {
   const SearchResults = lazy(() => import("./pages/SearchResult.tsx"));
   const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
   const AvatarPage = lazy(() => import("./pages/avatar/AvatarPage.tsx"));
-  const MyPage = lazy(() => import("./pages/mypage/MyPage.tsx"));
+  const MyPage = lazy(() => import("./pages/myPage/MyPage.tsx"));
 
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" Component={MainPage} />
-          <Route path="/viewDetailPost/:id" Component={ViewDetailPost} />
+          <Route path="/viewDetailPost/:postId" Component={ViewDetailPost} />
           <Route path="/register" Component={RegisterPage} />
           <Route path="/register2" Component={RegisterPage2} />
           <Route path="/registerEmailVerify" Component={RegisterEmailVerify} />
