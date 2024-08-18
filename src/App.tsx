@@ -6,9 +6,10 @@ function App() {
   const ViewDetailPost = lazy(() => import("./pages/ViewDetailPostPage.tsx"));
   const RegisterPage = lazy(() => import("./pages/RegisterPage.tsx"));
   const RegisterPage2 = lazy(() => import("./pages/RegisterPage2.tsx"));
-  const EmailVerify = lazy(() => import("./pages/EmailVerify.tsx"));
+  const RegisterEmailVerify = lazy(() => import("./pages/RegisterEmailVerify.tsx"));
   const ChangingPassword = lazy(() => import("./pages/ChangingPassword.tsx"));
-  const PasswordResetPage = lazy(() => import("./pages/PasswordResetPage.tsx"));
+  const PasswordResetMailEnter = lazy(() => import("./pages/ResetEmailEnterPage.tsx"));
+  const PasswordResetMailCheck = lazy(() => import("./pages/ResetEmailCheck.tsx"));
   const LogInPage = lazy(() => import("./pages/LoginPage.tsx"));
   const ResetSuccess = lazy(() => import("./pages/ResetSuccess.tsx"));
   const EmailSuccess = lazy(() => import("./pages/EmailSuccess.tsx"));
@@ -25,13 +26,14 @@ function App() {
           <Route path="/viewDetailPost/:postId" Component={ViewDetailPost} />
           <Route path="/register" Component={RegisterPage} />
           <Route path="/register2" Component={RegisterPage2} />
-          <Route path="/emailVerify" Component={EmailVerify} />
+          <Route path="/registerEmailVerify" Component={RegisterEmailVerify} />
           <Route path="/changingPassword" Component={ChangingPassword} />
-          <Route path="/passwordResetMail" Component={PasswordResetPage} />
+          <Route path="/passResetEmail" Component={PasswordResetMailEnter} />
+          <Route path="/passResetEmailCheck" Component={PasswordResetMailCheck} />
           <Route path="/logIn" Component={LogInPage} />
-          <Route path="/passwordResetSuccess" Component={ResetSuccess} />
+          <Route path="/passResetSuccess" Component={ResetSuccess} />
           <Route path="/emailSuccess" Component={EmailSuccess} />
-          <Route path="searchResults" Component={SearchResults} />
+          <Route path="/searchResults" Component={SearchResults} />
           <Route path="/post" Component={PostPage} />
           <Route path="/avatar" Component={AvatarPage} />
           <Route path="/myPage" Component={MyPage} />
