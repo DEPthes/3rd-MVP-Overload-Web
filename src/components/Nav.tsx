@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/Nav.css";
 import defaultProfile from "../images/defaultProfile.png";
 import logo from "../images/deplogLogo.png";
@@ -9,10 +9,27 @@ import devider from "../images/Devider.png";
 import { Link, useNavigate } from "react-router-dom";
 
 const Nav: React.FC<{ profile?: string, onSearchClick: () => void }> = (props) => {
+  const [istoken, setIsToken] = useState(false);
+
+  useEffect(()=>{
+    const token = sessionStorage.getItem("accessToken");
+    if(token!=null){
+      setIsToken(true);
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
       navigate(`/logIn`);
+  }
+
+  const handleMyPageClick = () => {
+    navigate(`/MyPage`);
+  }
+
+  const handleWriteClick = () => {
+    navigate(`post`);
   }
 
   return (
@@ -32,13 +49,22 @@ const Nav: React.FC<{ profile?: string, onSearchClick: () => void }> = (props) =
           <img className="nav-icon instagram-icon" src={insta} />
         </a>
         <img className="nav-icon" src={devider} />
-        <a href="#">
-          <img className="nav-icon write-button" src={writeBtn} />
-        </a>
-
-          {props.profile ? 
-          <img className="profile-icon" src={props.profile}/> : <img className="profile-icon" src={defaultProfile} onClick={handleProfileClick}
-          />}
+        { istoken ? (
+        <img className="nav-icon write-button" src={writeBtn} alt="Write Button" onClick={handleWriteClick}/>
+        )   : null }
+          {istoken ? (
+              <img
+                  className="profile-icon"
+                  src={props.profile? props.profile : defaultProfile}
+                  onClick={handleMyPageClick}
+              />
+          ) : (
+              <img
+                  className="profile-icon"
+                  src={defaultProfile}
+                  onClick={handleProfileClick}
+              />
+          )}
       </div>
     </nav>
   );

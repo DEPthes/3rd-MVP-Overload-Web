@@ -13,7 +13,7 @@ import api from '../api';
 // MainPage
 
 const MainPage: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+    const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [posts, setPosts] = useState<any[]>([]);

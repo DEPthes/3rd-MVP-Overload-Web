@@ -19,9 +19,12 @@ const ViewDetailPost: React.FC = () => {
     const [comments, setComments] = useState<any[]>([]);
 
     useEffect(() => {
-
+        // sessionStorage.setItem("accessToken",'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsInJvbGUiOiJzaTE0NDQ0QG5hdmVyLmNvbSIsImlkIjoic2kxNDQ0NEBuYXZlci5jb20iLCJleHAiOjE3MjM5MTc1MjMsImVtYWlsIjoic2kxNDQ0NEBuYXZlci5jb20ifQ.EXrQj2WHKf5veTt2Jioowx2RC70XJI1sJa027ArwmdWNLlt1lSl0BOGPYZgQW1ibG9LIlxljKlTnfTHXwGOljA')
+        // sessionStorage.getItem("accessToken", token);
+        
+        const numericPostId = Number(postId);
         // 상세 게시글 데이터 가져오기
-        api.get(`/posts/details/${postId}`)
+        api.get(`/posts/details/${numericPostId}`)
             .then((response) => {
                 const data = response.data.data;
                 console.log(data);
@@ -30,7 +33,8 @@ const ViewDetailPost: React.FC = () => {
                 setComments(data.comments || []);
             })
             .catch((error) => {
-                console.log(postId)
+                console.log(typeof(numericPostId))
+                console.log(sessionStorage.getItem("token"));
                 console.error("Error fetching post data:", error);
             });
     }, [postId]);
