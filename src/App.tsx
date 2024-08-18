@@ -22,7 +22,7 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" Component={MainPage} />
-          <Route path="/viewDetailPost/:id" Component={ViewDetailPost} />
+          <Route path="/viewDetailPost/:postId" Component={ViewDetailPost} />
           <Route path="/register" Component={RegisterPage} />
           <Route path="/register2" Component={RegisterPage2} />
           <Route path="/emailVerify" Component={EmailVerify} />
