@@ -8,7 +8,8 @@ const EmailSuccess: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLoginRedirect = () => {
-        navigate('/login');
+        navigate('/login'); //홈으로 갈지 로그인으로 갈지?
+        //navigate('/');
     };
 
     return (
