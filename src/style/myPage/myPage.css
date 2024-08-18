@@ -62,6 +62,7 @@
   border-radius: 2px;
   background: var(--Contents-Primary, #050c20);
   color: var(--Typo-Tertiary, #fff);
+  cursor: pointer;
 
   /* Heading/Medium */
   font-family: "Noto Sans KR";
@@ -145,6 +146,7 @@
   border-radius: 2px;
   background: #adadad;
   border: none;
+  cursor: pointer;
 
   color: var(--Typo-Tertiary, #fff);
   font-family: "Noto Sans KR";
