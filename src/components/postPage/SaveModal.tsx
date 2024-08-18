@@ -1,19 +1,21 @@
 import SavePost from "./SavePost";
 import "../../style/postPage/saveModal.css";
+import { useGetTemps } from "../../hooks/post/useGetTemps";
 
 const SaveModal = ({ onClick }: { onClick: () => void }) => {
-  const dummyDate = [
-    { id: "1", title: "게시글 제목", date: "20243.08.07" },
-    { id: "2", title: "게시글 제목", date: "20243.08.07" },
-    { id: "3", title: "게시글 제목", date: "20243.08.07" },
-  ];
+  const { data } = useGetTemps();
 
   return (
     <div className="saveModalContainer">
       <span className="header">임시저장 게시글</span>
       <div className="savePostContainer">
-        {dummyDate.map((post) => (
-          <SavePost id={post.id} title={post.title} date={post.date} />
+        {data.data.map((post, index) => (
+          <SavePost
+            key={index}
+            id={post.id.toString()}
+            title={post.title}
+            date={post.createdDate.toString()}
+          />
         ))}
       </div>
       <div className="saveModalFooter">

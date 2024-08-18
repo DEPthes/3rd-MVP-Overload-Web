@@ -5,17 +5,24 @@ import "../../style/postPage/postPage.css";
 import TagInput from "../../components/postPage/TagInput";
 import PostNav from "../../components/postPage/PostNav";
 import { isDuplicateTag } from "../../util/isDuplicateTag";
-import usePost from "../../hooks/usePost";
 import { useNavigate } from "react-router-dom";
+import usePost from "../../hooks/post/usePost";
+import { SaveModalSvg } from "../../assets";
+import usePostTemps from "../../hooks/post/usePostTemps";
 
 const PostPage = () => {
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [tags, setTags] = useState<string[]>([""]);
+  const [isModalOpel, setIsModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSuccess = () => {
     navigate(`/`);
+  };
+
+  const handleSaveSuccess = () => {
+    setIsModal(true);
   };
 
   const handleError = (error: unknown) => {
@@ -23,6 +30,7 @@ const PostPage = () => {
   };
 
   const { mutate: submitPost } = usePost(handleSuccess, handleError);
+  const { mutate: savePost } = usePostTemps(handleSaveSuccess, handleError);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -51,9 +59,14 @@ const PostPage = () => {
     submitPost({ title, content: text, tagNameList: tags });
   };
 
+  const handleSaveTemp = () => {
+    savePost({ title, content: text, tagNameList: tags });
+  };
+
   return (
     <>
-      <PostNav onClick={handleSubmitPost} />
+      <PostNav onClick={handleSubmitPost} onSave={handleSaveTemp} />
+      <div className="saveModal"> {isModalOpel && <SaveModalSvg />}</div>
       <div className="postContainer">
         <input
           type="text"
@@ -61,6 +74,7 @@ const PostPage = () => {
           className="inputBox"
           onChange={handleTitleChange}
         />
+
         <AutoTextArea onChange={handleContentChange} />
         <div className="tagContainer">
           {tags.map((tag, index) => (

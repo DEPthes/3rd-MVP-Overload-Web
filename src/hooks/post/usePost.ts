@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { postPost } from "../api/post/post";
-import { PostPostsProps } from "../types/post";
+import { PostPostsProps } from "../../types/post";
+import { postPost } from "../../api/post/post";
 
 const usePost = (
   onSuccessCallback: () => void,
