@@ -4,7 +4,7 @@ import { SaveFolder } from "../../assets";
 import { useState } from "react";
 import SaveModal from "./SaveModal";
 
-const PostNav = () => {
+const PostNav = ({ onClick }: { onClick: () => void }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => {
@@ -26,7 +26,9 @@ const PostNav = () => {
         <SaveFolder style={{ cursor: "pointer" }} onClick={handleOpenModal} />
         <div className="border"></div>
         <button className="saveButton">임시저장</button>
-        <button className="postButton">발행하기</button>
+        <button className="postButton" onClick={onClick}>
+          발행하기
+        </button>
       </div>
       {isOpenModal && <SaveModal onClick={handleCloseModal} />}
     </nav>

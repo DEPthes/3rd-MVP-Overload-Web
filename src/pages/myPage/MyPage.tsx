@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CircleAvatarComponent from "../../components/CircleAvatarComponent";
 import MyPageNav from "../../components/myPage/MyPageNav";
 import { AVATARANIMALLIST } from "../../constants/avatar";
@@ -27,7 +28,9 @@ const MyPage = () => {
               <span className="myPageSpan">Email</span>
             </div>
           </div>
-          <button className="newAvatarButton">아바타 새로 만들기</button>
+          <Link to="/avatar">
+            <button className="newAvatarButton">아바타 새로 만들기</button>
+          </Link>
         </div>
 
         {/* 스크랩 리스트 */}
