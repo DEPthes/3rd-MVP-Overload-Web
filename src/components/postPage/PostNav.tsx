@@ -3,14 +3,17 @@ import logo from "../../images/deplogLogo.png";
 import { SaveFolder } from "../../assets";
 import { useState } from "react";
 import SaveModal from "./SaveModal";
+import { Temp } from "../../types/temps";
 
-const PostNav = ({
-  onClick,
-  onSave,
-}: {
+interface PostNavProp {
   onClick: () => void;
   onSave: () => void;
-}) => {
+  temps: Temp[];
+  isClear: boolean;
+  setTemp: () => void;
+}
+
+const PostNav = ({ onClick, onSave, temps, isClear, setTemp }: PostNavProp) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => {
@@ -34,11 +37,17 @@ const PostNav = ({
         <button className="saveButton" onClick={onSave}>
           임시저장
         </button>
-        <button className="postButton" onClick={onClick}>
+        <button
+          className={isClear ? "postButton" : "defaultPostButton"}
+          onClick={onClick}
+          disabled={!isClear}
+        >
           발행하기
         </button>
       </div>
-      {isOpenModal && <SaveModal onClick={handleCloseModal} />}
+      {isOpenModal && (
+        <SaveModal onClick={handleCloseModal} temps={temps} setTemp={setTemp} />
+      )}
     </nav>
   );
 };

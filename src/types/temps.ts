@@ -1,7 +1,7 @@
 export interface Temp {
   id: number;
   title: string;
-  createdDate: Date;
+  createdDate: string;
 }
 
 export interface TempsResponse {

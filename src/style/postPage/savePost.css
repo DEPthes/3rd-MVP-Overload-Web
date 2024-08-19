@@ -11,8 +11,8 @@
   appearance: none; /* 기본 브라우저 스타일 제거 */
 
   display: flex;
-  width: 24px;
-  height: 24px;
+  width: 25px;
+  height: 25px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
