@@ -1,22 +1,26 @@
-// PostType.tsx
 import React, { useState } from 'react';
 import "../style/postType.css";
 
 type postType = {
     category: string;
-    onCategoryChange: (category: string) => void
+    onCategoryChange: (category: string) => void;
 }
 
 const PostType: React.FC<postType> = (props) => {
-    
-    const categories = ['전체', '기획', '디자인', '개발'];
-    const categoriesEn = ['ALL', 'PLAN', 'DESIGN', 'SERVER']
-    const [selectedCategory, setSelectedCategory] = useState<string>(props.category);
 
+    const categories = ['전체', '기획', '디자인', '개발'];
+    const categoriesEn = ['ALL', 'PLAN', 'DESIGN', 'SERVER', 'WEB', 'ANDROID'];
+    const [selectedCategory, setSelectedCategory] = useState<string>(props.category);
 
     const handleCategoryClick = (category: string, index: number) => {
         setSelectedCategory(category);
-        props.onCategoryChange(categoriesEn[index]); // 영어로 된 카테고리 전달
+
+        // SERVER, WEB, ANDROID일 때 "개발"로 변경하여 전달
+        if (categoriesEn[index] === 'SERVER' || categoriesEn[index] === 'WEB' || categoriesEn[index] === 'ANDROID') {
+            props.onCategoryChange('DEV'); // "개발"에 해당하는 DEV를 전달
+        } else {
+            props.onCategoryChange(categoriesEn[index]); // 그 외는 정상적으로 해당 카테고리 전달
+        }
     };
 
     return (
@@ -37,4 +41,3 @@ const PostType: React.FC<postType> = (props) => {
 };
 
 export default PostType;
-
