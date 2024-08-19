@@ -22,9 +22,9 @@ type PostPreviewProps = {
     scrap: number;
     picture?: string;
     profile: string;
-    handleHeartClick?: ()=>boolean
+    handleHeartClick?: ()=>void
     selectedHeart?: boolean;
-    handleScrapClick?: ()=>boolean
+    handleScrapClick?: ()=>void
     selectedScrap?: boolean;
 };
 

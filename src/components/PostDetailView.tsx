@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {marked} from 'marked';
 
 import heart from "../images/heart.png";
 import view from "../images/View.png";
@@ -28,6 +29,7 @@ type post = {
 
 const PostDetailView: React.FC<post> = (props) => {
     const navigate = useNavigate();
+    const htmlContent = marked(props.content)
 
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScarp, setSelectedScarp] = useState<boolean>(false);
@@ -70,7 +72,7 @@ const PostDetailView: React.FC<post> = (props) => {
                 <img src={ props.profile }/>
                 <div>{props.writer}</div>
             </div>
-            <div className="detail-content">{props.content}</div>
+            <div className="detail-content" dangerouslySetInnerHTML={{__html:htmlContent}}></div>
 
             <div className="detail-tags">
                 {props.tag.map((t, index) => (
