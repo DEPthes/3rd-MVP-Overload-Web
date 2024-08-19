@@ -13,15 +13,22 @@ import api from '../api';
 // MainPage
 
 const MainPage: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+    const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [posts, setPosts] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
+    const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
+    const [isToken, setIsToken] = useState(false);
     const postsPerPage = 10;
 
     useEffect(() => {
         const endpoint = selectedCategory === 'ALL' ? '/posts/all' : `/posts/${selectedCategory}`;
+        const token = sessionStorage.getItem("accessToken");
+        if(token!=null){
+            setIsToken(true);
+        }
 
         api.get(endpoint)
             .then((response) => {
@@ -32,6 +39,7 @@ const MainPage: React.FC = () => {
             .catch(error => {
                 console.error("Error", error);
             });
+        
     }, [selectedCategory]);
 
     const handleCategoryChange = (category: string) => {
@@ -44,7 +52,15 @@ const MainPage: React.FC = () => {
         setIsSearchModalOpen(false);
     };
 
-    // 카테고리에 따라 필터링된 게시물을 역순으로 배열
+    const handleHeartClick = () => {
+        setSelectedHeart(!selectedHeart);
+    };
+
+    const handleScrapClick = () => {
+        setSelectedScrap(!selectedScrap);
+    };
+
+    
     const filteredPosts = posts;
 
     const startIndex = (selectedPage - 1) * postsPerPage;
@@ -85,8 +101,12 @@ const MainPage: React.FC = () => {
                                     view={item.viewCount}
                                     like={item.likeCount}
                                     scrap={item.scrapCount}
-                                    // profile={item.profile}
+                                    profile={item.profile}
                                     picture={item.previewImage ? item.previewImage : undefined}
+                                    handleHeartClick={isToken?Boolean:undefined}
+                                    handleScrapClick={isToken?Boolean:undefined}
+                                    selectedHeart={isToken?selectedHeart:undefined}
+                                    selectedScrap={isToken?selectedScrap:undefined}
                                 />
                             </li>
                         ))}
