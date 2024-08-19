@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Nav from "../components/Nav";
 import Banner from "../components/Banner";
@@ -11,40 +10,45 @@ import "../style/mainPage.css";
 import api from '../api';
 
 // MainPage
-
 const MainPage: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [posts, setPosts] = useState<any[]>([]);
+    const [totalPage, setTotalPage] = useState<number>(1);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
-    const [isToken, setIsToken] = useState(false);
+    const [isToken, setIsToken] = useState<boolean>(false);
     const postsPerPage = 10;
 
     useEffect(() => {
         const endpoint = selectedCategory === 'ALL' ? '/posts/all' : `/posts/${selectedCategory}`;
-        const token = sessionStorage.getItem("accessToken");
-        if(token!=null){
+        const token = sessionStorage.getItem("token");
+        if (token) {
             setIsToken(true);
         }
 
-        api.get(endpoint)
-            .then((response) => {
-                console.log(response.data);
-                const { dataList } = response.data.data;
-                setPosts(dataList); 
-            })
-            .catch(error => {
-                console.error("Error", error);
-            });
+        api.get(endpoint, {
+            params: {
+                page: selectedPage,  // 현재 페이지 번호를 API 요청에 포함
+                size: postsPerPage   // 페이지당 아이템 수를 API 요청에 포함
+            }
+        })
+        .then((response) => {
+            const { pageInfo, dataList } = response.data.data;
+            setPosts(dataList);
+            setTotalPage(pageInfo.totalPage);  // 총 페이지 수 업데이트
+        })
+        .catch(error => {
+            console.error("Error fetching posts:", error);
+        });
         
-    }, [selectedCategory]);
+    }, [selectedCategory, selectedPage]);
 
     const handleCategoryChange = (category: string) => {
         setSelectedCategory(category);
-        setSelectedPage(1);
+        setSelectedPage(1);  // 카테고리 변경 시 페이지를 1로 초기화
     };
 
     const handleSearch = (term: string) => {
@@ -60,12 +64,6 @@ const MainPage: React.FC = () => {
         setSelectedScrap(!selectedScrap);
     };
 
-    
-    const filteredPosts = posts;
-
-    const startIndex = (selectedPage - 1) * postsPerPage;
-    const currentPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
-
     const handlePageChange = (pageNumber: number) => {
         setSelectedPage(pageNumber);
     };
@@ -73,24 +71,22 @@ const MainPage: React.FC = () => {
     return (
         <>
             <div className="main-total">
-                {/* navbar */}
-                <Nav onSearchClick={() => setIsSearchModalOpen(true)}/>
+                {/* Navbar */}
+                <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
 
-
-                {/* banner */}
+                {/* Banner */}
                 <Banner />
 
-                <div>
-                    <PostType 
-                        category={selectedCategory} 
-                        onCategoryChange={handleCategoryChange} 
-                    />
-                </div>
+                {/* Category Selection */}
+                <PostType 
+                    category={selectedCategory} 
+                    onCategoryChange={handleCategoryChange} 
+                />
 
-                {/* preview 영역 */}
+                {/* Post Preview Area */}
                 <div className="post-preview">
                     <ul>
-                        {currentPosts.map((item, index) => (
+                        {posts.map((item, index) => (
                             <li key={index} className="post-preview-item">
                                 <PostPreview 
                                     id={item.id}
@@ -103,21 +99,22 @@ const MainPage: React.FC = () => {
                                     scrap={item.scrapCount}
                                     profile={item.profile}
                                     picture={item.previewImage ? item.previewImage : undefined}
-                                    handleHeartClick={isToken?Boolean:undefined}
-                                    handleScrapClick={isToken?Boolean:undefined}
-                                    selectedHeart={isToken?selectedHeart:undefined}
-                                    selectedScrap={isToken?selectedScrap:undefined}
+                                    handleHeartClick={isToken ? handleHeartClick : undefined}
+                                    handleScrapClick={isToken ? handleScrapClick : undefined}
+                                    selectedHeart={isToken ? selectedHeart : undefined}
+                                    selectedScrap={isToken ? selectedScrap : undefined}
                                 />
                             </li>
                         ))}
                     </ul>
                 </div>
 
-                {/* 페이지 이동 영역 */}
+                {/* Pagination Area */}
                 <Footer 
-                    totalPosts={filteredPosts.length} 
+                    totalPosts={posts.length} 
                     postsPerPage={postsPerPage} 
                     selectedPage={selectedPage} 
+                    totalPages={totalPage}  // 총 페이지 수 전달
                     onPageChange={handlePageChange}
                 />
 
@@ -126,8 +123,7 @@ const MainPage: React.FC = () => {
                         onClose={() => setIsSearchModalOpen(false)} 
                         onSearch={handleSearch} 
                     />
-                )}    
-
+                )}
             </div>
         </>
     );

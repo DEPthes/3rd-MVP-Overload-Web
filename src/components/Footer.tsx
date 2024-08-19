@@ -9,14 +9,17 @@ type FooterProps = {
   totalPosts: number;
   postsPerPage: number;
   selectedPage: number;
+  totalPages: number; // 총 페이지 수 추가
   onPageChange: (pageNumber: number) => void;
 };
 
 const Footer: React.FC<FooterProps> = (props) => {
-  const totalPages = Math.ceil(props.totalPosts / props.postsPerPage);
+  const totalPages = props.totalPages;
 
   const handlePageClick = (pageNumber: number) => {
-    props.onPageChange(pageNumber);
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      props.onPageChange(pageNumber);
+    }
   };
 
   return (
@@ -27,6 +30,7 @@ const Footer: React.FC<FooterProps> = (props) => {
       >
         <img className='footer-img'
           src={props.selectedPage === 1 ? LmovePage : LactivateMovePage} 
+          alt="Previous"
         />
       </button>
       {[...Array(totalPages)].map((_, index) => (
@@ -44,6 +48,7 @@ const Footer: React.FC<FooterProps> = (props) => {
       >
         <img className='footer-img'
           src={props.selectedPage === totalPages ? RmovePage : RactivateMovePage} 
+          alt="Next"
         />
       </button>
     </div>
@@ -51,4 +56,3 @@ const Footer: React.FC<FooterProps> = (props) => {
 };
 
 export default Footer;
-

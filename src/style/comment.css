@@ -35,6 +35,14 @@
     overflow: hidden;
 }
 
+.default-profile{
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
 .comment-profile img {
     width: 100%;
     height: 100%;
