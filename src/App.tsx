@@ -10,7 +10,9 @@ const RegisterPage2 = lazy(() => import("./pages/register/RegisterPage2.tsx"));
 const RegisterEmailVerify = lazy(
   () => import("./pages/register/RegisterEmailVerify.tsx")
 );
-const ChangingPassword = lazy(() => import("./pages/passwordReset/ChangingPassword.tsx"));
+const ChangingPassword = lazy(
+  () => import("./pages/passwordReset/ChangingPassword.tsx")
+);
 const PasswordResetMailEnter = lazy(
   () => import("./pages/passwordReset/ResetEmailEnterPage.tsx")
 );
@@ -18,7 +20,9 @@ const PasswordResetMailCheck = lazy(
   () => import("./pages/passwordReset/ResetEmailCheck.tsx")
 );
 const LogInPage = lazy(() => import("./pages/logIn/LoginPage.tsx"));
-const ResetSuccess = lazy(() => import("./pages/passwordReset/ResetSuccess.tsx"));
+const ResetSuccess = lazy(
+  () => import("./pages/passwordReset/ResetSuccess.tsx")
+);
 const EmailSuccess = lazy(() => import("./pages/register/EmailSuccess.tsx"));
 const SearchResults = lazy(() => import("./pages/search/SearchResult.tsx"));
 const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
