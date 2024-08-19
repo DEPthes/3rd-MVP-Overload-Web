@@ -18,9 +18,9 @@ const LoginPage: React.FC = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false); // 추가된 상태
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
 
-  const navigate = useNavigate(); //그냥 메인페이지로 갈 방법 XXXXXXXX
+  const navigate = useNavigate(); 
 
   const validateEmail = (email: string) => {
     return constants.emailPattern.test(email);
@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
     const newPassword = e.target.value;
     setPassword(newPassword);
     setPasswordError(validatePassword(newPassword) ? "" : constants.passwordError);
-    setIsPasswordValid(validatePassword(newPassword)); // 비밀번호 유효성 검사 결과 설정
+    setIsPasswordValid(validatePassword(newPassword)); 
   };
 
   const handleCapsLock = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -57,15 +57,17 @@ const LoginPage: React.FC = () => {
   const { mutate: logIn, isLoading } = useMutation(LogInReq, {
     onSuccess: (data) => {
       // JWT 토큰 처리
-      const token = data.data.accessToken;
-      if (token) {
+      const { accessToken, refreshToken } = data.data;
+      if (accessToken && refreshToken) {
         if (autoLogin) {
-          localStorage.setItem("token", token); //자동로그인일때 계속 토큰보관(로컬스토리지)
+          localStorage.setItem("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
         } else {
-          sessionStorage.setItem("token", token); //자동로그인 아니면 일시보관(세션처리)
+          sessionStorage.setItem("token", accessToken);
+          sessionStorage.setItem("refreshToken", refreshToken);
         }
         alert(constants.loginSuccessMessage);
-        navigate("/"); 
+        navigate("/");
       }
     },
     onError: (error: any) => {
