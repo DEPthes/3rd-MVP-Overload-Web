@@ -5,7 +5,7 @@ import Banner from "../components/Banner";
 import PostType from '../components/PostType';
 import PostPreview from "../components/PostPreview";
 import Footer from '../components/Footer';
-import SearchModal from '../components/SearchModal';
+import SearchModal from '../components/search/SearchModal';
 
 import "../style/mainPage.css";
 import api from '../api';

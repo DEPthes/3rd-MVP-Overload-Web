@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styles from '../style/changingPassword.module.css';
-import deplogLogo from '../images/deplogLogo.png';
-import eyeimg from '../images/eyecon.png';
-import eyeimgslash from '../images/eyeconslash.png';
-import { constants } from '../constants';
-import { PassReset } from '../api/PassReset';       //이메일전송=>인증완료버튼(인증했는지 여부 판단안됨) 질문하기
+import styles from '../../style/passwordReset/changingPassword.module.css';
+import deplogLogo from '../../images/deplogLogo.png';
+import eyeimg from '../../images/eyecon.png';
+import eyeimgslash from '../../images/eyeconslash.png';
+import { constants } from '../../constants/logIn';
+import { PassReset } from '../../api/PassReset'; 
 
 const ChangePasswordPage: React.FC = () => {
     const location = useLocation();

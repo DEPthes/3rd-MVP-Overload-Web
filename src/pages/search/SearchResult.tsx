@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Nav from "../components/Nav";
-import Footer from '../components/Footer';
-import PostPreview from "../components/PostPreview";
-import SearchModal from '../components/SearchModal';
-import { SearchPosts, TagSearchPosts } from '../api/Search';
-import NoSearchResult from '../components/NoSearchResult'; // 새로 만든 컴포넌트 가져오기
-import styles from "../style/searchResultsPage.module.css";
+import Nav from "../../components/Nav";
+import Footer from '../../components/Footer';
+import PostPreview from "../../components/PostPreview";
+import SearchModal from '../../components/search/SearchModal';
+import { SearchPosts, TagSearchPosts } from '../../api/Search';
+import NoSearchResult from '../../components/search/NoSearchResult'; // 새로 만든 컴포넌트 가져오기
+import styles from "../../style/search/searchResultsPage.module.css";
 
 const SearchResults: React.FC = () => {
     const location = useLocation();

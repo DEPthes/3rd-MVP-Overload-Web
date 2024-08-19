@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../style/resetSuccess.module.css';
-import EmailSuccessIcon from '../images/EmailSuccess.svg';
-import { constants } from '../constants';
+import styles from '../../style/passwordReset/resetSuccess.module.css';
+import EmailSuccessIcon from '../../images/EmailSuccess.svg';
+import { constants } from '../../constants/logIn';
 
 const EmailSuccess: React.FC = () => {
     const navigate = useNavigate();
