@@ -14,6 +14,7 @@ const SearchResults: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>(location.state?.searchTerm || '');
     const [results, setResults] = useState<any[]>([]);
     const [totalPosts, setTotalPosts] = useState<number>(0);
+    const [totalPage, setTotalPage] = useState<number>(1); // totalPage 상태 추가
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const postsPerPage = 10;
 
@@ -29,16 +30,19 @@ const SearchResults: React.FC = () => {
 
                 if (response.data && response.data.pageInfo && response.data.dataList && response.data.dataList.length > 0) {
                     setResults(response.data.dataList);
-                    setTotalPosts(response.data.pageInfo.totalPage * postsPerPage);
+                    setTotalPosts(response.data.pageInfo.totalPage * postsPerPage); // 총 게시물 수 설정
+                    setTotalPage(response.data.pageInfo.totalPage); // 총 페이지 수 설정
                 } else {
                     setResults([]);
                     setTotalPosts(0);
+                    setTotalPage(1); // 검색 결과가 없을 경우 totalPage를 1로 설정
                 }
 
             } catch (error) {
                 console.error("검색 결과를 가져오는 데 실패했습니다.", error);
                 setResults([]);
                 setTotalPosts(0);
+                setTotalPage(1); // 오류 발생 시 totalPage를 1로 설정
             }
         };
         
@@ -91,6 +95,7 @@ const SearchResults: React.FC = () => {
                             totalPosts={totalPosts} 
                             postsPerPage={postsPerPage} 
                             selectedPage={selectedPage} 
+                            totalPages={totalPage}  // 총 페이지 수 전달
                             onPageChange={handlePageChange}
                         />
                     </div>
