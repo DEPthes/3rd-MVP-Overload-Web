@@ -8,6 +8,7 @@ import SearchModal from '../components/search/SearchModal';
 
 import "../style/mainPage.css";
 import api from '../api';
+import ViewDetailPost from './ViewDetailPostPage';
 
 // MainPage
 const MainPage: React.FC = () => {

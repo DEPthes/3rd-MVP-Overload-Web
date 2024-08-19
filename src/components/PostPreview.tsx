@@ -74,13 +74,32 @@ const PostPreview: React.FC<postPreview> = (props) => {
         navigate(`/viewDetailPost/${props.id}`);
     };
 
-    const toggleHeart = () => {
-        if (isHeartSelected) {
-            setLikeCount(likeCount - 1);
-        } else {
-            setLikeCount(likeCount + 1);
-        }
-        setIsHeartSelected(!isHeartSelected);
+    const toggleHeart = async () => {
+        try {
+            if(isToken){
+                if (isHeartSelected) {
+                    await api.delete(`/likes/${props.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}` 
+                        }
+                    });
+                    setLikeCount(likeCount - 1);
+                } else {
+                    await api.post(`/likes/${props.id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}` // Bearer 토큰 설정
+                        }
+                    });
+                    setLikeCount(likeCount + 1);
+                }
+                    setIsHeartSelected(!isHeartSelected);
+                } 
+            }catch (error) {
+                console.error("like API 요청 중 오류가 발생했습니다.", error);
+                console.log(isScrapSelected);
+                console.log(isHeartSelected);
+            }
+            
 
         if (props.handleHeartClick) {
             props.handleHeartClick();

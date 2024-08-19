@@ -10,8 +10,12 @@ import defaultProfile from "../images/defaultProfile.png";
 import "../style/viewDetailPost.css";
 import api from "../api/index";
 
+type viewDetail = {
+  handleHeartClick:()=>void;
+  selectedHeart:boolean;
+}
 // 상세 게시글 페이지
-const ViewDetailPost: React.FC = () => {
+const ViewDetailPost: React.FC<viewDetail> = (props) => {
     const { postId } = useParams<{ postId: string }>();
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>('');
