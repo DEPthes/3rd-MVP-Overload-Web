@@ -10,14 +10,13 @@ const PostType: React.FC<postType> = (props) => {
 
     const categories = ['전체', '기획', '디자인', '개발'];
     const categoriesEn = ['ALL', 'PLAN', 'DESIGN', 'SERVER', 'WEB', 'ANDROID'];
-    const [selectedCategory, setSelectedCategory] = useState<string>(props.category);
+    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
 
     const handleCategoryClick = (category: string, index: number) => {
         setSelectedCategory(category);
 
-        // SERVER, WEB, ANDROID일 때 "개발"로 변경하여 전달
         if (categoriesEn[index] === 'SERVER' || categoriesEn[index] === 'WEB' || categoriesEn[index] === 'ANDROID') {
-            props.onCategoryChange('DEV'); // "개발"에 해당하는 DEV를 전달
+            props.onCategoryChange('ALL'); // "개발"에 해당하는 DEV를 전달
         } else {
             props.onCategoryChange(categoriesEn[index]); // 그 외는 정상적으로 해당 카테고리 전달
         }

@@ -30,7 +30,7 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
     const [isToken, setIsToken] = useState(false);
 
     useEffect(() => {
-        const token = sessionStorage.getItem("accessToken");
+        const token = sessionStorage.getItem("token");
         if (token != null) {
             setIsToken(true);
         }
@@ -69,12 +69,13 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
             window.location.reload();
         } catch (error) {
             console.error("댓글 제출 중 오류 발생:", error);
+            console.log(props.commentId, props.postId, commentText, selectedBox, props.name)
         }
     };
 
     return (
         <>
-            {true ? (//isToken
+            {isToken ? (//isToken
                 <div className="mycomment-total">
                     <textarea
                         className="mycomment-writebox"

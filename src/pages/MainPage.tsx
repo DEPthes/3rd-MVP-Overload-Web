@@ -24,7 +24,7 @@ const MainPage: React.FC = () => {
 
     useEffect(() => {
         const endpoint = selectedCategory === 'ALL' ? '/posts/all' : `/posts/${selectedCategory}`;
-        const token = sessionStorage.getItem("accessToken");
+        const token = sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
         }
