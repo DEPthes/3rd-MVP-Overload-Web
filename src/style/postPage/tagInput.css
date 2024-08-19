@@ -1,0 +1,46 @@
+.tagInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.tagInput {
+  display: flex;
+  width: 128px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background-color: #efefef;
+
+  /* Label/Medium */
+  color: #0258fe;
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+
+.tagInput::placeholder {
+  color: #0258fe;
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+
+.duplicateComment {
+  color: #6b6b6b;
+  margin: 0;
+
+  /* Paragraph/Samll */
+  font-family: "Noto Sans KR";
+  font-size: 12.003px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 19.205px */
+}

@@ -1,0 +1,10 @@
+.textBox {
+  margin-top: 16px;
+  resize: none;
+  width: 100%;
+  min-height: 545px;
+  padding: 16px;
+  background: rgba(173, 187, 200, 0.25);
+  border-radius: 2px;
+  box-sizing: border-box;
+}

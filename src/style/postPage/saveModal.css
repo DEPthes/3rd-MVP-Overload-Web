@@ -1,0 +1,82 @@
+.saveModalContainer {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 375px;
+  height: 476px;
+  top: 100px;
+  right: 200px;
+  border-radius: 5px;
+
+  /* modal */
+  box-shadow: 0px 9.701px 9.701px -4.851px rgba(16, 24, 40, 0.04),
+    0px 24.253px 29.103px -4px rgba(16, 24, 40, 0.1);
+}
+
+.header {
+  margin-top: 32px;
+
+  color: #000;
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+
+.savePostContainer {
+  margin-top: 32px;
+  background-color: rgba(173, 187, 200, 0.25);
+  flex-wrap: wrap;
+  width: calc(100% - 48px);
+  height: 268px;
+}
+
+.saveModalFooter {
+  display: flex;
+  margin-left: 100px;
+  gap: 64px;
+  margin-top: 48px;
+  right: 100px;
+}
+
+.saveModalOpenButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  color: var(--Contents-Click, #397cc0);
+  text-align: center;
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+  cursor: pointer;
+}
+
+.saveModalCloseButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  color: var(--Typo-Primary, #272d34);
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+  cursor: pointer;
+}

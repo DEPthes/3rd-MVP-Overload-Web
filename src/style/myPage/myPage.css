@@ -1,0 +1,157 @@
+.myPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 120px;
+}
+
+.myInfoContainer {
+  display: flex;
+  width: 740px;
+  height: 224px;
+  padding: 35px 50px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  border-radius: 5px;
+  background: rgba(173, 187, 200, 0.25);
+}
+
+.myPageLeftOption {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.myPageInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.myPageName {
+  color: #000;
+
+  /* Heading/XL */
+  font-family: "Noto Sans KR";
+  font-size: 28.43px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 39.802px */
+}
+
+.myPageSpan {
+  color: #000;
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+
+.newAvatarButton {
+  display: flex;
+  height: 58px;
+  padding: 16px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 2px;
+  background: var(--Contents-Primary, #050c20);
+  color: var(--Typo-Tertiary, #fff);
+  cursor: pointer;
+
+  /* Heading/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 22.4px */
+}
+
+.manageInfoContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  width: 740px;
+  height: 252px;
+  padding: 0 50px;
+  gap: 24px;
+  border-radius: 5px;
+  background: rgba(173, 187, 200, 0.25);
+}
+
+.manageInfoHeader {
+  margin-top: 35px;
+  color: #000;
+
+  /* Label/Large */
+  font-family: "Noto Sans KR";
+  font-size: 21.328px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 31.992px */
+}
+
+.outContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.outContainerLeftOption {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.OptionHeader {
+  margin-top: 8px;
+  color: #000;
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}
+
+.Optionspan {
+  color: #000;
+
+  /* Paragraph/Samll */
+  font-family: "Noto Sans KR";
+  font-size: 12.003px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 19.205px */
+}
+
+.outContainerRightOption {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.logoutButton {
+  display: flex;
+  height: 58px;
+  padding: 16px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 2px;
+  background: #adadad;
+  border: none;
+  cursor: pointer;
+
+  color: var(--Typo-Tertiary, #fff);
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 24px */
+}

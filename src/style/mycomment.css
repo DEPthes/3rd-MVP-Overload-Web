@@ -1,0 +1,113 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+.mycomment-total{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: 'Noto Sans KR';
+    margin-bottom: 20px;
+}
+
+.mycomment-writebox{
+    border: 1px solid #7F7F7F;
+    width: 100%;
+    height: 7vw;
+    margin-top: 20px;
+    padding: 20px 5px;
+    font-size: 1rem;
+    color: #7F7F7F;
+    border-radius: 5px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.mycomment-writebox::placeholder, .mycomment-writerinfo textarea::placeholder { 
+    font-family: 'Noto Sans KR';
+}
+
+.mycomment-writerinfo{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.mycomment-profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #7F7F7F;
+}
+
+.mycomment-profile img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mycomment-writerinfo-nickname{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 20px;
+}
+
+.mycomment-writerinfo textarea {
+    width: 170px;
+    height: 50px;
+    padding: 11px 3px;
+    font-size: 1rem;
+    color: #7F7F7F;
+    border: px solid #7F7F7F;
+    border-radius: 5px;
+    resize: none;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.mycomment-nickname{
+    display: flex;
+    align-items: center;
+    margin-left: 0px;
+}
+
+.mycomment-checkbox{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: -6px;
+}
+
+.mycomment-checkbox img{
+    height: 25px;
+}
+
+.mycomment-nickname p {
+    font-size: 1rem;
+    color: #3c3c3c;
+    margin: 0;
+}
+
+.mycomment-button{
+    padding: 20px 15px;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    margin-left: 20px;
+    align-items: flex-end;
+    font-size: 18px;
+    background-color: #858585;
+    cursor: not-allowed;
+}
+
+.mycomment-button.active{
+    background-color: #000;
+    cursor: pointer;
+
+}

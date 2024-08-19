@@ -1,0 +1,35 @@
+
+.footer-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .footer-pagination button {
+    border: none;
+    background-color: transparent;
+    color: #767676;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .footer-pagination button.active {
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+  }
+  
+  .footer-pagination button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .footer-img{
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 25px;
+  }
+  

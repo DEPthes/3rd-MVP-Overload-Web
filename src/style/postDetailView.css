@@ -1,0 +1,205 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+
+/* 전체에 적용되는 css */
+.detail-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 55vw;
+    margin: 0 auto;
+    font-family: 'Noto Sans KR';
+}
+
+/* title 밑 line */
+hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/* 게시글 상세 가로 너비 */
+.total > div {
+    width: 100%;
+}
+
+/* 제목 */
+.detail-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 3em;
+
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.detail-menu-container{
+    position: relative;
+}
+
+.detail-menu{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.detail-menu-options{
+    position: absolute;
+    padding: 0 45px 25px 45px;
+    right: 0;
+    left: -150px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-menu-option{
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    position: relative;
+}
+
+.detail-menu-option:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: #3C3C3C;
+}
+
+
+/* 날짜, 작성자 관리 */
+.detail-info {
+    font-family: 'Noto Sans KR Medium';
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-start;
+    margin: 15px 0;
+    font-size: 0.9rem;
+
+    color: #3C3C3C;
+}
+
+/* info layout */
+.detail-info div{
+    margin: 2px 20px 2px 5px;
+}
+
+/* 작성자 프로필 */
+.detail-info img {
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    margin: 5px 0;
+    border-radius: 50%;
+    border: 1px solid black;
+    object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
+    overflow: hidden;
+
+}
+
+/* 본문내용 */
+.detail-content {
+    font-size: 1.3rem;
+
+    margin-bottom: 10px;
+    line-height: 1.5;
+    margin: 20px 0 20px 0;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.detail-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    margin: 20px 0;
+    background-color: #f0f0f0; /* Placeholder background */
+}
+
+/* 태그 */
+.detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.detail-tags button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #EFEFEF;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #0258FE;
+    font-weight: bold;
+}
+
+.detail-tags button:hover {
+    background-color: #ddd;
+}
+
+/* view, like, scrap */
+.interaction {
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+}
+
+.interaction button{
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+}
+
+/* 눈, 하트, 스크랩 이미지 */
+.interaction img {
+    height: 25px;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.interaction div {
+    display: flex;
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.detail-bottom {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+    height: 150px;
+}
+
+.detail-bottom img {
+    margin-right: 30px;
+    border-radius: 30px; 
+    width: 120px; 
+    height: 120px; 
+    object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+
+.detail-bottom .detail-profile-name{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.detail-bottom .detail-profile-part{
+    font-size: 1.5rem;
+    color: #6B6B6B;
+    margin-bottom: 20px;
+
+}
