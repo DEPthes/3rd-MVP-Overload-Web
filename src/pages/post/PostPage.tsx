@@ -4,17 +4,43 @@ import AutoTextArea from "../../components/postPage/AutoTextArea";
 import "../../style/postPage/postPage.css";
 import TagInput from "../../components/postPage/TagInput";
 import PostNav from "../../components/postPage/PostNav";
-import { isDuplicateTag } from "../../util/isDuplicateTag";
-import usePost from "../../hooks/usePost";
-import { useNavigate } from "react-router-dom";
+import { hasDuplicateTags, isDuplicateTag } from "../../util/isDuplicateTag";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import usePost from "../../hooks/post/usePost";
+import { SaveModalSvg } from "../../assets";
+import usePostTemps from "../../hooks/post/usePostTemps";
+import { useGetTemps } from "../../hooks/post/useGetTemps";
+import { useGetDetails } from "../../hooks/useGetDetail";
 
 const PostPage = () => {
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [tags, setTags] = useState<string[]>([""]);
+  const [isModalOpel, setIsModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedId = searchParams.get("id");
 
-  const { mutate: submitPost, isError, isSuccess, error } = usePost();
+  const handleSuccess = () => {
+    navigate(`/`);
+  };
+
+  const handleSaveSuccess = () => {
+    setIsModal(true);
+  };
+
+  const handleError = (error: unknown) => {
+    alert((error as any)?.message || "게시물 작성 중 오류가 발생했습니다.");
+  };
+
+  const { mutate: submitPost } = usePost(handleSuccess, handleError);
+  const { mutate: savePost } = usePostTemps(handleSaveSuccess, handleError);
+  const tempsData = useGetTemps();
+  const tempsList = tempsData?.data.data;
+
+  const { data: detailData } = useGetDetails(
+    selectedId ? Number(searchParams.get("id")) : 1
+  );
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -39,21 +65,31 @@ const PostPage = () => {
     setTags([...tags, ""]);
   };
 
-  const handleSubmitPost = async () => {
-    try {
-      await submitPost({ title, content: text, tagNameList: tags });
-      // Wait for the submission to complete and then navigate
-      if (isSuccess) {
-        navigate(`/`);
-      }
-    } catch (err) {
-      alert(error?.message || "An error occurred while posting.");
-    }
+  const handleSubmitPost = () => {
+    submitPost({ title, content: text, tagNameList: tags });
+  };
+
+  const handleSaveTemp = () => {
+    savePost({ title, content: text, tagNameList: tags });
+  };
+
+  const handleSetTemp = () => {
+    // setTitle(temp.title);
+    // setText(temp.content);
+    // setTags(temp.tagNameList);
+    console.log(detailData.data);
   };
 
   return (
     <>
-      <PostNav onClick={handleSubmitPost} />
+      <PostNav
+        onClick={handleSubmitPost}
+        onSave={handleSaveTemp}
+        temps={tempsList}
+        isClear={hasDuplicateTags(tags)}
+        setTemp={handleSetTemp}
+      />
+      <div className="saveModal"> {isModalOpel && <SaveModalSvg />}</div>
       <div className="postContainer">
         <input
           type="text"
@@ -61,6 +97,7 @@ const PostPage = () => {
           className="inputBox"
           onChange={handleTitleChange}
         />
+
         <AutoTextArea onChange={handleContentChange} />
         <div className="tagContainer">
           {tags.map((tag, index) => (

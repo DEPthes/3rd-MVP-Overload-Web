@@ -65,3 +65,16 @@
   color: white;
   cursor: pointer;
 }
+
+.defaultPostButton {
+  display: flex;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 200px;
+  background-color: #e0e0e0; /* 기본 배경색 */
+  color: #000; /* 기본 텍스트 색상 */
+  border: 1px solid #ccc; /* 기본 테두리 색상 */
+  cursor: pointer;
+}
