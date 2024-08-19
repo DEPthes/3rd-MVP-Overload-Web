@@ -12,9 +12,12 @@ const Nav: React.FC<{ profile?: string, onSearchClick: () => void }> = (props) =
   const [istoken, setIsToken] = useState(false);
 
   useEffect(()=>{
-    const token = sessionStorage.getItem("accessToken");
-    if(token!=null){
+    const token = sessionStorage.getItem("token");
+    if(token){
       setIsToken(true);
+      console.log(token)
+    }else{
+      console.log(token)
     }
   }, []);
 
@@ -29,7 +32,7 @@ const Nav: React.FC<{ profile?: string, onSearchClick: () => void }> = (props) =
   }
 
   const handleWriteClick = () => {
-    navigate(`post`);
+    navigate(`/post`);
   }
 
   return (

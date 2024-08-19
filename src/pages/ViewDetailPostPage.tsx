@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "../components/Nav";
@@ -8,7 +7,7 @@ import Comment from "../components/Comment";
 import SearchModal from '../components/search/SearchModal';
 import defaultProfile from "../images/defaultProfile.png";
 import "../style/viewDetailPost.css";
-import api from "../api";
+import api from "../api/index";
 
 // 상세 게시글 페이지
 const ViewDetailPost: React.FC = () => {
@@ -21,7 +20,7 @@ const ViewDetailPost: React.FC = () => {
     const [isToken, setIsToken] = useState(false);
 
     useEffect(() => {
-        const token = sessionStorage.getItem("accessToken");
+        const token = sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
         }
@@ -38,14 +37,37 @@ const ViewDetailPost: React.FC = () => {
                 console.error("게시글 데이터 가져오기 오류:", error);
             });
 
+            api.interceptors.request.use(
+              (config) => {
+                let token = localStorage.getItem("token");
+                // localStorage에 토큰이 없으면 sessionStorage에서 가져오기.
+                if (!token) {
+                  token = sessionStorage.getItem("token");
+                }
+                if (token) {
+                  config.headers.Authorization = `Bearer ${token}`;
+                }
+                return config;
+              },
+              (error) => {
+                return Promise.reject(error);
+              }
+            );
+            
         // 멤버 데이터 가져오기
-        api.get(`/members`)
+        api.get(`/members`, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Bearer 토큰 설정
+                }
+            })
             .then((response) => {
-                const member = response.data;
+                const member = response.data.data;
                 setMember(member);
+                console.log(member)
             })
             .catch((error) => {
-                console.error("회원 데이터 가져오기 오류:", error);
+                console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
+                console.log(member)
             });
 
         // 댓글 데이터 가져오기
@@ -89,7 +111,7 @@ const ViewDetailPost: React.FC = () => {
                     />
                 </div>
 
-                {true && (//isToken
+                {isToken && (
                     <div className="detail-mycomment">
                         <MyComment
                             profile={member?.avatar || defaultProfile}
