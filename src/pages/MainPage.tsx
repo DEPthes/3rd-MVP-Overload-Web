@@ -39,6 +39,7 @@ const MainPage: React.FC = () => {
             const { pageInfo, dataList } = response.data.data;
             setPosts(dataList);
             setTotalPage(pageInfo.totalPage);  // 총 페이지 수 업데이트
+            console.log(posts);
         })
         .catch(error => {
             console.error("Error fetching posts:", error);
