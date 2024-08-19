@@ -7,33 +7,80 @@ const api = axios.create({
 });
 
 // JWT 토큰 만료 확인 함수
-const isTokenExpired = (token: string) => {
+const isTokenExpiringSoon = (token: string) => {
   const decoded: any = jwtDecode(token);
   const currentTime = Date.now() / 1000;
-  return decoded.exp < currentTime;
+  const expirationTime = decoded.exp;
+  const bufferTime = 5 * 60; // 만료 시간 5분 전 (단위: 초)
+
+  return expirationTime - currentTime < bufferTime;
 };
 
 // Refresh Token 함수
 const refreshToken = async () => {
   const storedRefreshToken = localStorage.getItem("refreshToken") || sessionStorage.getItem("refreshToken");
-  if (!storedRefreshToken) {
-    throw new Error("리프레시 토큰이 적절하지 않습니다.");
+  const currentToken = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+  if (!storedRefreshToken || !currentToken) {
+    throw new Error("리프레시 토큰 또는 액세스 토큰이 적절하지 않습니다.");
   }
 
-  const response = await axios.get("https://www.deplog.kro.kr/auth/reissue", {
-    params: { refreshToken: storedRefreshToken },
-  });
+  try {
+    const response = await axios.get("https://www.deplog.kro.kr/auth/reissue", {
+      params: {
+        refreshToken: storedRefreshToken,
+      },
+      headers: {
+        Authorization: `Bearer ${currentToken}`,
+      },
+    });
 
-  const newAccessToken = response.data.accessToken;
-  if (newAccessToken) {
-    if (localStorage.getItem("token")) {
-      localStorage.setItem("token", newAccessToken);
+    const newAccessToken = response.data.data.accessToken;
+    if (newAccessToken) {
+      if (localStorage.getItem("token")) {
+        localStorage.setItem("token", newAccessToken);
+      } else {
+        sessionStorage.setItem("token", newAccessToken);
+      }
+      return newAccessToken;
     } else {
-      sessionStorage.setItem("token", newAccessToken);
+      throw new Error("새로운 액세스 토큰을 받지 못했습니다.");
     }
+  } catch (error) {
+    console.error("토큰 갱신 중 오류가 발생했습니다:", error);
+    throw error;
   }
-  return newAccessToken;
 };
+
+// 주기적으로 토큰 만료를 체크하고 갱신하는 함수
+const checkTokenExpiration = async () => {
+  let token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+  if (token) {
+    const decoded: any = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    const expirationTime = decoded.exp;
+
+    console.log(`현재 시간: ${new Date(currentTime * 1000).toLocaleTimeString()}, 토큰 만료 시간: ${new Date(expirationTime * 1000).toLocaleTimeString()}`);
+
+    if (isTokenExpiringSoon(token)) {
+      console.log("백그라운드에서 토큰 만료가 임박하여 갱신을 시도합니다.");
+      try {
+        token = await refreshToken();
+        console.log("토큰이 성공적으로 갱신되었습니다.");
+      } catch (error) {
+        console.error("토큰 갱신에 실패했습니다:", error);
+      }
+    } else {
+      console.log("토큰이 아직 유효합니다. 갱신이 필요하지 않습니다.");
+    }
+  } else {
+    console.log("저장된 토큰이 없습니다.");
+  }
+};
+
+// 백그라운드에서 주기적으로 토큰 확인 (예: 1분마다 실행)
+setInterval(checkTokenExpiration, 1 * 60 * 1000); // 1분마다 확인
 
 // Request Interceptor
 api.interceptors.request.use(
@@ -41,8 +88,14 @@ api.interceptors.request.use(
     let token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
     if (token) {
-      if (isTokenExpired(token)) {
-        token = await refreshToken();
+      if (isTokenExpiringSoon(token)) {
+        console.log("API 호출 중 토큰 만료가 임박하여 갱신을 시도합니다.");
+        try {
+          token = await refreshToken();
+          console.log("토큰이 API 호출 중 성공적으로 갱신되었습니다.");
+        } catch (error) {
+          console.error("API 호출 중 토큰 갱신에 실패했습니다:", error);
+        }
       }
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -63,10 +116,16 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const token = await refreshToken();
-      if (token) {
-        originalRequest.headers.Authorization = `Bearer ${token}`;
-        return api(originalRequest);
+      console.log("401 오류 발생, 토큰 갱신을 시도합니다.");
+      try {
+        const token = await refreshToken();
+        if (token) {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return api(originalRequest);
+        }
+      } catch (tokenRefreshError) {
+        console.error("토큰 갱신에 실패했습니다:", tokenRefreshError);
+        return Promise.reject(tokenRefreshError);
       }
     }
 
