@@ -18,8 +18,6 @@ type post = {
     part: string;
     content: string;
     profile: string;
-
-    picture?: string;
     view: number;
     like: number;
     scrap: number;
@@ -73,11 +71,6 @@ const PostDetailView: React.FC<post> = (props) => {
                 <div>{props.writer}</div>
             </div>
             <div className="detail-content">{props.content}</div>
-            {props.picture && (
-                <div className="detail-image">
-                    <img src={props.picture}/>
-                </div>
-            )}
 
             <div className="detail-tags">
                 {props.tag.map((t, index) => (
