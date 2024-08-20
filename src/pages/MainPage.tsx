@@ -1,139 +1,144 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import Banner from "../components/Banner";
-import PostType from '../components/PostType';
+import PostType from "../components/PostType";
 import PostPreview from "../components/PostPreview";
-import Footer from '../components/Footer';
-import SearchModal from '../components/search/SearchModal';
+import Footer from "../components/Footer";
+import SearchModal from "../components/search/SearchModal";
 
 import "../style/mainPage.css";
-import api from '../api';
-import ViewDetailPost from './ViewDetailPostPage';
+import api from "../api";
+import ViewDetailPost from "./ViewDetailPostPage";
 
 // MainPage
 const MainPage: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
-    const [selectedPage, setSelectedPage] = useState<number>(1);
-    const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
-    const [posts, setPosts] = useState<any[]>([]);
-    const [totalPage, setTotalPage] = useState<number>(1);
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
-    const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
-    const [isToken, setIsToken] = useState<boolean>(false);
-    const postsPerPage = 10;
+  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
+  const [selectedPage, setSelectedPage] = useState<number>(1);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
+  const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
+  const [isToken, setIsToken] = useState<boolean>(false);
+  const postsPerPage = 10;
 
-    useEffect(() => {
-        const endpoint = 
-            selectedCategory === '전체' ? '/posts/all' :
-            selectedCategory === '디자인' ? '/posts/DESIGN' :
-            selectedCategory === '기획' ? '/posts/PLAN' :
-            selectedCategory === '개발' ? `/posts/SERVER` && `/posts/WEB`&& `/posts/ANDROID` : '';
+  useEffect(() => {
+    const endpoint =
+      selectedCategory === "전체"
+        ? "/posts/all"
+        : selectedCategory === "디자인"
+        ? "/posts/DESIGN"
+        : selectedCategory === "기획"
+        ? "/posts/PLAN"
+        : selectedCategory === "개발"
+        ? `/posts/SERVER` && `/posts/WEB` && `/posts/ANDROID`
+        : "";
 
-        const token = sessionStorage.getItem("token");
-        if (token) {
-            setIsToken(true);
-        }
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      setIsToken(true);
+    }
 
-        api.get(endpoint, {
-            params: {
-                page: selectedPage,  // 현재 페이지 번호를 API 요청에 포함
-                size: postsPerPage   // 페이지당 아이템 수를 API 요청에 포함
-            }
-        })
-        .then((response) => {
-            const { pageInfo, dataList } = response.data.data;
-            setPosts(dataList);
-            setTotalPage(pageInfo.totalPage);  // 총 페이지 수 업데이트
-            console.log(posts);
-        })
-        .catch(error => {
-            console.error("Error fetching posts:", error);
-        });
-        
-    }, [selectedCategory, selectedPage]);
+    api
+      .get(endpoint, {
+        params: {
+          page: selectedPage, // 현재 페이지 번호를 API 요청에 포함
+          size: postsPerPage, // 페이지당 아이템 수를 API 요청에 포함
+        },
+      })
+      .then((response) => {
+        const { pageInfo, dataList } = response.data.data;
+        setPosts(dataList);
+        setTotalPage(pageInfo.totalPage); // 총 페이지 수 업데이트
+        console.log(posts);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  }, [selectedCategory, selectedPage]);
 
-    const handleCategoryChange = (category: string) => {
-        setSelectedCategory(category);
-        setSelectedPage(1);  // 카테고리 변경 시 페이지를 1로 초기화
-    };
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setSelectedPage(1); // 카테고리 변경 시 페이지를 1로 초기화
+  };
 
-    const handleSearch = (term: string) => {
-        setSearchTerm(term);
-        setIsSearchModalOpen(false);
-    };
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+    setIsSearchModalOpen(false);
+  };
 
-    const handleHeartClick = () => {
-        setSelectedHeart(!selectedHeart);
-    };
+  const handleHeartClick = () => {
+    setSelectedHeart(!selectedHeart);
+  };
 
-    const handleScrapClick = () => {
-        setSelectedScrap(!selectedScrap);
-    };
+  const handleScrapClick = () => {
+    setSelectedScrap(!selectedScrap);
+  };
 
-    const handlePageChange = (pageNumber: number) => {
-        setSelectedPage(pageNumber);
-    };
+  const handlePageChange = (pageNumber: number) => {
+    setSelectedPage(pageNumber);
+  };
 
-    return (
-        <>
-            <div className="main-total">
-                {/* Navbar */}
-                <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+  return (
+    <>
+      <div className="main-total">
+        {/* Navbar */}
+        <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
 
-                {/* Banner */}
-                <Banner />
+        {/* Banner */}
+        <Banner />
 
-                {/* Category Selection */}
-                <PostType 
-                    category={selectedCategory} 
-                    onCategoryChange={handleCategoryChange} 
+        {/* Category Selection */}
+        <PostType
+          category={selectedCategory}
+          onCategoryChange={handleCategoryChange}
+        />
+
+        {/* Post Preview Area */}
+        <div className="post-preview">
+          <ul>
+            {posts.map((item, index) => (
+              <li key={index} className="post-preview-item">
+                <PostPreview
+                  id={item.id}
+                  title={item.title}
+                  content={item.previewContent}
+                  date={item.createdDate}
+                  writer={item.name}
+                  view={item.viewCount}
+                  like={item.likeCount}
+                  scrap={item.scrapCount}
+                  profile={item.profile}
+                  picture={item.previewImage ? item.previewImage : undefined}
+                  handleHeartClick={isToken ? handleHeartClick : undefined}
+                  handleScrapClick={isToken ? handleScrapClick : undefined}
+                  selectedHeart={isToken ? selectedHeart : undefined}
+                  selectedScrap={isToken ? selectedScrap : undefined}
                 />
+              </li>
+            ))}
+          </ul>
+        </div>
 
-                {/* Post Preview Area */}
-                <div className="post-preview">
-                    <ul>
-                        {posts.map((item, index) => (
-                            <li key={index} className="post-preview-item">
-                                <PostPreview 
-                                    id={item.id}
-                                    title={item.title}
-                                    content={item.previewContent}
-                                    date={item.createdDate}
-                                    writer={item.name}
-                                    view={item.viewCount}
-                                    like={item.likeCount}
-                                    scrap={item.scrapCount}
-                                    profile={item.profile}
-                                    picture={item.previewImage ? item.previewImage : undefined}
-                                    handleHeartClick={isToken ? handleHeartClick : undefined}
-                                    handleScrapClick={isToken ? handleScrapClick : undefined}
-                                    selectedHeart={isToken ? selectedHeart : undefined}
-                                    selectedScrap={isToken ? selectedScrap : undefined}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+        {/* Pagination Area */}
+        <Footer
+          totalPosts={posts.length}
+          postsPerPage={postsPerPage}
+          selectedPage={selectedPage}
+          totalPages={totalPage} // 총 페이지 수 전달
+          onPageChange={handlePageChange}
+        />
 
-                {/* Pagination Area */}
-                <Footer 
-                    totalPosts={posts.length} 
-                    postsPerPage={postsPerPage} 
-                    selectedPage={selectedPage} 
-                    totalPages={totalPage}  // 총 페이지 수 전달
-                    onPageChange={handlePageChange}
-                />
-
-                {isSearchModalOpen && (
-                    <SearchModal 
-                        onClose={() => setIsSearchModalOpen(false)} 
-                        onSearch={handleSearch} 
-                    />
-                )}
-            </div>
-        </>
-    );
+        {isSearchModalOpen && (
+          <SearchModal
+            onClose={() => setIsSearchModalOpen(false)}
+            onSearch={handleSearch}
+          />
+        )}
+      </div>
+    </>
+  );
 };
 
 export default MainPage;

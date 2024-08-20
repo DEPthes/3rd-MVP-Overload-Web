@@ -3,8 +3,35 @@ import CircleAvatarComponent from "../../components/CircleAvatarComponent";
 import MyPageNav from "../../components/myPage/MyPageNav";
 import { AVATARANIMALLIST } from "../../constants/avatar";
 import "../../style/myPage/myPage.css";
+import { useGetScraps } from "../../hooks/useGetScraps";
+import { useState, useEffect } from "react";
+import PostPreview from "../../components/PostPreview";
+import { PageNextButton } from "../../assets";
 
 const MyPage = () => {
+  const [page, setPage] = useState<number>(1);
+  const [pageList, setPageList] = useState<number[]>([]);
+  const { data } = useGetScraps(page);
+  const totalPage = data.data.pageInfo.totalPage;
+
+  useEffect(() => {
+    const pagesToShow = 5; // Number of pages to show
+    const startPage = Math.max(1, page - Math.floor(pagesToShow / 2));
+    const endPage = Math.min(totalPage, startPage + pagesToShow - 1);
+
+    const newPageList = [];
+    for (let i = startPage; i <= endPage; i++) {
+      newPageList.push(i);
+    }
+    setPageList(newPageList);
+  }, [page, totalPage]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPage) {
+      setPage(newPage);
+    }
+  };
+
   return (
     <>
       <MyPageNav />
@@ -34,8 +61,54 @@ const MyPage = () => {
         </div>
 
         {/* 스크랩 리스트 */}
-        {/* 계정 관리 */}
+        <div className="myPageScrabListContainer">
+          <div style={{ width: "100%" }}>
+            <span className="scrabListSpan">스크랩 리스트</span>
+            {data.data.dataList.map((item) => (
+              <div key={item.id}>
+                <PostPreview
+                  id={item.id}
+                  title={item.title}
+                  content={item.previewContent}
+                  date={item.createdDate}
+                  writer={item.name}
+                  view={item.viewCount}
+                  like={item.likeCount}
+                  scrap={item.scrapCount}
+                  profile={""}
+                  picture={""}
+                />
+                <div style={{ borderBottom: "0.5px solid #8C8C8C" }} />
+              </div>
+            ))}
+          </div>
+          <div className="scrabPage">
+            <PageNextButton
+              onClick={() => handlePageChange(page - 1)}
+              stroke={page === 1 ? "#B8B8B8" : "000000"}
+            />
+            {pageList.map((pageNum) => (
+              <div
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`paginationButton ${
+                  page === pageNum ? "active" : ""
+                }`}
+              >
+                {pageNum}
+              </div>
+            ))}
+            <PageNextButton
+              onClick={() => handlePageChange(page - 1)}
+              stroke={page === 1 ? "#B8B8B8" : "000000"}
+              style={{
+                transform: "rotate(180deg)",
+              }}
+            />
+          </div>
+        </div>
 
+        {/* 계정 관리 */}
         <div className="manageInfoContainer">
           <span className="manageInfoHeader">계정 관리</span>
           <div className="outContainer">
