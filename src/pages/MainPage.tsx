@@ -136,6 +136,7 @@ const MainPage: React.FC = () => {
                   handleScrapClick={isToken ? handleScrapClick : undefined}
                   selectedHeart={isToken ? selectedHeart : undefined}
                   selectedScrap={isToken ? selectedScrap : undefined}
+                  avatar={item.avatar}
                 />
               </li>
             ))}
