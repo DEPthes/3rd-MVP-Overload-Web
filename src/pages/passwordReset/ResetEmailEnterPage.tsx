@@ -64,7 +64,7 @@ const ResetEmailEnterPage: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.buttonGroup}>
-                        <button type="submit" className={styles.nextButton} disabled={!email}>
+                        <button type="submit" className={styles.nextButton} disabled={!email || !!emailError}>
                             {constants.submitButtonText}
                         </button>
                     </div>
