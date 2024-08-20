@@ -9,12 +9,8 @@ import defaultProfile from "../images/defaultProfile.png";
 import "../style/viewDetailPost.css";
 import api from "../api/index";
 
-type viewDetail = {
-  handleHeartClick:()=>void;
-  selectedHeart:boolean;
-}
 
-const ViewDetailPost: React.FC<viewDetail> = (props) => {
+const ViewDetailPost: React.FC= () => {
     const { postId } = useParams<{ postId: string }>();
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>('');

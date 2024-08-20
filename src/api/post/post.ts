@@ -1,5 +1,10 @@
 import api from "../index";
-import { PostPostsProps, PostResponse } from "../../types/post";
+import {
+  ImageResponse,
+  PostImageProps,
+  PostPostsProps,
+  PostResponse,
+} from "../../types/post";
 import { TempsResponse } from "../../types/temps";
 
 export async function postPost({
@@ -30,5 +35,14 @@ export async function postTemps({
 
 export async function getTemps(): Promise<TempsResponse> {
   const response = await api.get("/posts/temps");
+  return response?.data;
+}
+
+export async function postImage({
+  postImage,
+}: PostImageProps): Promise<ImageResponse> {
+  const response = await api.post("/posts/uploadImages", {
+    postImage,
+  });
   return response?.data;
 }

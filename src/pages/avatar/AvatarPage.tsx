@@ -7,10 +7,10 @@ import {
 } from "../../constants/avatar";
 import ".././../style/avatar/avatarPage.css";
 import matchAvatarHeader from "../../util/matchAvatarHeader";
-import { NextButton } from "../../assets";
 import AvatarCard from "../../components/avatarPage/AvatarCard";
 import AvatarComponent from "../../components/avatarPage/AvatarComponent";
 import AvatarNav from "../../components/avatarPage/AvatarNav";
+import { NextButton } from "../../assets";
 
 const AvatarPage = () => {
   const [avatarHeader, setAvatarHeader] = useState<string>(AVATARHEADER[0]);
@@ -72,6 +72,8 @@ const AvatarPage = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
+  console.log(currentImages, maxPage, currentPage);
+
   const isImageSelected = (image: string): boolean => {
     return Object.values(avatar).includes(image);
   };
@@ -108,6 +110,7 @@ const AvatarPage = () => {
               {AVATARRANDOMBUTTONSPAN}
             </span>
           </div>
+          {/* 아바타 */}
           <div
             className={`avatarCardWrap ${
               currentPage === 0 && "avatarSecondPage"

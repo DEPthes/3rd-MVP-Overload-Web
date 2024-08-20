@@ -1,62 +1,61 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
 
 .preview-total {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    width: 55vw;
-    margin-bottom: 25px;
-    color: #3C3C3C;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 25px;
+  color: #3c3c3c;
 }
 
 /* 그림을 제외한 왼쪽 부분 */
 .preview-left {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    flex: 1;
-    max-width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1;
+  max-width: 100%;
 }
 
 /* 제목 */
 .preview-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-    color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+  color: black;
 }
 
-.preview-title a{
-    text-decoration: none;
-    color: inherit;
+.preview-title a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.preview-title:hover{
-    color: #0258FE;
-    cursor: pointer;
+.preview-title:hover {
+  color: #0258fe;
+  cursor: pointer;
 }
 
 /* 내용 부분 */
 .preview-content {
-    word-wrap: break-word;
-    word-break: break-all;
-    font-size: 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  word-wrap: break-word;
+  word-break: break-all;
+  font-size: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* data, writer */
 .preview-middle {
-    display: flex;
-    font-size: 1rem;
-    margin-top: 20px;
-    margin-bottom: 10px;
+  display: flex;
+  font-size: 1rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
+
 
 .preview-middle div{
     margin-right: 25px;
@@ -87,45 +86,47 @@
 
 /* view, like, scrap */
 .preview-bottom {
-    display: flex;
-    justify-content: left;
+  display: flex;
+  justify-content: left;
 }
 
-.preview-bottom button{
-    border: none;
-    background-color: rgba(255, 255, 255, 0);
+.preview-bottom button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+
 }
 
 /* 눈, 하트, 스크랩 이미지 */
 .preview-bottom img {
-    height: 20px;
-    margin-right: 5px;
-    margin-top: 3px;
+  height: 20px;
+  margin-right: 5px;
+  margin-top: 3px;
 }
 
 .preview-bottom div {
-    display: flex;
-    margin-right: 20px;
-    font-size: 1rem;
+  display: flex;
+  margin-right: 20px;
+  font-size: 1rem;
 }
 
 /* 오른쪽 섹선, 이미지 */
 .preview-right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 160px;
-    width: 240px;
-    margin-left: 20px;
-    margin-top: 30px;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  width: 240px;
+  margin-left: 20px;
+  margin-top: 30px;
+  overflow: hidden;
 
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .preview-right img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
 }

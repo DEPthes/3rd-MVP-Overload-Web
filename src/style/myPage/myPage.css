@@ -155,3 +155,53 @@
   font-weight: 700;
   line-height: 150%; /* 24px */
 }
+
+.myPageScrabListContainer {
+  background: rgba(173, 187, 200, 0.25);
+  padding: 35px 50px;
+  gap: 4px;
+  width: 740px;
+  margin-top: 18px;
+}
+
+.scrabListSpan {
+  color: #050c20;
+
+  /* Label/Large */
+  font-family: "Noto Sans KR";
+  font-size: 21.328px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 31.992px */
+}
+.scrabPage {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+  align-items: center;
+  gap: 30px;
+}
+
+.paginationButton {
+  color: #767676;
+  text-align: center;
+
+  /* Paragraph/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
+}
+.paginationButton.active {
+  color: #000;
+  text-align: center;
+
+  /* Heading/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 22.4px */
+  border-bottom: 2px solid black;
+}
