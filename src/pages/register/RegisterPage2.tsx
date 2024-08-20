@@ -27,7 +27,8 @@ const RegisterPage2: React.FC = () => {
     };
 
     useEffect(() => {
-        if (!name || !part || !count || nameError || partError || countError) {
+        const isNameValid = name.length >= 2 && name.length <= 20;
+        if (!name || !part || !count || nameError || partError || countError || !isNameValid) {
             setIsSubmitDisabled(true);
         } else {
             setIsSubmitDisabled(false);
@@ -35,8 +36,14 @@ const RegisterPage2: React.FC = () => {
     }, [name, part, count, nameError, partError, countError]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
-        setNameError('');
+        const value = e.target.value.slice(0, 20); 
+        setName(value);
+
+        if (value.length < 2) {
+            setNameError('이름은 2글자 이상이어야 합니다.');
+        } else {
+            setNameError('');
+        }
     };
 
     const handlePartChange = (part: string) => {
@@ -47,13 +54,19 @@ const RegisterPage2: React.FC = () => {
     };
 
     const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setCount(value);
-        if (parseInt(value) > 3) {
+        const value = e.target.value.replace(/[^0-9]/g, ''); // 숫자가 아닌 문자는 제거
+
+        if (value === '' || parseInt(value) > 3) {
             setCountError(constants.countError);
+            setCount('');
         } else {
             setCountError('');
+            setCount(value);
         }
+    };
+
+    const handleCountBlur = () => {
+        setCountError(''); // 입력 필드에서 포커스가 벗어났을 때 에러 메시지 지우기
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -73,7 +86,7 @@ const RegisterPage2: React.FC = () => {
         }
     };
 
-    const handleCancel = () => navigate('/');
+    const handleCancel = () => navigate('/register');
 
     return (
         <div className={styles.centeredContainer}>
@@ -103,7 +116,16 @@ const RegisterPage2: React.FC = () => {
                     </div>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer2}><label htmlFor="count">{constants.countLabel}</label></div>
-                        <div className={styles.inputWithButton}><input type="number" id="count" value={count} placeholder={constants.countPlaceholder} onChange={handleCountChange} /></div>
+                        <div className={styles.inputWithButton}>
+                            <input
+                                type="text" // 'number' 대신 'text'로 설정하여 onChange에서 제어
+                                id="count"
+                                value={count}
+                                placeholder={constants.countPlaceholder}
+                                onChange={handleCountChange}
+                                onBlur={handleCountBlur} // 포커스 해제 시 에러 메시지 제거
+                            />
+                        </div>
                         <div className={styles.errorMessageContainer}><span className={styles.errorMessage}>{countError}</span></div>
                     </div>
                     <div className={styles.buttonGroup}>

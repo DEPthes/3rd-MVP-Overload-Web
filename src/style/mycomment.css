@@ -34,21 +34,29 @@
     margin-top: 10px;
 }
 
-.mycomment-profile{
+
+.mycomment-avatar{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 80px;
-    width: 80px;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid #7F7F7F;
+    position: relative;
+    margin-right: 80px;
 }
 
-.mycomment-profile img{
-    width: 100%;
-    height: 100%;
+.mycomment-avatar-img {
+    height: 80px;
+    width: auto; 
+    position: absolute;
     object-fit: cover;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.mycomment-default-profile{
+    position: absolute;
+    width: 80px; 
+    height: 80px;
+    object-fit: cover; 
+    overflow: hidden;
 }
 
 .mycomment-writerinfo-nickname{

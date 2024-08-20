@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "../components/Nav";
@@ -14,7 +13,7 @@ type viewDetail = {
   handleHeartClick:()=>void;
   selectedHeart:boolean;
 }
-// 상세 게시글 페이지
+
 const ViewDetailPost: React.FC<viewDetail> = (props) => {
     const { postId } = useParams<{ postId: string }>();
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
@@ -25,6 +24,15 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
     const [isToken, setIsToken] = useState(false);
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
+
+    const fetchComments = async () => {
+        try {
+            const response = await api.get(`/comments/posts/${postId}`);
+            setComments(response.data.data);
+        } catch (error) {
+            console.error("댓글 목록 가져오기 오류:", error);
+        }
+    };
 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
@@ -43,7 +51,7 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
             .then((response) => {
                 const data = response.data.data;
                 setPost(data);
-                console.log(data);
+                console.log(data)
             })
             .catch((error) => {
                 console.error("게시글 데이터 가져오기 오류:", error);
@@ -58,23 +66,13 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
             .then((response) => {
                 const member = response.data.data;
                 setMember(member);
-                console.log(member)
             })
             .catch((error) => {
                 console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
-                console.log(member)
             });
 
-        // 댓글 데이터 가져오기
-        api.get(`/comments/posts/${numericPostId}`)
-            .then((response) => {
-                const comment = response.data.data;
-                setComments(comment);
-            })
-            .catch((error) => {
-                console.error("댓글 데이터 가져오기 오류:", error);
-            });
-
+        // 댓글 데이터 가져오기 호출 추가
+        fetchComments();
     }, [postId]);
 
     const handleSearch = (term: string) => {
@@ -96,7 +94,10 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
 
     return (
         <>
-            <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+            <Nav 
+                onSearchClick={() => setIsSearchModalOpen(true)} 
+                profile={member?.avatar || undefined}
+            />
 
             <div className="total">
                 <div className="detail-post">
@@ -107,26 +108,28 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
                         date={post.createdDate}
                         writer={post.writerInfo.name}
                         part={post.writerInfo.part}
-                        profile={post.writerInfo.avatar?.avatarFace || ""}
+                        profile={post.writerInfo.avatar ? post.writerInfo.avatar : undefined}
                         view={post.viewCount}
                         like={post.likeCount}
                         liked={post.liked}
+                        mine={post.mine}
                         scrap={post.scrapCount}
+                        generation={post.writerInfo.generation}
                         handleHeartClick={isToken ? handleHeartClick : undefined}
                         handleScrapClick={isToken ? handleScrapClick : undefined}
                         selectedHeart={isToken ? selectedHeart : undefined}
                         selectedScrap={isToken ? selectedScrap : undefined}
                         tag={post.tagNameList || []}
-                        
                     />
                 </div>
 
-                {isToken && (
+                { (
                     <div className="detail-mycomment">
                         <MyComment
                             profile={member?.avatar || defaultProfile}
                             name={member?.memberName || ""}
-                            postId={Number(postId)} // postId 전달
+                            postId={Number(postId)} 
+                            refreshComments={fetchComments}
                         />
                     </div>
                 )}
@@ -138,6 +141,7 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
                             myProfile={member?.avatar || defaultProfile}
                             myName={member?.memberName || ""}
                             postId={Number(postId)}
+                            refreshComments={fetchComments}
                         />
                     </ul>
                 </div>

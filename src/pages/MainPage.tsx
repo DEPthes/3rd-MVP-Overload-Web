@@ -12,109 +12,100 @@ import ViewDetailPost from "./ViewDetailPostPage";
 
 // MainPage
 const MainPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("전체");
-  const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
-  const [posts, setPosts] = useState<any[]>([]);
-  const [totalPage, setTotalPage] = useState<number>(1);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
-  const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
-  const [isToken, setIsToken] = useState<boolean>(false);
-  const postsPerPage = 10;
 
-  useEffect(() => {
-    const endpoint =
-      selectedCategory === "전체"
-        ? "/posts/all"
-        : selectedCategory === "디자인"
-        ? "/posts/DESIGN"
-        : selectedCategory === "기획"
-        ? "/posts/PLAN"
-        : selectedCategory === "개발"
-        ? `/posts/SERVER` && `/posts/WEB` && `/posts/ANDROID`
-        : "";
+    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+    const [selectedPage, setSelectedPage] = useState<number>(1);
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+    const [posts, setPosts] = useState<any[]>([]);
+    const [totalPage, setTotalPage] = useState<number>(1);
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
+    const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
+    const [isToken, setIsToken] = useState<boolean>(false);
+    const [member, setMember] = useState<any|null>(null);
+    const postsPerPage = 10;
 
-    const token = sessionStorage.getItem("token");
-    if (token) {
-      setIsToken(true);
-    }
+    useEffect(() => {
+        const endpoint = 
+            selectedCategory === '전체' ? '/posts/all' :
+            selectedCategory === '디자인' ? '/posts/DESIGN' :
+            selectedCategory === '기획' ? '/posts/PLAN' :
+            selectedCategory === '개발' ? `/posts/SERVER` && `/posts/WEB`&& `/posts/ANDROID` : '';
 
-    api
-      .get(endpoint, {
-        params: {
-          page: selectedPage, // 현재 페이지 번호를 API 요청에 포함
-          size: postsPerPage, // 페이지당 아이템 수를 API 요청에 포함
-        },
-      })
-      .then((response) => {
-        const { pageInfo, dataList } = response.data.data;
-        setPosts(dataList);
-        setTotalPage(pageInfo.totalPage); // 총 페이지 수 업데이트
-        console.log(posts);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  }, [selectedCategory, selectedPage]);
+        const token = sessionStorage.getItem("token");
+        if (token) {
+            setIsToken(true);
+        }
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setSelectedPage(1); // 카테고리 변경 시 페이지를 1로 초기화
-  };
+        api.get(endpoint, {
+            params: {
+                page: selectedPage,  // 현재 페이지 번호를 API 요청에 포함
+                size: postsPerPage   // 페이지당 아이템 수를 API 요청에 포함
+            }
+        })
+        .then((response) => {
+            const { pageInfo, dataList } = response.data.data;
+            setPosts(dataList);
+            setTotalPage(pageInfo.totalPage);  // 총 페이지 수 업데이트
+        })
+        .catch(error => {
+            console.error("Error fetching posts:", error);
+        });
+        
+        // 멤버 데이터 가져오기
+        api.get(`/members`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            const member = response.data.data;
+            setMember(member);
+        })
+        .catch((error) => {
+            console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
+        });
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    setIsSearchModalOpen(false);
-  };
+    }, [selectedCategory, selectedPage]);
 
-  const handleHeartClick = () => {
-    setSelectedHeart(!selectedHeart);
-  };
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
+        setSelectedPage(1);  // 카테고리 변경 시 페이지를 1로 초기화
+    };
 
-  const handleScrapClick = () => {
-    setSelectedScrap(!selectedScrap);
-  };
+    const handleSearch = (term: string) => {
+        setSearchTerm(term);
+        setIsSearchModalOpen(false);
+    };
 
-  const handlePageChange = (pageNumber: number) => {
-    setSelectedPage(pageNumber);
-  };
+    const handleHeartClick = () => {
+        setSelectedHeart(!selectedHeart);
+    };
 
-  return (
-    <>
-      <div className="main-total">
-        {/* Navbar */}
-        <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+    const handleScrapClick = () => {
+        setSelectedScrap(!selectedScrap);
+    };
 
-        {/* Banner */}
-        <Banner />
+    const handlePageChange = (pageNumber: number) => {
+        setSelectedPage(pageNumber);
+    };
 
-        {/* Category Selection */}
-        <PostType
-          category={selectedCategory}
-          onCategoryChange={handleCategoryChange}
-        />
+    return (
+        <>
+            <div className="main-total">
+                {/* Navbar */}
+                <Nav 
+                    onSearchClick={() => setIsSearchModalOpen(true)} 
+                    profile={member?.avatar || undefined}
+                />
 
-        {/* Post Preview Area */}
-        <div className="post-preview">
-          <ul>
-            {posts.map((item, index) => (
-              <li key={index} className="post-preview-item">
-                <PostPreview
-                  id={item.id}
-                  title={item.title}
-                  content={item.previewContent}
-                  date={item.createdDate}
-                  writer={item.name}
-                  view={item.viewCount}
-                  like={item.likeCount}
-                  scrap={item.scrapCount}
-                  profile={item.profile}
-                  picture={item.previewImage ? item.previewImage : undefined}
-                  handleHeartClick={isToken ? handleHeartClick : undefined}
-                  handleScrapClick={isToken ? handleScrapClick : undefined}
-                  selectedHeart={isToken ? selectedHeart : undefined}
-                  selectedScrap={isToken ? selectedScrap : undefined}
+                {/* Banner */}
+                <Banner />
+
+                {/* Category Selection */}
+                <PostType 
+                    category={selectedCategory} 
+                    onCategoryChange={handleCategoryChange} 
                 />
               </li>
             ))}
