@@ -47,6 +47,7 @@ import nose5 from "../assets/avatar/nose5.svg";
 import nose6 from "../assets/avatar/nose6.svg";
 import nose7 from "../assets/avatar/nose7.svg";
 import nose8 from "../assets/avatar/nose8.svg";
+import EditPage from '../pages/EditPage';
 
 // 이미지 매핑 객체
 const avatarImages:any = {
@@ -103,6 +104,7 @@ type post = {
     view: number;
     like: number;
     liked: boolean;
+    scraped: boolean;
     mine: boolean;
     scrap: number;
     tag: string[];
@@ -120,7 +122,7 @@ const PostDetailView: React.FC<post> = (props) => {
     const htmlContent = marked(props.content)
 
     const [isHeartSelected, setIsHeartSelected] = useState(props.liked || false);
-    const [isScrapSelected, setIsScrapSelected] = useState(props.selectedScrap || false);
+    const [isScrapSelected, setIsScrapSelected] = useState(props.scraped || false);
     const [likeCount, setLikeCount] = useState(props.like);
     const [scrapCount, setScrapCount] = useState(props.scrap);
     const [selecteMenu, setSelecteMenu] = useState<boolean>(false);
@@ -130,31 +132,11 @@ const PostDetailView: React.FC<post> = (props) => {
     useEffect(()=>{
         // setIsScrapSelected(props.selectedScrap || false);
 
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
             setToken(token);
         }
-
-        api.get(`/scraps`, {
-            headers: {
-                'Authorization': `Bearer ${token}` 
-            }
-        })
-        .then((response) => {
-            // 응답 데이터에서 dataList 배열을 가져옴
-            const dataList = response.data.data.dataList;
-            
-            // 각 게시물의 id를 배열로 저장
-            const scrapIds = dataList.map((item:any) => item.id);
-        
-            // 현재 포스트가 스크랩된 상태인지 확인
-            const isScrapped = scrapIds.includes(props.id);
-            setIsScrapSelected(isScrapped);
-        })
-        .catch((error) => {
-            console.error("스크랩 가져오기 오류:", error);
-        });
 
     }, [props.selectedScrap]);
 
@@ -222,26 +204,6 @@ const PostDetailView: React.FC<post> = (props) => {
             props.handleScrapClick();
         }
     };
-    
-    // const handleEditPost = async() => {
-    //     try {
-    //         const updatedPost = {
-    //             title: props.title,
-    //             content: props.content,
-    //             tags: props.tag,
-    //         };
-
-    //         await api.put(`/posts/edits/${props.id}`, updatedPost, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`
-    //             }
-    //         });
-
-    //         navigate(`/post/${props.id}`, { state: { post: updatedPost } }); 
-    //     } catch (error) {
-    //         console.error("게시글 수정 중 오류가 발생했습니다.", error);
-    //     }
-    // };
 
     const handleTagClick = (tag: string) => {
         navigate('/searchResults', { state: { searchTerm: tag, isTagSearch: true } });
@@ -260,6 +222,10 @@ const PostDetailView: React.FC<post> = (props) => {
         }
     }
 
+    const handleEditPost = () => {
+        navigate(`/editPage/${props.id}`);
+    }
+
     return (
         <div className="detail-total">
             <div className="detail-title">
@@ -270,7 +236,7 @@ const PostDetailView: React.FC<post> = (props) => {
                         <button className="detail-menu" onClick={handleMenuClick}><img src={menu}/></button>
                         {selecteMenu && 
                             <div className='detail-menu-options'>
-                                <button className='detail-menu-option'>게시글 수정</button>
+                                <button className='detail-menu-option'onClick={handleEditPost}>게시글 수정</button>
                                 <button className='detail-menu-option' onClick={handleDeletePost}>게시글 삭제</button>
                             </div>
                         }

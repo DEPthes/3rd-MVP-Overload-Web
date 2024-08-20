@@ -107,13 +107,11 @@ type postPreview = {
 const PostPreview: React.FC<postPreview> = (props) => {
     const navigate = useNavigate();
 
-    const [likeCount, setLikeCount] = useState(props.like);
-    const [scrapCount, setScrapCount] = useState(props.scrap);
     const [isToken, setIsToken] = useState(false);
     const [token, setToken] = useState<string>();
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
             setToken(token);
@@ -170,13 +168,13 @@ const PostPreview: React.FC<postPreview> = (props) => {
                         <button>
                             <img src={heart} />
                         </button>
-                        {likeCount}
+                        {props.like}
                     </div>
                     <div>
                         <button>
                             <img src={bookmark} />
                         </button>
-                        {scrapCount}
+                        {props.scrap}
                     </div>
                 </div>
             </div>
