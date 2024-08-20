@@ -10,11 +10,11 @@ type NoseImage = AvatarCategoryImages["nose"][number];
 export interface AvatarComponentProps {
   width: string;
   height: string;
-  face: FaceImage;
-  body: BodyImage;
-  eyes: EyesImage;
-  nose: NoseImage;
-  mouth: MouthImage;
+  face?: FaceImage;
+  body?: BodyImage;
+  eyes?: EyesImage;
+  nose?: NoseImage;
+  mouth?: MouthImage;
 }
 
 export type AvatarAnimalListKey = "body" | "eyes" | "face" | "mouth" | "nose";
