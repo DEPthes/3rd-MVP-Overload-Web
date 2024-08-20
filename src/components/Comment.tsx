@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import doComment from "../images/doComment.png";
 import undoComment from "../images/undoComment.png";
@@ -41,7 +40,7 @@ import nose8 from "../assets/avatar/nose8.svg";
 import api from "../api";
 
 // 이미지 매핑 객체
-const avatarImages:any = {
+const avatarImages: any = {
   body1,
   body2,
   body3,
@@ -77,135 +76,200 @@ const avatarImages:any = {
 };
 
 type Avatar = {
-    avatarFace?: string;
-    avatarBody?: string;
-    avatarEyes?: string;
-    avatarNose?: string;
-    avatarMouth?: string;
+  avatarFace?: string;
+  avatarBody?: string;
+  avatarEyes?: string;
+  avatarNose?: string;
+  avatarMouth?: string;
 };
 
 type CommentProps = {
-    comments?: any[]; // 전체 댓글 리스트
-    myProfile?: Avatar;
-    myName: string;
-    postId: number;
-    refreshComments:()=>void;
+  comments?: any[]; // 전체 댓글 리스트
+  myProfile?: Avatar;
+  myName: string;
+  postId: number;
+  refreshComments: () => void;
 };
 
 const Comment: React.FC<CommentProps> = (props) => {
-    const [replyVisible, setReplyVisible] = useState<{ [key: number]: boolean }>({});
+  const [replyVisible, setReplyVisible] = useState<{ [key: number]: boolean }>(
+    {}
+  );
 
-    const handleDoCommentClick = (commentId: number) => {
-        setReplyVisible(prev => ({
-            ...prev,
-            [commentId]: !prev[commentId]
-        }));
-    };
+  const handleDoCommentClick = (commentId: number) => {
+    setReplyVisible((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId],
+    }));
+  };
 
-    return (
-        <>
-            {/* 댓글 배열을 역순으로 정렬 */}
-            {props.comments && props.comments.slice().reverse().map((comment, index) => (
-                <li key={index}>
-                    <div className="comment-total">
-                        <div className="comment-top">
+  return (
+    <>
+      {/* 댓글 배열을 역순으로 정렬 */}
+      {props.comments &&
+        props.comments.slice().map((comment, index) => (
+          <li key={index}>
+            <div className="comment-total">
+              <div className="comment-top">
+                <div>
+                  {comment.avatar && (
+                    <div className="comment-avatar">
+                      {comment.avatar.avatarFace ? (
+                        <img
+                          className="comment-avatar-img"
+                          src={avatarImages[comment.avatar.avatarFace]}
+                        />
+                      ) : (
+                        <img
+                          src={defaultProfile}
+                          className="comment-default-profile"
+                        />
+                      )}
+                      {comment.avatar.avatarBody && (
+                        <img
+                          className="comment-avatar-img"
+                          src={avatarImages[comment.avatar.avatarBody]}
+                        />
+                      )}
+                      {comment.avatar.avatarEyes && (
+                        <img
+                          className="comment-avatar-img"
+                          src={avatarImages[comment.avatar.avatarEyes]}
+                        />
+                      )}
+                      {comment.avatar.avatarNose && (
+                        <img
+                          className="comment-avatar-img"
+                          src={avatarImages[comment.avatar.avatarNose]}
+                        />
+                      )}
+                      {comment.avatar.avatarMouth && (
+                        <img
+                          className="comment-avatar-img"
+                          src={avatarImages[comment.avatar.avatarMouth]}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
+                <div className="comment-header">
+                  <p className="comment-nickname">{comment.nickname}</p>
+                  <p className="comment-date">{comment.createdDate}</p>
+                </div>
+              </div>
+              <div className="comment-body">
+                <p>{comment.content}</p>
+              </div>
+              <button
+                onClick={() => handleDoCommentClick(comment.commentId)}
+                className="comment-actions"
+              >
+                <img
+                  src={
+                    replyVisible[comment.commentId] ? undoComment : doComment
+                  }
+                  alt="toggle comment"
+                />
+              </button>
+              <hr
+                className={`comment-hr ${
+                  replyVisible[comment.commentId] ? "active" : ""
+                }`}
+              />
+
+              {/* 대댓글 표시 */}
+              {replyVisible[comment.commentId] && (
+                <div className="comment-total active">
+                  {/* 댓글이 있을 때만 대댓글 표시 */}
+                  {comment.replyList &&
+                    comment.replyList.length > 0 &&
+                    comment.replyList
+                      .slice()
+                      .reverse()
+                      .map((reply: any, replyIndex: number) => (
+                        <div key={replyIndex}>
+                          <div className="comment-top">
                             <div>
-                                {comment.avatar && (
-                                <div className='comment-avatar'>
-                                {comment.avatar.avatarFace ? (
-                                    <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarFace]} />
-                                ) 
-                                : (
-                                    <img src={defaultProfile} className="comment-default-profile"/>
-                                )}
-                                {comment.avatar.avatarBody && (
-                                    <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarBody]} />
-                                )}
-                                {comment.avatar.avatarEyes && (
-                                    <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarEyes]} />
-                                )}
-                                {comment.avatar.avatarNose && (
-                                    <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarNose]} />
-                                )}
-                                {comment.avatar.avatarMouth && (
-                                    <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarMouth]} />
-                                )}
+                              {reply.avatar && (
+                                <div className="comment-avatar">
+                                  {reply.avatar.avatarFace ? (
+                                    <img
+                                      className="comment-avatar-img"
+                                      src={
+                                        avatarImages[comment.avatar.avatarFace]
+                                      }
+                                    />
+                                  ) : (
+                                    <img
+                                      src={defaultProfile}
+                                      className="comment-default-profile"
+                                    />
+                                  )}
+                                  {reply.avatar.avatarBody && (
+                                    <img
+                                      className="comment-avatar-img"
+                                      src={
+                                        avatarImages[comment.avatar.avatarBody]
+                                      }
+                                    />
+                                  )}
+                                  {reply.avatar.avatarEyes && (
+                                    <img
+                                      className="comment-avatar-img"
+                                      src={
+                                        avatarImages[comment.avatar.avatarEyes]
+                                      }
+                                    />
+                                  )}
+                                  {reply.avatar.avatarNose && (
+                                    <img
+                                      className="comment-avatar-img"
+                                      src={
+                                        avatarImages[comment.avatar.avatarNose]
+                                      }
+                                    />
+                                  )}
+                                  {reply.avatar.avatarMouth && (
+                                    <img
+                                      className="comment-avatar-img"
+                                      src={
+                                        avatarImages[comment.avatar.avatarMouth]
+                                      }
+                                    />
+                                  )}
                                 </div>
-                        )}
+                              )}
                             </div>
                             <div className="comment-header">
-                                <p className="comment-nickname">{comment.nickname}</p>
-                                <p className="comment-date">{comment.createdDate}</p>
+                              <p className="comment-nickname">
+                                {reply.nickname}
+                              </p>
+                              <p className="comment-date">
+                                {reply.createdDate}
+                              </p>
                             </div>
+                          </div>
+                          <div className="comment-body">
+                            <p>{reply.content}</p>
+                          </div>
                         </div>
-                        <div className="comment-body">
-                            <p>{comment.content}</p>
-                        </div>
-                        <button onClick={() => handleDoCommentClick(comment.commentId)} className="comment-actions">
-                            <img src={replyVisible[comment.commentId] ? undoComment : doComment} alt="toggle comment" />
-                        </button>
-                        <hr className={`comment-hr ${replyVisible[comment.commentId] ? 'active' : ''}`} />
-
-                        {/* 대댓글 표시 */}
-                        {replyVisible[comment.commentId] && (
-                            <div className="comment-total active">
-                                {/* 댓글이 있을 때만 대댓글 표시 */}
-                                {comment.replyList && comment.replyList.length > 0 && (
-                                    comment.replyList.slice().reverse().map((reply: any, replyIndex: number) => (
-                                        <div key={replyIndex}>
-                                            <div className="comment-top">
-                                                <div>
-                                                {reply.avatar && (
-                                                    <div className='comment-avatar'>
-                                                    {reply.avatar.avatarFace ? (
-                                                        <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarFace]} />
-                                                    ) 
-                                                    : (
-                                                        <img src={defaultProfile} className="comment-default-profile"/>
-                                                    )}
-                                                    {reply.avatar.avatarBody && (
-                                                        <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarBody]} />
-                                                    )}
-                                                    {reply.avatar.avatarEyes && (
-                                                        <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarEyes]} />
-                                                    )}
-                                                    {reply.avatar.avatarNose && (
-                                                        <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarNose]} />
-                                                    )}
-                                                    {reply.avatar.avatarMouth && (
-                                                        <img className="comment-avatar-img" src={avatarImages[comment.avatar.avatarMouth]} />
-                                                    )}
-                                                    
-                                                    </div>
-                                            )}
-                                                </div>
-                                                <div className="comment-header">
-                                                    <p className="comment-nickname">{reply.nickname}</p>
-                                                    <p className="comment-date">{reply.createdDate}</p>
-                                                </div>
-                                            </div>
-                                            <div className="comment-body">
-                                                <p>{reply.content}</p>
-                                            </div>
-                                        </div>
-                                    ))
-                                )}
-                                {/* 대댓글이 없어도 MyComment 컴포넌트는 표시 */}
-                                <MyComment
-                                    commentId={comment.commentId}
-                                    profile={props.myProfile}
-                                    name={props.myName}
-                                    postId={props.postId}
-                                    parentPostId={comment.commentId}
-                                    refreshComments={props.refreshComments}
-                                />
-                            </div>
-                        )}
-                    </div>
-                </li>
-            ))}
-        </>
-    );
+                      ))}
+                  {/* 대댓글이 없어도 MyComment 컴포넌트는 표시 */}
+                  <MyComment
+                    commentId={comment.commentId}
+                    profile={props.myProfile}
+                    name={props.myName}
+                    postId={props.postId}
+                    parentPostId={comment.commentId}
+                    refreshComments={props.refreshComments}
+                  />
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+    </>
+  );
 };
 
 export default Comment;

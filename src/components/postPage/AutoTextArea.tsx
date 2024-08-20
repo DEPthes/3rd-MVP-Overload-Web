@@ -24,31 +24,23 @@ const AutoTextArea: React.FC<InputAreaProps> = ({ onChange }) => {
   const handleImageUpload = async () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
-    fileInput.accept = "image/*";
+    fileInput.accept = "image/*"; // 이미지 파일만 선택할 수 있도록 제한
 
     fileInput.onchange = async () => {
       const file = fileInput.files?.[0];
       if (file) {
         try {
-          // Convert the file to a base64 string
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onloadend = async () => {
-            const base64String = reader.result as string;
-            console.log(base64String);
-            // // Call the API with the base64 string
-            // const response = await postImage({ postImage: base64String });
+          const response = await postImage({ image: file });
 
-            // // Log the URL returned from the API
-            // console.log("Uploaded Image URL:", response.fileUrl);
-          };
+          console.log("Uploaded Image URL:", response.fileUrl);
         } catch (error) {
+          // 업로드 실패 시 에러 출력
           console.error("Error uploading image:", error);
         }
       }
     };
 
-    fileInput.click(); // Trigger the file input dialog
+    fileInput.click();
   };
 
   return (
