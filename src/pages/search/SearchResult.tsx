@@ -78,8 +78,8 @@ const SearchResults: React.FC = () => {
                                             id={item.id}
                                             title={item.title}
                                             content={item.previewContent}
-                                            date={item.createDate}
-                                            writer={item.writer}
+                                            date={item.createdDate}
+                                            writer={item.name}
                                             view={item.viewCount}
                                             like={item.likeCount}
                                             scrap={item.scrapCount}

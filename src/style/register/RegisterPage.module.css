@@ -211,7 +211,8 @@ body {
 }
 
 .cancelButton:hover {
-    color: #050C20;
+    border-radius: 2px;
+    background-color: #F4F4F4;
 }
 
 .nextButton:disabled {
