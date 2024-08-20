@@ -22,7 +22,6 @@ const MyPage = () => {
   const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
   const [isExitModal, setIsExitModal] = useState<boolean>(false);
   const memberData = useMember();
-  console.log(data.data.dataList);
 
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
@@ -184,13 +183,7 @@ const MyPage = () => {
                   like={item.likeCount}
                   scrap={item.scrapCount}
                   picture={""}
-                  profile={{
-                    avatarFace: undefined,
-                    avatarBody: undefined,
-                    avatarEyes: undefined,
-                    avatarNose: undefined,
-                    avatarMouth: undefined,
-                  }}
+                  avatar={item.avatar}
                 />
                 <div style={{ borderBottom: "0.5px solid #8C8C8C" }} />
               </div>

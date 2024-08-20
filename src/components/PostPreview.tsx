@@ -10,11 +10,11 @@ import "../style/postPreview.css";
 import CircleAvatarComponent from "./CircleAvatarComponent";
 
 type Avatar = {
-  avatarFace?: string;
-  avatarBody?: string;
-  avatarEyes?: string;
-  avatarNose?: string;
-  avatarMouth?: string;
+  avatarFace: string;
+  avatarBody: string;
+  avatarEyes: string;
+  avatarNose: string;
+  avatarMouth: string;
 };
 
 type postPreview = {
@@ -27,7 +27,7 @@ type postPreview = {
   like: number;
   scrap: number;
   picture?: string;
-  profile: Avatar;
+  profile?: Avatar;
   handleHeartClick?: () => void;
   selectedHeart?: boolean;
   handleScrapClick?: () => void;
@@ -54,8 +54,6 @@ const PostPreview: React.FC<postPreview> = (props) => {
   const handleTitleClick = () => {
     navigate(`/viewDetailPost/${props.id}`);
   };
-
-  console.log("avatar", props.avatar);
 
   return (
     <div className="preview-total">
