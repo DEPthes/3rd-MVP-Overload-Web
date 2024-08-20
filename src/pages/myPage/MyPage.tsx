@@ -176,8 +176,14 @@ const MyPage = () => {
                   view={item.viewCount}
                   like={item.likeCount}
                   scrap={item.scrapCount}
-                  profile={""}
                   picture={""}
+                  profile={{
+                    avatarFace: undefined,
+                    avatarBody: undefined,
+                    avatarEyes: undefined,
+                    avatarNose: undefined,
+                    avatarMouth: undefined,
+                  }}
                 />
                 <div style={{ borderBottom: "0.5px solid #8C8C8C" }} />
               </div>
