@@ -119,7 +119,6 @@ const PostPreview: React.FC<postPreview> = (props) => {
             setToken(token);
         }
         
-        console.log(props.id);//여러개나옴
 
     },[]);
 

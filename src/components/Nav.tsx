@@ -92,11 +92,13 @@ type nav = {
 
 const Nav: React.FC<nav> = (props) => {
   const [istoken, setIsToken] = useState(false);
+  const [token, setToken] = useState<string>();
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token) {
       setIsToken(true);
+      setToken(token);
     }
   }, []);
 
@@ -135,10 +137,10 @@ const Nav: React.FC<nav> = (props) => {
           <img className="nav-icon instagram-icon" src={insta} />
         </a>
         <img className="nav-icon" src={devider} />
-        {istoken ? (
+        {token ? (
           <img className="nav-icon write-button" src={writeBtn} alt="Write Button" onClick={handleWriteClick} />
         ) : null}
-        {istoken ? (
+        {token ? (
           props.profile && (
             <div className="nav-avatar" onClick={handleMyPageClick}>
               {props.profile.avatarFace ? (

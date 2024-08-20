@@ -43,7 +43,6 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
             .then((response) => {
                 const data = response.data.data;
                 setPost(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error("게시글 데이터 가져오기 오류:", error);
@@ -58,11 +57,9 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
             .then((response) => {
                 const member = response.data.data;
                 setMember(member);
-                console.log(member)
             })
             .catch((error) => {
                 console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
-                console.log(member)
             });
 
         // 댓글 데이터 가져오기

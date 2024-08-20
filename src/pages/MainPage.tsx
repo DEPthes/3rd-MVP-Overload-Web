@@ -46,7 +46,6 @@ const MainPage: React.FC = () => {
             const { pageInfo, dataList } = response.data.data;
             setPosts(dataList);
             setTotalPage(pageInfo.totalPage);  // 총 페이지 수 업데이트
-            console.log(dataList);
         })
         .catch(error => {
             console.error("Error fetching posts:", error);
@@ -61,11 +60,9 @@ const MainPage: React.FC = () => {
         .then((response) => {
             const member = response.data.data;
             setMember(member);
-            console.log(member)
         })
         .catch((error) => {
             console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
-            console.log(member)
         });
 
     }, [selectedCategory, selectedPage]);

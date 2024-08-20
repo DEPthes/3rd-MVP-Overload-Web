@@ -138,7 +138,6 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
             window.location.reload();
         } catch (error) {
             console.error("댓글 제출 중 오류 발생:", error);
-            console.log(props.commentId, props.postId, commentText, selectedBox, props.name)
         }
     };
 
