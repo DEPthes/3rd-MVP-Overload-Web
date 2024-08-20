@@ -105,7 +105,7 @@ const Comment: React.FC<CommentProps> = (props) => {
 
   return (
     <>
-      {/* 댓글 배열을 역순으로 정렬 */}
+      {/* 댓글 배열을 정순으로 정렬 */}
       {props.comments &&
         props.comments.slice().map((comment, index) => (
           <li key={index}>
@@ -185,7 +185,6 @@ const Comment: React.FC<CommentProps> = (props) => {
                     comment.replyList.length > 0 &&
                     comment.replyList
                       .slice()
-                      .reverse()
                       .map((reply: any, replyIndex: number) => (
                         <div key={replyIndex}>
                           <div className="comment-top">
