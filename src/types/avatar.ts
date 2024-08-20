@@ -22,3 +22,19 @@ export type AvatarAnimalListKey = "body" | "eyes" | "face" | "mouth" | "nose";
 export interface AvatarAnimalList {
   [key: string]: string[]; // 모든 속성의 값이 string[]인 객체
 }
+
+export interface AvatarApiProps {
+  avatarFace: string;
+  avatarBody: string;
+  avatarEyes: string;
+  avatarNose: string;
+  avatarMouth: string;
+}
+
+export interface AvatarResponse {
+  memberId: number;
+  avatar: AvatarApiProps;
+  memberName: string;
+  part: string;
+  email: string;
+}

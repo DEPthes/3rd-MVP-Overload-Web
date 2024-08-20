@@ -11,6 +11,7 @@ import { LogOutReq } from "../../api/LogInReq";
 import AuthModa from "../../components/AuthModa";
 import { useMutation } from "@tanstack/react-query";
 import { ExitReq } from "../../api/Exit";
+import { useMember } from "../../hooks/useMember";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const MyPage = () => {
   const totalPage = data.data.pageInfo.totalPage;
   const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
   const [isExitModal, setIsExitModal] = useState<boolean>(false);
+  const memberData = useMember();
+  console.log(memberData.data.data.avatar);
 
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
@@ -144,16 +147,18 @@ const MyPage = () => {
             <CircleAvatarComponent
               width="154px"
               height="154px"
-              body={AVATARANIMALLIST.body[0]}
-              eyes={AVATARANIMALLIST.eyes[0]}
-              face={AVATARANIMALLIST.face[0]}
-              mouth={AVATARANIMALLIST.mouth[0]}
-              nose={AVATARANIMALLIST.nose[0]}
+              body={memberData.data.data.avatar.avatarBody}
+              eyes={memberData.data.data.avatar.avatarEyes}
+              face={memberData.data.data.avatar.avatarFace}
+              mouth={memberData.data.data.avatar.avatarMouth}
+              nose={memberData.data.data.avatar.avatarNose}
             />
             <div className="myPageInfo">
-              <span className="myPageName">Name</span>
-              <span className="myPageSpan">part</span>
-              <span className="myPageSpan">Email</span>
+              <span className="myPageName">
+                {memberData.data.data.memberName}
+              </span>
+              <span className="myPageSpan">{memberData.data.data.part}</span>
+              <span className="myPageSpan">{memberData.data.data.email}</span>
             </div>
           </div>
           <Link to="/avatar">
@@ -219,7 +224,7 @@ const MyPage = () => {
           <div className="outContainer">
             <div className="outContainerLeftOption">
               <span className="OptionHeader">로그아웃</span>
-              <span className="Optionspan">abce@gmail.com</span>
+              <span className="Optionspan">{memberData.data.data.email}</span>
               <span className="OptionHeader">탈퇴하기</span>
               <span className="Optionspan">
                 회원 탈퇴 시 모든 게시글 및 댓글을 영구적으로 수정 불가능하며,

@@ -11,8 +11,11 @@ import AvatarCard from "../../components/avatarPage/AvatarCard";
 import AvatarComponent from "../../components/avatarPage/AvatarComponent";
 import AvatarNav from "../../components/avatarPage/AvatarNav";
 import { NextButton } from "../../assets";
+import { putAvatar } from "../../api/avatar";
+import { useNavigate } from "react-router-dom";
 
 const AvatarPage = () => {
+  const navigate = useNavigate();
   const [avatarHeader, setAvatarHeader] = useState<string>(AVATARHEADER[0]);
   const [avatar, setAvatar] = useState({
     body: AVATARANIMALLIST.body[0],
@@ -28,6 +31,7 @@ const AvatarPage = () => {
     setCurrentPage(0); // Reset to first page when header changes
   };
 
+  //무작위
   const handleRandomAvatar = () => {
     setAvatar({
       body: AVATARANIMALLIST.body[
@@ -78,9 +82,25 @@ const AvatarPage = () => {
     return Object.values(avatar).includes(image);
   };
 
+  const handleSubmitAvatar = async () => {
+    try {
+      const response = await putAvatar({
+        avatarFace: avatar.face,
+        avatarBody: avatar.body,
+        avatarEyes: avatar.eyes,
+        avatarNose: avatar.nose,
+        avatarMouth: avatar.mouth,
+      });
+      navigate("/MyPage");
+    } catch (error) {
+      // 업로드 실패 시 에러 출력
+      console.error("Error uploading image:", error);
+    }
+  };
+
   return (
     <>
-      <AvatarNav />
+      <AvatarNav onClick={handleSubmitAvatar} />
       <div className="avatarMainContainer">
         <AvatarComponent
           width="270px"
@@ -152,3 +172,6 @@ const AvatarPage = () => {
 };
 
 export default AvatarPage;
+function useMember() {
+  throw new Error("Function not implemented.");
+}
