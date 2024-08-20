@@ -23,6 +23,7 @@ type post = {
     profile: string;
     view: number;
     like: number;
+    liked: boolean;
     scrap: number;
     tag: string[];
     handleHeartClick?: ()=>void
@@ -37,7 +38,7 @@ const PostDetailView: React.FC<post> = (props) => {
     const navigate = useNavigate();
     const htmlContent = marked(props.content)
 
-    const [isHeartSelected, setIsHeartSelected] = useState(props.selectedHeart || false);
+    const [isHeartSelected, setIsHeartSelected] = useState(props.liked || false);
     const [isScrapSelected, setIsScrapSelected] = useState(props.selectedScrap || false);
     const [likeCount, setLikeCount] = useState(props.like);
     const [scrapCount, setScrapCount] = useState(props.scrap);

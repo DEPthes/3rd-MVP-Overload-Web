@@ -32,8 +32,8 @@ type postPreview = {
 const PostPreview: React.FC<postPreview> = (props) => {
     const navigate = useNavigate();
 
-    const [isHeartSelected, setIsHeartSelected] = useState(props.selectedHeart || false);
-    const [isScrapSelected, setIsScrapSelected] = useState(props.selectedScrap || false);
+    // const [isHeartSelected, setIsHeartSelected] = useState(props.selectedHeart || false);
+    // const [isScrapSelected, setIsScrapSelected] = useState(props.selectedScrap || false);
     const [likeCount, setLikeCount] = useState(props.like);
     const [scrapCount, setScrapCount] = useState(props.scrap);
     const [isToken, setIsToken] = useState(false);
@@ -46,26 +46,26 @@ const PostPreview: React.FC<postPreview> = (props) => {
             setToken(token);
         }
 
-        api.get(`/scraps`, {
-            headers: {
-                'Authorization': `Bearer ${token}` 
-            }
-        })
-        .then((response) => {
-            // 응답 데이터에서 dataList 배열을 가져옴
-            const dataList = response.data.data.dataList;
+        // api.get(`/scraps`, {
+        //     headers: {
+        //         'Authorization': `Bearer ${token}` 
+        //     }
+        // })
+        // .then((response) => {
+        //     // 응답 데이터에서 dataList 배열을 가져옴
+        //     const dataList = response.data.data.dataList;
             
-            // 각 게시물의 id를 배열로 저장
-            const scrapIds = dataList.map((item:any) => item.id);
+        //     // 각 게시물의 id를 배열로 저장
+        //     const scrapIds = dataList.map((item:any) => item.id);
         
-            // 현재 포스트가 스크랩된 상태인지 확인
-            const isScrapped = scrapIds.includes(props.id);
-            setIsScrapSelected(isScrapped);
+        //     // 현재 포스트가 스크랩된 상태인지 확인
+        //     const isScrapped = scrapIds.includes(props.id);
+        //     setIsScrapSelected(isScrapped);
 
-        })
-        .catch((error) => {
-            console.error("스크랩 가져오기 오류:", error);
-        });
+        // })
+        // .catch((error) => {
+        //     console.error("스크랩 가져오기 오류:", error);
+        // });
         
 
     },[]);
@@ -74,69 +74,69 @@ const PostPreview: React.FC<postPreview> = (props) => {
         navigate(`/viewDetailPost/${props.id}`);
     };
 
-    const toggleHeart = async () => {
-        try {
-            if(isToken){
-                if (isHeartSelected) {
-                    await api.delete(`/likes/${props.id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}` 
-                        }
-                    });
-                    setLikeCount(likeCount - 1);
-                } else {
-                    await api.post(`/likes/${props.id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}` // Bearer 토큰 설정
-                        }
-                    });
-                    setLikeCount(likeCount + 1);
-                }
-                    setIsHeartSelected(!isHeartSelected);
-                } 
-            }catch (error) {
-                console.error("like API 요청 중 오류가 발생했습니다.", error);
-                console.log(isScrapSelected);
-                console.log(isHeartSelected);
-            }
+    // const toggleHeart = async () => {
+    //     try {
+    //         if(isToken){
+    //             if (isHeartSelected) {
+    //                 await api.delete(`/likes/${props.id}`, {
+    //                     headers: {
+    //                         'Authorization': `Bearer ${token}` 
+    //                     }
+    //                 });
+    //                 setLikeCount(likeCount - 1);
+    //             } else {
+    //                 await api.post(`/likes/${props.id}`, {
+    //                     headers: {
+    //                         'Authorization': `Bearer ${token}` // Bearer 토큰 설정
+    //                     }
+    //                 });
+    //                 setLikeCount(likeCount + 1);
+    //             }
+    //                 setIsHeartSelected(!isHeartSelected);
+    //             } 
+    //         }catch (error) {
+    //             console.error("like API 요청 중 오류가 발생했습니다.", error);
+    //             console.log(isScrapSelected);
+    //             console.log(isHeartSelected);
+    //         }
             
 
-        if (props.handleHeartClick) {
-            props.handleHeartClick();
-        }
-    };
+    //     if (props.handleHeartClick) {
+    //         props.handleHeartClick();
+    //     }
+    // };
 
-    const toggleScrap = async () => {
-        try {
-            if(isToken){
-                if (isScrapSelected) {
-                    await api.delete(`/scraps/${props.id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}` 
-                        }
-                    });
-                    setScrapCount(scrapCount - 1);
-                } else {
-                    await api.post(`/scraps/${props.id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}` // Bearer 토큰 설정
-                        }
-                    });
-                    setScrapCount(scrapCount + 1);
-                }
-                    setIsScrapSelected(!isScrapSelected);
-                } 
-            }catch (error) {
-                console.error("Scrap API 요청 중 오류가 발생했습니다.", error);
-                console.log(isScrapSelected);
-                console.log(isHeartSelected);
-            }
+    // const toggleScrap = async () => {
+    //     try {
+    //         if(isToken){
+    //             if (isScrapSelected) {
+    //                 await api.delete(`/scraps/${props.id}`, {
+    //                     headers: {
+    //                         'Authorization': `Bearer ${token}` 
+    //                     }
+    //                 });
+    //                 setScrapCount(scrapCount - 1);
+    //             } else {
+    //                 await api.post(`/scraps/${props.id}`, {
+    //                     headers: {
+    //                         'Authorization': `Bearer ${token}` // Bearer 토큰 설정
+    //                     }
+    //                 });
+    //                 setScrapCount(scrapCount + 1);
+    //             }
+    //                 setIsScrapSelected(!isScrapSelected);
+    //             } 
+    //         }catch (error) {
+    //             console.error("Scrap API 요청 중 오류가 발생했습니다.", error);
+    //             console.log(isScrapSelected);
+    //             console.log(isHeartSelected);
+    //         }
             
 
-        if (props.handleScrapClick) {
-            props.handleScrapClick();
-        }
-    };
+    //     if (props.handleScrapClick) {
+    //         props.handleScrapClick();
+    //     }
+    // };
 
     return (
         <div className="preview-total">
@@ -154,18 +154,18 @@ const PostPreview: React.FC<postPreview> = (props) => {
 
                 <div className="preview-bottom">
                     <div>
-                        <img src={view} alt="Views" />
+                        <img src={view}/>
                         {props.view}
                     </div>
                     <div>
-                        <button onClick={toggleHeart}>
-                            <img src={isHeartSelected ? checkHeart : heart} />
+                        <button>
+                            <img src={heart} />
                         </button>
                         {likeCount}
                     </div>
                     <div>
-                        <button onClick={toggleScrap}>
-                            <img src={isScrapSelected ? checkBookmark : bookmark} />
+                        <button>
+                            <img src={bookmark} />
                         </button>
                         {scrapCount}
                     </div>

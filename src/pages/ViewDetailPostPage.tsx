@@ -35,10 +35,15 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
         const numericPostId = Number(postId);
 
         // 상세 게시글 데이터 가져오기
-        api.get(`/posts/details/${numericPostId}`)
+        api.get(`/posts/details/${numericPostId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+            })
             .then((response) => {
                 const data = response.data.data;
                 setPost(data);
+                console.log(data);
             })
             .catch((error) => {
                 console.error("게시글 데이터 가져오기 오류:", error);
@@ -47,7 +52,7 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
         // 멤버 데이터 가져오기
         api.get(`/members`, {
                 headers: {
-                    'Authorization': `Bearer ${token}` // Bearer 토큰 설정
+                    'Authorization': `Bearer ${token}`
                 }
             })
             .then((response) => {
@@ -105,6 +110,7 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
                         profile={post.writerInfo.avatar?.avatarFace || ""}
                         view={post.viewCount}
                         like={post.likeCount}
+                        liked={post.liked}
                         scrap={post.scrapCount}
                         handleHeartClick={isToken ? handleHeartClick : undefined}
                         handleScrapClick={isToken ? handleScrapClick : undefined}
