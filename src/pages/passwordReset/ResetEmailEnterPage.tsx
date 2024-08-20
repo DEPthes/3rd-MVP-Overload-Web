@@ -17,7 +17,7 @@ const ResetEmailEnterPage: React.FC = () => {
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
-        setEmailError(validateEmail(e.target.value) ? '' : constants.invalidEmailError);
+        setEmailError(validateEmail(e.target.value) || e.target.value === '' ? '' : constants.invalidEmailError);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
