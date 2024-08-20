@@ -17,12 +17,12 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const [pageList, setPageList] = useState<number[]>([]);
-  const { data } = useGetScraps(page);
+  const { data, refetch } = useGetScraps(page);
   const totalPage = data.data.pageInfo.totalPage;
   const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
   const [isExitModal, setIsExitModal] = useState<boolean>(false);
   const memberData = useMember();
-  console.log(memberData.data.data.avatar);
+  console.log(data.data.dataList);
 
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
@@ -89,6 +89,7 @@ const MyPage = () => {
       newPageList.push(i);
     }
     setPageList(newPageList);
+    refetch();
   }, [page, totalPage]);
 
   const handlePageChange = (newPage: number) => {
@@ -197,12 +198,14 @@ const MyPage = () => {
           <div className="scrabPage">
             <PageNextButton
               onClick={() => handlePageChange(page - 1)}
-              stroke={page === 1 ? "#B8B8B8" : "000000"}
+              stroke={page === 1 ? "#B8B8B8" : "#000000"}
+              style={{ cursor: "pointer" }}
             />
             {pageList.map((pageNum) => (
               <div
                 key={pageNum}
                 onClick={() => handlePageChange(pageNum)}
+                style={{ cursor: "pointer" }}
                 className={`paginationButton ${
                   page === pageNum ? "active" : ""
                 }`}
@@ -212,8 +215,8 @@ const MyPage = () => {
             ))}
             <PageNextButton
               onClick={() => handlePageChange(page + 1)}
-              stroke={page === totalPage ? "#B8B8B8" : "000000"}
-              style={{ transform: "rotate(180deg)" }}
+              stroke={page === totalPage ? "#B8B8B8" : "#000000"}
+              style={{ transform: "rotate(180deg)", cursor: "pointer" }}
             />
           </div>
         </div>
