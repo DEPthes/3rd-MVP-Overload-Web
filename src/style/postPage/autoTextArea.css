@@ -1,3 +1,7 @@
+.autoTextAreaContainer {
+  position: relative;
+}
+
 .textBox {
   margin-top: 16px;
   resize: none;
@@ -7,4 +11,10 @@
   background: rgba(173, 187, 200, 0.25);
   border-radius: 2px;
   box-sizing: border-box;
+}
+
+.autoTextAreaContainer svg {
+  position: absolute;
+  left: -50px; /* Adjust this value as per your layout */
+  transition: top 0.3s ease;
 }
