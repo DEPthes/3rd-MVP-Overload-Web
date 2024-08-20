@@ -118,7 +118,8 @@ const MyPage = () => {
     if (action === "yes") {
       exit();
     } else {
-      setIsLogoutModal(false);
+      console.log(action);
+      setIsExitModal(false);
     }
   };
 

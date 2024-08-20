@@ -79,7 +79,7 @@ const Nav: React.FC<nav> = (props) => {
         ) : null}
         {token ? (
           props.profile && (
-            <div style={{ cursor: "pointer" }}>
+            <div style={{ cursor: "pointer" }} onClick={handleMyPageClick}>
               <CircleAvatarComponent
                 width={"40px"}
                 height={"40px"}
