@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import doComment from "../images/doComment.png";
 import undoComment from "../images/undoComment.png";
 import MyComment from "../components/MyComment";
@@ -38,6 +38,7 @@ import nose5 from "../assets/avatar/nose5.svg";
 import nose6 from "../assets/avatar/nose6.svg";
 import nose7 from "../assets/avatar/nose7.svg";
 import nose8 from "../assets/avatar/nose8.svg";
+import api from "../api";
 
 // 이미지 매핑 객체
 const avatarImages:any = {
@@ -88,9 +89,10 @@ type CommentProps = {
     myProfile?: Avatar;
     myName: string;
     postId: number;
+    refreshComments:()=>void;
 };
 
-const Comment: React.FC<CommentProps> = ({ comments, myProfile, myName, postId }) => {
+const Comment: React.FC<CommentProps> = (props) => {
     const [replyVisible, setReplyVisible] = useState<{ [key: number]: boolean }>({});
 
     const handleDoCommentClick = (commentId: number) => {
@@ -103,7 +105,7 @@ const Comment: React.FC<CommentProps> = ({ comments, myProfile, myName, postId }
     return (
         <>
             {/* 댓글 배열을 역순으로 정렬 */}
-            {comments && comments.slice().reverse().map((comment, index) => (
+            {props.comments && props.comments.slice().reverse().map((comment, index) => (
                 <li key={index}>
                     <div className="comment-total">
                         <div className="comment-top">
@@ -191,10 +193,11 @@ const Comment: React.FC<CommentProps> = ({ comments, myProfile, myName, postId }
                                 {/* 대댓글이 없어도 MyComment 컴포넌트는 표시 */}
                                 <MyComment
                                     commentId={comment.commentId}
-                                    profile={myProfile}
-                                    name={myName}
-                                    postId={postId}
+                                    profile={props.myProfile}
+                                    name={props.myName}
+                                    postId={props.postId}
                                     parentPostId={comment.commentId}
+                                    refreshComments={props.refreshComments}
                                 />
                             </div>
                         )}

@@ -106,6 +106,7 @@ type post = {
     mine: boolean;
     scrap: number;
     tag: string[];
+    generation: number;
     handleHeartClick?: ()=>void
     selectedHeart?: boolean;
     handleScrapClick?: ()=>void
@@ -356,7 +357,7 @@ const PostDetailView: React.FC<post> = (props) => {
                 )}
                 <div>
                     <p className='detail-profile-name'>{props.writer}</p>
-                    <p className='detail-profile-part'>{props.part}</p>
+                    <p className='detail-profile-part'>{props.generation}기 {props.part}</p>
                 </div>
             </div>
             <hr/>

@@ -38,6 +38,7 @@ import nose5 from "../assets/avatar/nose5.svg";
 import nose6 from "../assets/avatar/nose6.svg";
 import nose7 from "../assets/avatar/nose7.svg";
 import nose8 from "../assets/avatar/nose8.svg";
+import { Navigate } from "react-router-dom";
 
 // 이미지 매핑 객체
 const avatarImages:any = {
@@ -83,17 +84,17 @@ type Avatar = {
     avatarMouth?: string;
 };
 
-type MyCommentProps = {
+type MyComment = {
     commentId?: number;
-    profile?: Avatar; // 수정된 타입
+    profile?: Avatar; 
     name: string;
     postId: number;
     parentPostId?: number;
     refreshComments?: () => void; // 댓글 새로 고침 함수
 };
 
-const MyComment: React.FC<MyCommentProps> = (props) => {
-    const [selectedBox, setSelectedBox] = useState<boolean>(false);
+const MyComment: React.FC<MyComment> = (props) => {
+    const [selectedBox, setSelectedBox] = useState<boolean>();
     const [commentText, setCommentText] = useState<string>("");
     const [nickname, setNickname] = useState<string>(props.name);
     const [isToken, setIsToken] = useState(false);
@@ -102,7 +103,11 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
         const token = sessionStorage.getItem("token");
         if (token != null) {
             setIsToken(true);
+            setSelectedBox(false);
+        }else{
+            setSelectedBox(true);
         }
+
     }, [props.postId]);
 
     const handleBoxClick = () => {
@@ -134,16 +139,16 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
             if (props.refreshComments) {
                 props.refreshComments();
             }
-            // 페이지 새로 고침
-            window.location.reload();
+            
         } catch (error) {
             console.error("댓글 제출 중 오류 발생:", error);
+            console.log(props.postId, commentText, selectedBox, nickname, props.name)
         }
     };
 
     return (
         <>
-            {isToken ? (//isToken
+            {(//isToken
                 <div className="mycomment-total">
                     <textarea
                         className="mycomment-writebox"
@@ -176,19 +181,27 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
                         )}
                         <div className="mycomment-writerinfo-nickname">
                             <textarea
-                                placeholder={nickname? nickname: '닉네임'}
+                                placeholder='이름'
+                                value={nickname}
                                 onChange={handleNicknameChange}
                             ></textarea>
                             <div className="mycomment-nickname">
+                                {isToken?
                                 <button
                                     className="mycomment-checkbox"
                                     onClick={handleBoxClick}
                                 >
                                     <img src={selectedBox ? check : noncheck}/>
                                 </button>
+                                :
+                                <button className="mycomment-checkbox">
+                                    <img src={check}/>
+                                </button>
+                                }
                                 <p>닉네임 사용</p>
                             </div>
                         </div>
+                        {isToken?
                         <button
                             className={`mycomment-button ${commentText ? 'active' : ''}`}
                             disabled={!commentText}
@@ -196,9 +209,18 @@ const MyComment: React.FC<MyCommentProps> = (props) => {
                         >
                             댓글 남기기
                         </button>
+                        :
+                        <button
+                            className={`mycomment-button ${commentText && nickname ? 'active' : ''}`}
+                            disabled={!commentText}
+                            onClick={handleSubmit}
+                        >
+                            댓글 남기기
+                        </button>
+                        }
                     </div>
                 </div>
-            ) : null}
+            ) }
         </>
     );
 };
