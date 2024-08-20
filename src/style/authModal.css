@@ -5,13 +5,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: fixed; /* fixed로 변경 */
   top: 50%;
-  left: 30%;
-  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: white;
   z-index: 101;
   gap: 20px;
 }
+
 .authModalText {
   color: var(--Typo-Secondary, #6b6b6b);
   text-align: center;
@@ -52,13 +54,4 @@
   font-weight: 500;
   line-height: 150%; /* 24px */
   cursor: pointer;
-}
-.authoverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.7);
-  z-index: 100;
 }

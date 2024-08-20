@@ -39,6 +39,7 @@ const refreshToken = async () => {
     if (newAccessToken) {
       if (localStorage.getItem("token")) {
         localStorage.setItem("token", newAccessToken);
+        sessionStorage.setItem("token", newAccessToken);
       } else {
         sessionStorage.setItem("token", newAccessToken);
       }
@@ -55,6 +56,11 @@ const refreshToken = async () => {
 // 주기적으로 토큰 만료를 체크하고 갱신하는 함수
 const checkTokenExpiration = async () => {
   let token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+  // 로컬 스토리지에 토큰이 있지만 세션 스토리지에 토큰이 없는 경우 복사
+  if (localStorage.getItem("token") && !sessionStorage.getItem("token")) {
+    sessionStorage.setItem("token", localStorage.getItem("token")!);
+  }
 
   if (token) {
     const decoded: any = jwtDecode(token);
@@ -86,6 +92,11 @@ setInterval(checkTokenExpiration, 1 * 60 * 1000); // 1분마다 확인
 api.interceptors.request.use(
   async (config) => {
     let token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+    // 로컬 스토리지에 토큰이 있지만 세션 스토리지에 토큰이 없는 경우 복사
+    if (localStorage.getItem("token") && !sessionStorage.getItem("token")) {
+      sessionStorage.setItem("token", localStorage.getItem("token")!);
+    }
 
     if (token) {
       if (isTokenExpiringSoon(token)) {

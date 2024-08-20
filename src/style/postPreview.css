@@ -3,12 +3,12 @@
 
 
 .preview-total {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    width: 55vw;
-    margin-bottom: 25px;
-    color: #3C3C3C;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 680px;
+  margin-bottom: 25px;
+  color: #3c3c3c;
 }
 
 /* 그림을 제외한 왼쪽 부분 */
@@ -58,31 +58,32 @@
     margin-bottom: 10px;
 }
 
-.preview-middle div{
-    margin-right: 25px;
+
+/* .preview-middle div {
+  margin-right: 25px;
+} */
+
+.postpre-writer {
+  display: flex;
+  position: relative;
 }
 
-.postpre-writer{
-    display: flex;
-    position: relative;
+.postpre-writer-img {
+  height: 20px;
+  width: auto;
+  position: absolute;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid rgb(180, 180, 180);
 }
 
-.postpre-writer-img{
-    height: 20px;
-    width: auto; 
-    position: absolute;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 1px solid rgb(180, 180, 180);
-}
-
-.postpre-default-profile{
-    width: 20px; 
-    height: 20px; 
-    position:absolute;
-    object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
-    overflow: hidden;
+.postpre-default-profile {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
+  overflow: hidden;
 }
 
 /* view, like, scrap */
@@ -91,9 +92,11 @@
     justify-content: left;
 }
 
-.preview-bottom button{
-    border: none;
-    background-color: rgba(255, 255, 255, 0);
+
+.preview-bottom button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
 }
 
 /* 눈, 하트, 스크랩 이미지 */

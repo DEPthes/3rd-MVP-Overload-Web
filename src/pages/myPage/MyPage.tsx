@@ -11,15 +11,17 @@ import { LogOutReq } from "../../api/LogInReq";
 import AuthModa from "../../components/AuthModa";
 import { useMutation } from "@tanstack/react-query";
 import { ExitReq } from "../../api/Exit";
+import { useMember } from "../../hooks/useMember";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
   const [pageList, setPageList] = useState<number[]>([]);
-  const { data } = useGetScraps(page);
+  const { data, refetch } = useGetScraps(page);
   const totalPage = data.data.pageInfo.totalPage;
   const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
   const [isExitModal, setIsExitModal] = useState<boolean>(false);
+  const memberData = useMember();
 
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
@@ -86,6 +88,7 @@ const MyPage = () => {
       newPageList.push(i);
     }
     setPageList(newPageList);
+    refetch();
   }, [page, totalPage]);
 
   const handlePageChange = (newPage: number) => {
@@ -114,7 +117,8 @@ const MyPage = () => {
     if (action === "yes") {
       exit();
     } else {
-      setIsLogoutModal(false);
+      console.log(action);
+      setIsExitModal(false);
     }
   };
 
@@ -144,16 +148,18 @@ const MyPage = () => {
             <CircleAvatarComponent
               width="154px"
               height="154px"
-              body={AVATARANIMALLIST.body[0]}
-              eyes={AVATARANIMALLIST.eyes[0]}
-              face={AVATARANIMALLIST.face[0]}
-              mouth={AVATARANIMALLIST.mouth[0]}
-              nose={AVATARANIMALLIST.nose[0]}
+              body={memberData.data.data.avatar.avatarBody}
+              eyes={memberData.data.data.avatar.avatarEyes}
+              face={memberData.data.data.avatar.avatarFace}
+              mouth={memberData.data.data.avatar.avatarMouth}
+              nose={memberData.data.data.avatar.avatarNose}
             />
             <div className="myPageInfo">
-              <span className="myPageName">Name</span>
-              <span className="myPageSpan">part</span>
-              <span className="myPageSpan">Email</span>
+              <span className="myPageName">
+                {memberData.data.data.memberName}
+              </span>
+              <span className="myPageSpan">{memberData.data.data.part}</span>
+              <span className="myPageSpan">{memberData.data.data.email}</span>
             </div>
           </div>
           <Link to="/avatar">
@@ -177,13 +183,7 @@ const MyPage = () => {
                   like={item.likeCount}
                   scrap={item.scrapCount}
                   picture={""}
-                  profile={{
-                    avatarFace: undefined,
-                    avatarBody: undefined,
-                    avatarEyes: undefined,
-                    avatarNose: undefined,
-                    avatarMouth: undefined,
-                  }}
+                  avatar={item.avatar}
                 />
                 <div style={{ borderBottom: "0.5px solid #8C8C8C" }} />
               </div>
@@ -192,12 +192,14 @@ const MyPage = () => {
           <div className="scrabPage">
             <PageNextButton
               onClick={() => handlePageChange(page - 1)}
-              stroke={page === 1 ? "#B8B8B8" : "000000"}
+              stroke={page === 1 ? "#B8B8B8" : "#000000"}
+              style={{ cursor: "pointer" }}
             />
             {pageList.map((pageNum) => (
               <div
                 key={pageNum}
                 onClick={() => handlePageChange(pageNum)}
+                style={{ cursor: "pointer" }}
                 className={`paginationButton ${
                   page === pageNum ? "active" : ""
                 }`}
@@ -207,8 +209,8 @@ const MyPage = () => {
             ))}
             <PageNextButton
               onClick={() => handlePageChange(page + 1)}
-              stroke={page === totalPage ? "#B8B8B8" : "000000"}
-              style={{ transform: "rotate(180deg)" }}
+              stroke={page === totalPage ? "#B8B8B8" : "#000000"}
+              style={{ transform: "rotate(180deg)", cursor: "pointer" }}
             />
           </div>
         </div>
@@ -219,7 +221,7 @@ const MyPage = () => {
           <div className="outContainer">
             <div className="outContainerLeftOption">
               <span className="OptionHeader">로그아웃</span>
-              <span className="Optionspan">abce@gmail.com</span>
+              <span className="Optionspan">{memberData.data.data.email}</span>
               <span className="OptionHeader">탈퇴하기</span>
               <span className="Optionspan">
                 회원 탈퇴 시 모든 게시글 및 댓글을 영구적으로 수정 불가능하며,

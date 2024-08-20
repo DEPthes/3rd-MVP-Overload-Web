@@ -24,5 +24,7 @@ export interface PostImageProps {
 }
 
 export interface ImageResponse {
-  fileUrl: string;
+  data: {
+    fileUrl: string;
+  };
 }
