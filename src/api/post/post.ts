@@ -44,8 +44,10 @@ export async function postImage({
   const postImage = new FormData();
   postImage.append("postImage", image);
 
-  const response = await api.post("/posts/uploadImages", {
-    postImage,
+  const response = await api.post("/posts/uploadImages", postImage, {
+    headers: {
+      "Contest-Type": "multipart/form-data",
+    },
   });
   return response?.data;
 }
