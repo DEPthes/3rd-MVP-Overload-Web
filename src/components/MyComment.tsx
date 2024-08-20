@@ -96,7 +96,7 @@ type MyComment = {
 const MyComment: React.FC<MyComment> = (props) => {
     const [selectedBox, setSelectedBox] = useState<boolean>();
     const [commentText, setCommentText] = useState<string>("");
-    const [nickname, setNickname] = useState<string>(props.name);
+    const [nickname, setNickname] = useState<string>();
     const [isToken, setIsToken] = useState(false);
 
     useEffect(() => {
@@ -180,11 +180,17 @@ const MyComment: React.FC<MyComment> = (props) => {
                             </div>
                         )}
                         <div className="mycomment-writerinfo-nickname">
+                            {selectedBox?
                             <textarea
                                 placeholder='이름'
                                 value={nickname}
                                 onChange={handleNicknameChange}
+                            ></textarea>:
+                            <textarea
+                                readOnly
+                                placeholder={props.name}
                             ></textarea>
+                            }
                             <div className="mycomment-nickname">
                                 {isToken?
                                 <button
@@ -202,13 +208,22 @@ const MyComment: React.FC<MyComment> = (props) => {
                             </div>
                         </div>
                         {isToken?
-                        <button
-                            className={`mycomment-button ${commentText ? 'active' : ''}`}
-                            disabled={!commentText}
-                            onClick={handleSubmit}
-                        >
-                            댓글 남기기
-                        </button>
+                            (selectedBox?
+                                <button
+                                    className={`mycomment-button ${commentText && nickname ? 'active' : ''}`}
+                                    disabled={!commentText}
+                                    onClick={handleSubmit}
+                                >
+                                    댓글 남기기
+                                </button> :
+                                <button
+                                    className={`mycomment-button ${commentText ? 'active' : ''}`}
+                                    disabled={!commentText}
+                                    onClick={handleSubmit}
+                                >
+                                    댓글 남기기
+                                </button>
+                            )
                         :
                         <button
                             className={`mycomment-button ${commentText && nickname ? 'active' : ''}`}
