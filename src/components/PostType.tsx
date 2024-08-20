@@ -15,11 +15,12 @@ const PostType: React.FC<postType> = (props) => {
     const handleCategoryClick = (category: string, index: number) => {
         setSelectedCategory(category);
 
-        if (categoriesEn[index] === 'SERVER' || categoriesEn[index] === 'WEB' || categoriesEn[index] === 'ANDROID') {
-            props.onCategoryChange('ALL'); // "개발"에 해당하는 DEV를 전달
-        } else {
-            props.onCategoryChange(categoriesEn[index]); // 그 외는 정상적으로 해당 카테고리 전달
-        }
+        // if (categoriesEn[index] === 'SERVER' || categoriesEn[index] === 'WEB' || categoriesEn[index] === 'ANDROID') {
+        //     props.onCategoryChange('SERVER'); // "개발"에 해당하는 DEV를 전달
+        // } else {
+        props.onCategoryChange(categories[index]); // 그 외는 정상적으로 해당 카테고리 전달
+        // }
+        console.log(categories[index])
     };
 
     return (

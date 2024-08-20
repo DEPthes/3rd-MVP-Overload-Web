@@ -12,7 +12,7 @@ import ViewDetailPost from './ViewDetailPostPage';
 
 // MainPage
 const MainPage: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [posts, setPosts] = useState<any[]>([]);
@@ -24,7 +24,12 @@ const MainPage: React.FC = () => {
     const postsPerPage = 10;
 
     useEffect(() => {
-        const endpoint = selectedCategory === 'ALL' ? '/posts/all' : `/posts/${selectedCategory}`;
+        const endpoint = 
+            selectedCategory === '전체' ? '/posts/all' :
+            selectedCategory === '디자인' ? '/posts/DESIGN' :
+            selectedCategory === '기획' ? '/posts/PLAN' :
+            selectedCategory === '개발' ? `/posts/SERVER` && `/posts/WEB`&& `/posts/ANDROID` : '';
+
         const token = sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
