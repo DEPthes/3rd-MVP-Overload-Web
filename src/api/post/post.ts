@@ -39,8 +39,11 @@ export async function getTemps(): Promise<TempsResponse> {
 }
 
 export async function postImage({
-  postImage,
+  image,
 }: PostImageProps): Promise<ImageResponse> {
+  const postImage = new FormData();
+  postImage.append("postImage", image);
+
   const response = await api.post("/posts/uploadImages", {
     postImage,
   });

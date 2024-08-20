@@ -20,7 +20,7 @@ export interface PostResponse {
 
 /////////////////////////////////////
 export interface PostImageProps {
-  postImage: string;
+  image: File;
 }
 
 export interface ImageResponse {
