@@ -21,6 +21,7 @@ const MainPage: React.FC = () => {
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
     const [isToken, setIsToken] = useState<boolean>(false);
+    const [member, setMember] = useState<any|null>(null);
     const postsPerPage = 10;
 
     useEffect(() => {
@@ -45,12 +46,25 @@ const MainPage: React.FC = () => {
             const { pageInfo, dataList } = response.data.data;
             setPosts(dataList);
             setTotalPage(pageInfo.totalPage);  // 총 페이지 수 업데이트
-            console.log(posts);
         })
         .catch(error => {
             console.error("Error fetching posts:", error);
         });
         
+        // 멤버 데이터 가져오기
+        api.get(`/members`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            const member = response.data.data;
+            setMember(member);
+        })
+        .catch((error) => {
+            console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
+        });
+
     }, [selectedCategory, selectedPage]);
 
     const handleCategoryChange = (category: string) => {
@@ -79,7 +93,10 @@ const MainPage: React.FC = () => {
         <>
             <div className="main-total">
                 {/* Navbar */}
-                <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+                <Nav 
+                    onSearchClick={() => setIsSearchModalOpen(true)} 
+                    profile={member?.avatar || undefined}
+                />
 
                 {/* Banner */}
                 <Banner />

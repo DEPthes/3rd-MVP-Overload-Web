@@ -59,15 +59,29 @@
 }
 
 .preview-middle div{
-    margin-right: 15px;
+    margin-right: 25px;
 }
 
-.preview-middle img {
-    align-items: center;
+.postpre-writer{
+    display: flex;
+    position: relative;
+}
+
+.postpre-writer-img{
     height: 20px;
-    margin-top: 3px;
-    margin-right: 5px;
+    width: auto; 
+    position: absolute;
+    object-fit: cover;
+    overflow: hidden;
     border-radius: 50%;
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.postpre-default-profile{
+    width: 20px; 
+    height: 20px; 
+    position:absolute;
+    object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
     overflow: hidden;
 }
 
@@ -80,7 +94,6 @@
 .preview-bottom button{
     border: none;
     background-color: rgba(255, 255, 255, 0);
-    cursor: pointer;
 }
 
 /* 눈, 하트, 스크랩 이미지 */
