@@ -17,3 +17,12 @@ export interface PostPostsProps {
 export interface PostResponse {
   message: string;
 }
+
+/////////////////////////////////////
+export interface PostImageProps {
+  postImage: string;
+}
+
+export interface ImageResponse {
+  fileUrl: string;
+}

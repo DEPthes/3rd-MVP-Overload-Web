@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Nav from "../components/Nav";
 import Banner from "../components/Banner";
-import PostType from '../components/PostType';
+import PostType from "../components/PostType";
 import PostPreview from "../components/PostPreview";
-import Footer from '../components/Footer';
-import SearchModal from '../components/search/SearchModal';
+import Footer from "../components/Footer";
+import SearchModal from "../components/search/SearchModal";
 
 import "../style/mainPage.css";
-import api from '../api';
-import ViewDetailPost from './ViewDetailPostPage';
+import api from "../api";
+import ViewDetailPost from "./ViewDetailPostPage";
 
 // MainPage
 const MainPage: React.FC = () => {
+
     const [selectedCategory, setSelectedCategory] = useState<string>('전체');
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
@@ -106,51 +107,29 @@ const MainPage: React.FC = () => {
                     category={selectedCategory} 
                     onCategoryChange={handleCategoryChange} 
                 />
+              </li>
+            ))}
+          </ul>
+        </div>
 
-                {/* Post Preview Area */}
-                <div className="post-preview">
-                    <ul>
-                        {posts.map((item, index) => (
-                            <li key={index} className="post-preview-item">
-                                <PostPreview 
-                                    id={item.id}
-                                    title={item.title}
-                                    content={item.previewContent}
-                                    date={item.createdDate}
-                                    writer={item.name}
-                                    view={item.viewCount}
-                                    like={item.likeCount}
-                                    scrap={item.scrapCount}
-                                    profile={item.profile}
-                                    picture={item.previewImage ? item.previewImage : undefined}
-                                    handleHeartClick={isToken ? handleHeartClick : undefined}
-                                    handleScrapClick={isToken ? handleScrapClick : undefined}
-                                    selectedHeart={isToken ? selectedHeart : undefined}
-                                    selectedScrap={isToken ? selectedScrap : undefined}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+        {/* Pagination Area */}
+        <Footer
+          totalPosts={posts.length}
+          postsPerPage={postsPerPage}
+          selectedPage={selectedPage}
+          totalPages={totalPage} // 총 페이지 수 전달
+          onPageChange={handlePageChange}
+        />
 
-                {/* Pagination Area */}
-                <Footer 
-                    totalPosts={posts.length} 
-                    postsPerPage={postsPerPage} 
-                    selectedPage={selectedPage} 
-                    totalPages={totalPage}  // 총 페이지 수 전달
-                    onPageChange={handlePageChange}
-                />
-
-                {isSearchModalOpen && (
-                    <SearchModal 
-                        onClose={() => setIsSearchModalOpen(false)} 
-                        onSearch={handleSearch} 
-                    />
-                )}
-            </div>
-        </>
-    );
+        {isSearchModalOpen && (
+          <SearchModal
+            onClose={() => setIsSearchModalOpen(false)}
+            onSearch={handleSearch}
+          />
+        )}
+      </div>
+    </>
+  );
 };
 
 export default MainPage;
