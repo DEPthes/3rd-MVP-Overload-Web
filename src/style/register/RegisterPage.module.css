@@ -1,13 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
-* {
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -15,8 +10,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
     background-color: #f5f5f5;
 }
 
@@ -24,9 +18,11 @@ html, body {
     width: 508px;
     padding: 35px 23px;
     background-color: #e9ecef;
+    box-sizing: border-box;
 }
 
 .logoContainer {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,6 +33,8 @@ html, body {
 }
 
 .logo {
+    display: block;
+    margin: 0 auto;
     width: 143.58px;
     height: 41.42px;
 }
@@ -89,6 +87,8 @@ html, body {
     font-size: 16px;
     line-height: 22.4px;
     font-weight: 700;
+    margin: 0;
+    padding: 0;
     color: #000000;
 }
 
@@ -97,19 +97,20 @@ html, body {
     gap: 2px;
 }
 
-.inputWithButton input {
+.inputWithButton input,
+.passwordContainer input {
     box-sizing: border-box;
-    width: 373px;
+    width: 100%;
     height: 58px;
     flex: 1;
     padding: 16px 12px;
     border: solid 1px #ADBBC8;
     border-radius: 2px;
     background-color: white;
-}
-
-input {
-    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .error {
@@ -128,7 +129,6 @@ input {
 .errorMessage {
     color: red;
     font-size: 12px;
-    font-family: 'Noto Sans KR', sans-serif;
     line-height: 19.2px;
     font-weight: 400;
 }
@@ -137,21 +137,6 @@ input {
     position: relative;
     display: flex;
     align-items: center;
-}
-
-.passwordContainer input {
-    box-sizing: border-box;
-    width: 373px;
-    height: 58px;
-    flex: 1;
-    padding: 16px 12px;
-    border: solid 1px #ADBBC8;
-    border-radius: 2px;
-    background-color: white;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 25.6px;
-    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .passwordToggleIcon {
@@ -225,26 +210,38 @@ input {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-.inputWithButton input {
-    box-sizing: border-box;
-    width: 373px;
-    height: 58px;
-    flex: 1;
-    padding: 16px 12px;
-    border: solid 1px #ADBBC8;
-    border-radius: 2px;
-    background-color: white;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 25.6px;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
 .cancelButton:hover {
-    color: #050C20;
+    border-radius: 2px;
+    background-color: #F4F4F4;
 }
 
 .nextButton:disabled {
     background-color: #858585;
     cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .registerForm {
+        width: 100%;
+        padding: 20px 15px;
+    }
+
+    .inputWithButton {
+        flex-direction: column;
+    }
+
+    .checkButton {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .cancelButton,
+    .nextButton {
+        width: 100%;
+    }
 }

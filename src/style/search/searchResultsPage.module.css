@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 55vw;
+    width: 57vw;
     height: 104px;
     padding: 48px 4px 16px;
     gap: 4px;
@@ -39,7 +39,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; 
-    width: 55vw;
+    width: 60vw;
     flex-grow: 1;
     padding: 16px 0px;
     overflow-y: auto;
@@ -48,7 +48,7 @@
 
 .post-preview {
     display: flex;
-    width: 55vw; 
+    width: 60vw; 
     align-items: flex-start;
 }
 
@@ -92,4 +92,15 @@
     line-height: 42.65px;
     font-family: 'Noto Sans KR', sans-serif;
     color: #000000;
+}
+
+@media (max-width: 768px) {
+   
+    .ResultsTitle label {
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 39.8px;
+        font-family: 'Noto Sans KR', sans-serif;
+        color: #000000;
+    }
 }

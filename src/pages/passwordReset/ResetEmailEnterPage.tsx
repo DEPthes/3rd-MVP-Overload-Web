@@ -17,7 +17,7 @@ const ResetEmailEnterPage: React.FC = () => {
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
-        setEmailError(validateEmail(e.target.value) ? '' : constants.invalidEmailError);
+        setEmailError(validateEmail(e.target.value) || e.target.value === '' ? '' : constants.invalidEmailError);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -64,7 +64,7 @@ const ResetEmailEnterPage: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.buttonGroup}>
-                        <button type="submit" className={styles.nextButton} disabled={!email}>
+                        <button type="submit" className={styles.nextButton} disabled={!email || !!emailError}>
                             {constants.submitButtonText}
                         </button>
                     </div>

@@ -55,7 +55,9 @@ const RegisterPage: React.FC = () => {
         setIsEmailAvailable(false);
         setIsEmailChecked(false);
         
-        if (!validateEmail(emailValue)) {
+        if (emailValue === '') {
+            setEmailError(''); 
+        } else if (!validateEmail(emailValue)) {
             setEmailError(constants.invalidEmailError);
         } else {
             setEmailError('');
@@ -72,8 +74,11 @@ const RegisterPage: React.FC = () => {
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const passwordValue = e.target.value;
         setPassword(passwordValue);
-    
-        if (!validatePassword(passwordValue)) {
+        
+        if (passwordValue === '') {
+            setPasswordError(''); 
+        }
+        else if (!validatePassword(passwordValue)) {
             setPasswordError(constants.passwordError);
         } else {
             setPasswordError('');
@@ -94,8 +99,11 @@ const RegisterPage: React.FC = () => {
     
         console.log('Password:', trimmedPassword);      //디버깅용
         console.log('Confirm Password:', trimmedConfirmPassword);
-    
-        if (trimmedPassword === trimmedConfirmPassword) {
+        
+        if (trimmedConfirmPassword === '') {
+            setConfirmPasswordError('');
+        }
+        else if (trimmedPassword === trimmedConfirmPassword) {
             setConfirmPasswordError('');
         } else {
             setConfirmPasswordError(constants.confirmPasswordError);
@@ -200,7 +208,7 @@ const RegisterPage: React.FC = () => {
                                 className={passwordError ? styles.error : ''}
                             />
                             <span onClick={togglePasswordVisibility} className={styles.passwordToggleIcon}>
-                                <img src={passwordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
+                                <img src={passwordVisible ? eyeimg : eyeimgslash} alt="Toggle visibility" />
                             </span>
                         </div>
                         <div className={styles.errorMessageContainer}>
@@ -221,7 +229,7 @@ const RegisterPage: React.FC = () => {
                                 className={confirmPasswordError ? styles.error : ''}
                             />
                             <span onClick={toggleConfirmPasswordVisibility} className={styles.passwordToggleIcon}>
-                                <img src={confirmPasswordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
+                                <img src={confirmPasswordVisible ? eyeimg : eyeimgslash} alt="Toggle visibility" />
                             </span>
                         </div>
                         <div className={styles.errorMessageContainer}>

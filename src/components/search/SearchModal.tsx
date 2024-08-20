@@ -15,9 +15,18 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose, onSearch }) => {
     const navigate = useNavigate();
 
     const handleSearch = () => {
+        if (searchTerm.trim() === '') {
+            return; // 검색어가 없으면 검색을 실행하지 않음
+        }
         onSearch(searchTerm);
         onClose(); // Close the modal after searching
         navigate('/searchResults', { state: { searchTerm } }); // Navigate to search results page with search term
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch(); // 엔터 키를 누르면 검색 실행
+        }
     };
 
     return (
@@ -35,6 +44,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose, onSearch }) => {
                         className={styles.searchInput} 
                         value={searchTerm} 
                         onChange={(e) => setSearchTerm(e.target.value)} 
+                        onKeyDown={handleKeyDown} // 엔터 키 이벤트 처리
                     />
                     <img 
                         src={searchImg} 

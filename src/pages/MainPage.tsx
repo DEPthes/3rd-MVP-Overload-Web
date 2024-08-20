@@ -8,10 +8,11 @@ import SearchModal from '../components/search/SearchModal';
 
 import "../style/mainPage.css";
 import api from '../api';
+import ViewDetailPost from './ViewDetailPostPage';
 
 // MainPage
 const MainPage: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+    const [selectedCategory, setSelectedCategory] = useState<string>('전체');
     const [selectedPage, setSelectedPage] = useState<number>(1);
     const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
     const [posts, setPosts] = useState<any[]>([]);
@@ -20,10 +21,16 @@ const MainPage: React.FC = () => {
     const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
     const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
     const [isToken, setIsToken] = useState<boolean>(false);
+    const [member, setMember] = useState<any|null>(null);
     const postsPerPage = 10;
 
     useEffect(() => {
-        const endpoint = selectedCategory === 'ALL' ? '/posts/all' : `/posts/${selectedCategory}`;
+        const endpoint = 
+            selectedCategory === '전체' ? '/posts/all' :
+            selectedCategory === '디자인' ? '/posts/DESIGN' :
+            selectedCategory === '기획' ? '/posts/PLAN' :
+            selectedCategory === '개발' ? `/posts/SERVER` && `/posts/WEB`&& `/posts/ANDROID` : '';
+
         const token = sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
@@ -44,6 +51,20 @@ const MainPage: React.FC = () => {
             console.error("Error fetching posts:", error);
         });
         
+        // 멤버 데이터 가져오기
+        api.get(`/members`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            const member = response.data.data;
+            setMember(member);
+        })
+        .catch((error) => {
+            console.error("회원 데이터 가져오기 오류:", error.response ? error.response.data : error.message);
+        });
+
     }, [selectedCategory, selectedPage]);
 
     const handleCategoryChange = (category: string) => {
@@ -72,7 +93,10 @@ const MainPage: React.FC = () => {
         <>
             <div className="main-total">
                 {/* Navbar */}
-                <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+                <Nav 
+                    onSearchClick={() => setIsSearchModalOpen(true)} 
+                    profile={member?.avatar || undefined}
+                />
 
                 {/* Banner */}
                 <Banner />

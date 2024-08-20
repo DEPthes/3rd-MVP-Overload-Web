@@ -132,7 +132,7 @@
                   className={passwordError ? styles.error : ""}
                 />
                 <span onClick={togglePasswordVisibility} className={styles.passwordToggleIcon}>
-                  <img src={passwordVisible ? eyeimgslash : eyeimg} alt={constants.eyeAltText} />
+                  <img src={passwordVisible ? eyeimg : eyeimgslash} alt={constants.eyeAltText} />
                 </span>
               </div>
               <div className={styles.errorMessageContainer}>
