@@ -89,21 +89,43 @@ hr {
 }
 
 /* info layout */
-.detail-info div{
-    margin: 2px 20px 2px 5px;
+.detail-info {
+    display: flex;
+    align-items: center;
 }
 
-/* 작성자 프로필 */
-.detail-info img {
-    align-items: center;
+.detail-info-date{
+    margin: 2px 20px 2px 0px;
+}
+
+.detail-info-writer{
+    margin: 2px 10px 2px 5px;
+}
+
+.postdetail-writer{
+    display: flex;
+    position: relative;
+    margin-right: 25px;
+}
+
+.postdetail-writer-img{
     height: 20px;
-    width: 20px;
-    margin: 5px 0;
+    width: auto; 
+    position: absolute;
+    object-fit: cover;
+    overflow: hidden;
+    margin-top: -8px;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.postdetail-default-profile{
+    width: 20px; 
+    height: 20px; 
+    margin-top:-8px;
+    position:absolute;
     object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
     overflow: hidden;
-
 }
 
 /* 본문내용 */
@@ -180,14 +202,31 @@ hr {
     height: 150px;
 }
 
-.detail-bottom img {
-    margin-right: 30px;
+.bottom-postwriter-avatar{
+    display: flex;
+    position: relative;
+    margin-right: 150px;
+}
+
+.bottom-postwriter-avatar-img {
+    height: 120px;
+    width: auto; 
+    position: absolute;
+    object-fit: cover;
+    overflow: hidden;
+    margin-top: -70px;
+    border-radius: 30px;
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.bottom-default-profile{
+    position: absolute;
     border-radius: 30px; 
     width: 120px; 
     height: 120px; 
+    margin-top: -70px;
     object-fit: cover; /* 이미지를 중앙에 위치시키고 비율 유지 */
     overflow: hidden;
-    border: 1px solid black;
 }
 
 

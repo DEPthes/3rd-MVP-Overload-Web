@@ -64,6 +64,23 @@
   margin-right: 30px;
 }
 
+.nav-avatar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-avatar-img {
+  height: 30px; /* Ensure all avatar parts are the same height */
+  width: auto; /* Maintain aspect ratio */
+  position: absolute;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid rgb(180, 180, 180);
+}
+
 /* 프로필 아이콘 */
 .profile-icon {
   display: flex;

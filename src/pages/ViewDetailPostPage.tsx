@@ -96,7 +96,10 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
 
     return (
         <>
-            <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+            <Nav 
+                onSearchClick={() => setIsSearchModalOpen(true)} 
+                profile={member?.avatar || undefined}
+            />
 
             <div className="total">
                 <div className="detail-post">
@@ -107,10 +110,11 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
                         date={post.createdDate}
                         writer={post.writerInfo.name}
                         part={post.writerInfo.part}
-                        profile={post.writerInfo.avatar?.avatarFace || ""}
+                        profile={post.writerInfo.avatar? post.writerInfo.avatar : undefined}
                         view={post.viewCount}
                         like={post.likeCount}
                         liked={post.liked}
+                        mine={post.mine}
                         scrap={post.scrapCount}
                         handleHeartClick={isToken ? handleHeartClick : undefined}
                         handleScrapClick={isToken ? handleScrapClick : undefined}
@@ -124,7 +128,7 @@ const ViewDetailPost: React.FC<viewDetail> = (props) => {
                 {isToken && (
                     <div className="detail-mycomment">
                         <MyComment
-                            profile={member?.avatar || defaultProfile}
+                            profile={member?.avatar || undefined}
                             name={member?.memberName || ""}
                             postId={Number(postId)} // postId 전달
                         />
