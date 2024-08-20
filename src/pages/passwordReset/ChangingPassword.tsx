@@ -25,12 +25,12 @@ const ChangePasswordPage: React.FC = () => {
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
-        setPasswordError(validatePassword(e.target.value) ? '' : constants.passwordError);
+        setPasswordError(validatePassword(e.target.value) || e.target.value === '' ? '' : constants.passwordError);
     };
 
     const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setConfirmPassword(e.target.value);
-        setConfirmPasswordError(password === e.target.value ? '' : constants.confirmPasswordError);
+        setConfirmPasswordError(password === e.target.value || e.target.value === '' ? '' : constants.confirmPasswordError);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -78,7 +78,7 @@ const ChangePasswordPage: React.FC = () => {
                                 className={passwordError ? styles.error : ''}
                             />
                             <span onClick={togglePasswordVisibility} className={styles.passwordToggleIcon}>
-                                <img src={passwordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
+                                <img src={passwordVisible ? eyeimg : eyeimgslash} alt="Toggle visibility" />
                             </span>
                         </div>
                         <div className={styles.errorMessageContainer}>
@@ -99,7 +99,7 @@ const ChangePasswordPage: React.FC = () => {
                                 className={confirmPasswordError ? styles.error : ''}
                             />
                             <span onClick={toggleConfirmPasswordVisibility} className={styles.passwordToggleIcon}>
-                                <img src={confirmPasswordVisible ? eyeimgslash : eyeimg} alt="Toggle visibility" />
+                                <img src={confirmPasswordVisible ? eyeimg : eyeimgslash} alt="Toggle visibility" />
                             </span>
                         </div>
                         <div className={styles.errorMessageContainer}>
