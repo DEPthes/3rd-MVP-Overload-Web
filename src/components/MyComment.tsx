@@ -100,7 +100,7 @@ const MyComment: React.FC<MyComment> = (props) => {
     const [isToken, setIsToken] = useState(false);
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
         if (token != null) {
             setIsToken(true);
             setSelectedBox(false);

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import EditPage from "./pages/EditPage.tsx";
 
 // 페이지 컴포넌트들을 lazy 로딩
 const MainPage = lazy(() => import("./pages/MainPage.tsx"));
@@ -26,6 +27,7 @@ const ResetSuccess = lazy(
 const EmailSuccess = lazy(() => import("./pages/register/EmailSuccess.tsx"));
 const SearchResults = lazy(() => import("./pages/search/SearchResult.tsx"));
 const PostPage = lazy(() => import("./pages/post/PostPage.tsx"));
+const editPage = lazy(() => import("./pages/EditPage.tsx"));
 const AvatarPage = lazy(() => import("./pages/avatar/AvatarPage.tsx"));
 const MyPage = lazy(() => import("./pages/myPage/MyPage.tsx"));
 
@@ -41,6 +43,10 @@ function App() {
             <Route
               path="/viewDetailPost/:postId"
               element={<ViewDetailPost />}
+            />
+            <Route
+              path="/editPage/:postId"
+              element={<EditPage/>}
             />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/register2" element={<RegisterPage2 />} />

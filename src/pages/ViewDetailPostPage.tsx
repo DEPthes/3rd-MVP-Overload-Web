@@ -31,7 +31,7 @@ const ViewDetailPost: React.FC= () => {
     };
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
         if (token) {
             setIsToken(true);
         }
@@ -52,6 +52,7 @@ const ViewDetailPost: React.FC= () => {
             .catch((error) => {
                 console.error("게시글 데이터 가져오기 오류:", error);
             });
+            console.log(post);
             
         // 멤버 데이터 가져오기
         api.get(`/members`, {
@@ -108,6 +109,7 @@ const ViewDetailPost: React.FC= () => {
                         view={post.viewCount}
                         like={post.likeCount}
                         liked={post.liked}
+                        scraped={post.scraped}
                         mine={post.mine}
                         scrap={post.scrapCount}
                         generation={post.writerInfo.generation}
