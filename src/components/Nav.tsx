@@ -27,7 +27,7 @@ const Nav: React.FC<nav> = (props) => {
   const [token, setToken] = useState<string>();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
     if (token) {
       setIsToken(true);
       setToken(token);

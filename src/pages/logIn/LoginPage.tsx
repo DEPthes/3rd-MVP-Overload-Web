@@ -61,6 +61,7 @@
         if (accessToken && refreshToken) {
           if (autoLogin) {
             localStorage.setItem("token", accessToken);
+            sessionStorage.setItem("token", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
           } else {
             sessionStorage.setItem("token", accessToken);
