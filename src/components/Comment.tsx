@@ -38,6 +38,7 @@ import nose6 from "../assets/avatar/nose6.svg";
 import nose7 from "../assets/avatar/nose7.svg";
 import nose8 from "../assets/avatar/nose8.svg";
 import api from "../api";
+import AvatarComponent from "./avatarPage/AvatarComponent";
 
 // 이미지 매핑 객체
 const avatarImages: any = {
@@ -112,44 +113,28 @@ const Comment: React.FC<CommentProps> = (props) => {
             <div className="comment-total">
               <div className="comment-top">
                 <div>
-                  {comment.avatar && (
-                    <div className="comment-avatar">
-                      {comment.avatar.avatarFace ? (
-                        <img
-                          className="comment-avatar-img"
-                          src={avatarImages[comment.avatar.avatarFace]}
-                        />
-                      ) : (
-                        <img
-                          src={defaultProfile}
-                          className="comment-default-profile"
-                        />
-                      )}
-                      {comment.avatar.avatarBody && (
-                        <img
-                          className="comment-avatar-img"
-                          src={avatarImages[comment.avatar.avatarBody]}
-                        />
-                      )}
-                      {comment.avatar.avatarEyes && (
-                        <img
-                          className="comment-avatar-img"
-                          src={avatarImages[comment.avatar.avatarEyes]}
-                        />
-                      )}
-                      {comment.avatar.avatarNose && (
-                        <img
-                          className="comment-avatar-img"
-                          src={avatarImages[comment.avatar.avatarNose]}
-                        />
-                      )}
-                      {comment.avatar.avatarMouth && (
-                        <img
-                          className="comment-avatar-img"
-                          src={avatarImages[comment.avatar.avatarMouth]}
-                        />
-                      )}
+                  {comment.avatar.avatarFace !== null ? (
+                    <div style={{ marginRight: "20px" }}>
+                      <AvatarComponent
+                        height="112px"
+                        width="112px"
+                        face={comment.avatar.avatarFace}
+                        body={comment.avatar.avatarBody}
+                        eyes={comment.avatar.avatarEyes}
+                        nose={comment.avatar.avatarNose}
+                        mouth={comment.avatar.avatarMouth}
+                      />
                     </div>
+                  ) : (
+                    <img
+                      className="profile-icon"
+                      src={defaultProfile}
+                      style={{
+                        width: "112px",
+                        height: "112px",
+                        marginRight: "20px",
+                      }}
+                    />
                   )}
                 </div>
                 <div className="comment-header">
@@ -189,54 +174,28 @@ const Comment: React.FC<CommentProps> = (props) => {
                         <div key={replyIndex}>
                           <div className="comment-top">
                             <div>
-                              {reply.avatar && (
-                                <div className="comment-avatar">
-                                  {reply.avatar.avatarFace ? (
-                                    <img
-                                      className="comment-avatar-img"
-                                      src={
-                                        avatarImages[comment.avatar.avatarFace]
-                                      }
-                                    />
-                                  ) : (
-                                    <img
-                                      src={defaultProfile}
-                                      className="comment-default-profile"
-                                    />
-                                  )}
-                                  {reply.avatar.avatarBody && (
-                                    <img
-                                      className="comment-avatar-img"
-                                      src={
-                                        avatarImages[comment.avatar.avatarBody]
-                                      }
-                                    />
-                                  )}
-                                  {reply.avatar.avatarEyes && (
-                                    <img
-                                      className="comment-avatar-img"
-                                      src={
-                                        avatarImages[comment.avatar.avatarEyes]
-                                      }
-                                    />
-                                  )}
-                                  {reply.avatar.avatarNose && (
-                                    <img
-                                      className="comment-avatar-img"
-                                      src={
-                                        avatarImages[comment.avatar.avatarNose]
-                                      }
-                                    />
-                                  )}
-                                  {reply.avatar.avatarMouth && (
-                                    <img
-                                      className="comment-avatar-img"
-                                      src={
-                                        avatarImages[comment.avatar.avatarMouth]
-                                      }
-                                    />
-                                  )}
+                              {reply.avatar ? (
+                                <div style={{ marginRight: "20px" }}>
+                                  <AvatarComponent
+                                    height="112px"
+                                    width="112px"
+                                    face={reply.avatar.avatarFace}
+                                    body={reply.avatar.avatarBody}
+                                    eyes={reply.avatar.avatarEyes}
+                                    nose={reply.avatar.avatarNose}
+                                    mouth={reply.avatar.avatarMouth}
+                                  />
                                 </div>
+                              ) : (
+                                <img
+                                  className="profile-icon"
+                                  src={defaultProfile}
+                                  style={{
+                                    width: "112px",
+                                    height: "112px",
+                                    marginRight: "20px",
+                                  }}
+                                />
                               )}
                             </div>
                             <div className="comment-header">

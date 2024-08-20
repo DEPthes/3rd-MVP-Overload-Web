@@ -36,7 +36,7 @@ const MainPage: React.FC = () => {
         ? `/posts/SERVER` && `/posts/WEB` && `/posts/ANDROID`
         : "";
 
-    const token = sessionStorage.getItem("token");
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
     if (token) {
       setIsToken(true);
     }
@@ -136,6 +136,7 @@ const MainPage: React.FC = () => {
                   handleScrapClick={isToken ? handleScrapClick : undefined}
                   selectedHeart={isToken ? selectedHeart : undefined}
                   selectedScrap={isToken ? selectedScrap : undefined}
+                  avatar={item.avatar}
                 />
               </li>
             ))}
