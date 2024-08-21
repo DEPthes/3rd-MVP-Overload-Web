@@ -8,6 +8,7 @@ import SearchModal from "../components/search/SearchModal";
 import defaultProfile from "../images/defaultProfile.png";
 import "../style/viewDetailPost.css";
 import api from "../api/index";
+import { useMember } from "../hooks/useMember";
 
 const ViewDetailPost: React.FC = () => {
   const { postId } = useParams<{ postId: string }>();
@@ -19,6 +20,7 @@ const ViewDetailPost: React.FC = () => {
   const [isToken, setIsToken] = useState(false);
   const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
   const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
+  const memberData = useMember();
 
   const fetchComments = async () => {
     try {
@@ -133,7 +135,7 @@ const ViewDetailPost: React.FC = () => {
         {
           <div className="detail-mycomment">
             <MyComment
-              profile={post.writerInfo.avatar}
+              profile={memberData.data.data.avatar}
               name={member?.memberName || ""}
               postId={Number(postId)}
               refreshComments={fetchComments}

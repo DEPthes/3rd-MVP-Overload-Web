@@ -25,8 +25,6 @@ const MyPage = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
   const memberData = useMember();
 
-  console.log(data.data.dataList);
-
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
       let accessToken = localStorage.getItem("token");

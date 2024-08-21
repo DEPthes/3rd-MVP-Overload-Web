@@ -67,7 +67,7 @@ const MyComment: React.FC<MyComment> = (props) => {
       // 댓글 제출 후 textarea 초기화
       setCommentText("");
       setNickname("");
-      if(isToken){
+      if (isToken) {
         setSelectedBox(false);
       }
       // 댓글 새로 고침 함수 호출
@@ -80,7 +80,6 @@ const MyComment: React.FC<MyComment> = (props) => {
     }
   };
 
-  console.log("test", props.profile);
   return (
     <>
       {
@@ -93,8 +92,7 @@ const MyComment: React.FC<MyComment> = (props) => {
             onChange={handleCommentChange}
           ></textarea>
           <div className="mycomment-writerinfo">
-            {props.profile?.avatarBody !== null ? (
-
+            {props.profile?.avatarBody !== null && isToken ? (
               <div>
                 <AvatarComponent
                   height="112px"
@@ -111,31 +109,30 @@ const MyComment: React.FC<MyComment> = (props) => {
                 className="mycomment-default-profile"
                 src={defaultProfile}
                 style={{ width: "112px", height: "112px" }}
-
               />
             )}
             <div className="mycomment-writerinfo-nickname">
-            {isToken ? (
-              selectedBox ? (
+              {isToken ? (
+                selectedBox ? (
+                  <textarea
+                    placeholder="닉네임을 입력하세요."
+                    value={nickname}
+                    onChange={handleNicknameChange}
+                  ></textarea>
+                ) : (
+                  <textarea
+                    readOnly
+                    value={props.name}
+                    placeholder={props.name}
+                  ></textarea>
+                )
+              ) : (
                 <textarea
                   placeholder="닉네임을 입력하세요."
                   value={nickname}
                   onChange={handleNicknameChange}
                 ></textarea>
-              ) : (
-                <textarea
-                  readOnly
-                  value={props.name}
-                  placeholder={props.name}
-                ></textarea>
-              )
-            ) : (
-              <textarea
-                placeholder="닉네임을 입력하세요."
-                value={nickname}
-                onChange={handleNicknameChange}
-              ></textarea>
-            )}
+              )}
 
               <div className="mycomment-nickname">
                 {isToken ? (
