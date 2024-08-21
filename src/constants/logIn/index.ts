@@ -53,8 +53,9 @@ export const constants = {
 
     // 이메일 인증 및 에러 메시지
     verifyEmailTitle: "인증 메일 전송",
-    verifyEmailSubtitle: "인증 메일을 받을 메일 주소를 입력해주세요.",
-    verifyEmailSubtitle2: "",
+    verifyEmailSubtitle: " 으로 가입 인증 메일을 전송했어요.",
+    verifyEmailSubtitle3: " 으로 본인 인증 메일을 전송했어요.",
+    verifyEmailSubtitle2: "메일함을 확인하시고, 인증을 완료해 주세요.",
     verifyCompleteMessage: "메일함의 링크 클릭 후 완료 버튼을 눌러주세요.",
     resendEmailButtonText: "인증 메일 다시 받기",
     emailSuccessMessage: "이메일 인증 완료",
