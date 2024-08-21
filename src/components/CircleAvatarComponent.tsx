@@ -25,7 +25,7 @@ const CircleAvatarComponent: React.FC<AvatarComponentProps> = ({
         style={{
           width: "100%",
           height: "100%",
-          transform: "scale(1.05)", // 요소를 1.2배 확대
+          transform: "scale(1.1)  translateX(-2%)",
         }}
       >
         <AvatarComponent

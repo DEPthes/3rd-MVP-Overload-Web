@@ -56,5 +56,41 @@ export const AVATARANIMALLIST: AvatarAnimalList = {
   nose: [nose1, nose2, nose3, nose4, nose5, nose6, nose7, nose8],
 };
 
+export const AVATARANIMALLISTSTRING: AvatarAnimalList = {
+  body: ["body1", "body2", "body3"],
+  eyes: [
+    "eyes1",
+    "eyes2",
+    "eyes3",
+    "eyes4",
+    "eyes5",
+    "eyes6",
+    "eyes7",
+    "eyes8",
+  ],
+  face: ["face1", "face2", "face3", "face4"],
+  mouth: [
+    "mouth1",
+    "mouth2",
+    "mouth3",
+    "mouth4",
+    "mouth5",
+    "mouth6",
+    "mouth7",
+    "mouth8",
+    "mouth9",
+  ],
+  nose: [
+    "nose1",
+    "nose2",
+    "nose3",
+    "nose4",
+    "nose5",
+    "nose6",
+    "nose7",
+    "nose8",
+  ],
+};
+
 // 한 페이지에 보여줄 아바타 수
 export const ITEMS_PER_PAGE = 5;

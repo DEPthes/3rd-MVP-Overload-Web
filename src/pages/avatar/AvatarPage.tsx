@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   AVATARANIMALLIST,
+  AVATARANIMALLISTSTRING,
   AVATARHEADER,
   AVATARRANDOMBUTTONSPAN,
   ITEMS_PER_PAGE,
@@ -13,16 +14,17 @@ import AvatarNav from "../../components/avatarPage/AvatarNav";
 import { NextButton } from "../../assets";
 import { putAvatar } from "../../api/avatar";
 import { useNavigate } from "react-router-dom";
+import { getImageByString } from "../../util/getImageByString";
 
 const AvatarPage = () => {
   const navigate = useNavigate();
   const [avatarHeader, setAvatarHeader] = useState<string>(AVATARHEADER[0]);
   const [avatar, setAvatar] = useState({
-    body: AVATARANIMALLIST.body[0],
-    eyes: AVATARANIMALLIST.eyes[0],
-    face: AVATARANIMALLIST.face[0],
-    mouth: AVATARANIMALLIST.mouth[0],
-    nose: AVATARANIMALLIST.nose[0],
+    body: AVATARANIMALLISTSTRING.body[0],
+    eyes: AVATARANIMALLISTSTRING.eyes[0],
+    face: AVATARANIMALLISTSTRING.face[0],
+    mouth: AVATARANIMALLISTSTRING.mouth[0],
+    nose: AVATARANIMALLISTSTRING.nose[0],
   });
   const [currentPage, setCurrentPage] = useState<number>(0);
 
@@ -34,20 +36,20 @@ const AvatarPage = () => {
   //무작위
   const handleRandomAvatar = () => {
     setAvatar({
-      body: AVATARANIMALLIST.body[
+      body: AVATARANIMALLISTSTRING.body[
         Math.floor(Math.random() * AVATARANIMALLIST.body.length)
       ],
-      eyes: AVATARANIMALLIST.eyes[
+      eyes: AVATARANIMALLISTSTRING.eyes[
         Math.floor(Math.random() * AVATARANIMALLIST.eyes.length)
       ],
-      face: AVATARANIMALLIST.face[
+      face: AVATARANIMALLISTSTRING.face[
         Math.floor(Math.random() * AVATARANIMALLIST.face.length)
       ],
       mouth:
-        AVATARANIMALLIST.mouth[
+        AVATARANIMALLISTSTRING.mouth[
           Math.floor(Math.random() * AVATARANIMALLIST.mouth.length)
         ],
-      nose: AVATARANIMALLIST.nose[
+      nose: AVATARANIMALLISTSTRING.nose[
         Math.floor(Math.random() * AVATARANIMALLIST.nose.length)
       ],
     });
@@ -68,7 +70,8 @@ const AvatarPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
-  const selectedImages = AVATARANIMALLIST[matchAvatarHeader(avatarHeader)];
+  const selectedImages =
+    AVATARANIMALLISTSTRING[matchAvatarHeader(avatarHeader)];
   const maxPage = Math.ceil(selectedImages.length / ITEMS_PER_PAGE) - 1;
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const currentImages = selectedImages.slice(
@@ -76,12 +79,9 @@ const AvatarPage = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
-  console.log(currentImages, maxPage, currentPage);
-
   const isImageSelected = (image: string): boolean => {
     return Object.values(avatar).includes(image);
   };
-
   const handleSubmitAvatar = async () => {
     try {
       const response = await putAvatar({
@@ -98,6 +98,7 @@ const AvatarPage = () => {
     }
   };
 
+  console.log(avatar);
   return (
     <>
       <AvatarNav onClick={handleSubmitAvatar} />
@@ -105,11 +106,11 @@ const AvatarPage = () => {
         <AvatarComponent
           width="270px"
           height="270px"
-          face={avatar.face}
-          body={avatar.body}
-          eyes={avatar.eyes}
-          nose={avatar.nose}
-          mouth={avatar.mouth}
+          face={getImageByString(avatar.face)}
+          body={getImageByString(avatar.body)}
+          eyes={getImageByString(avatar.eyes)}
+          nose={getImageByString(avatar.nose)}
+          mouth={getImageByString(avatar.mouth)}
         />
         <div className="avatarSelectContainer">
           <div className="avatarHeader">
@@ -149,7 +150,7 @@ const AvatarPage = () => {
             {currentImages.map((image, index) => (
               <AvatarCard
                 key={index}
-                image={image}
+                image={getImageByString(image)}
                 onclick={handleSelectAvatar}
                 selected={isImageSelected(image)}
               />
