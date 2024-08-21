@@ -20,7 +20,6 @@ const ViewDetailPost: React.FC = () => {
   const [isToken, setIsToken] = useState(false);
   const [selectedHeart, setSelectedHeart] = useState<boolean>(false);
   const [selectedScrap, setSelectedScrap] = useState<boolean>(false);
-  const memberData = useMember();
 
   const fetchComments = async () => {
     try {
@@ -30,6 +29,8 @@ const ViewDetailPost: React.FC = () => {
       console.error("댓글 목록 가져오기 오류:", error);
     }
   };
+
+  console.log(member);
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -135,7 +136,7 @@ const ViewDetailPost: React.FC = () => {
         {
           <div className="detail-mycomment">
             <MyComment
-              profile={memberData.data.data.avatar}
+              profile={member?.avatar}
               name={member?.memberName || ""}
               postId={Number(postId)}
               refreshComments={fetchComments}
