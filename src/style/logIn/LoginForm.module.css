@@ -66,6 +66,11 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+.formGroup input::-ms-reveal, 
+.formGroup input::-ms-clear { 
+    display : none;
+}
+
 .error {
     border-color: red;
 }
