@@ -85,11 +85,11 @@ const AvatarPage = () => {
   const handleSubmitAvatar = async () => {
     try {
       const response = await putAvatar({
-        avatarFace: avatar.face,
-        avatarBody: avatar.body,
-        avatarEyes: avatar.eyes,
-        avatarNose: avatar.nose,
-        avatarMouth: avatar.mouth,
+        avatarFace: avatar.face.toString(),
+        avatarBody: avatar.body.toString(),
+        avatarEyes: avatar.eyes.toString(),
+        avatarNose: avatar.nose.toString(),
+        avatarMouth: avatar.mouth.toString(),
       });
       navigate("/MyPage");
     } catch (error) {
