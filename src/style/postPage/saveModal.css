@@ -35,6 +35,7 @@
   flex-wrap: wrap;
   width: calc(100% - 48px);
   height: 268px;
+  overflow-y: auto;
 }
 
 .saveModalFooter {

@@ -11,15 +11,19 @@ import { SaveModalSvg } from "../../assets";
 import usePostTemps from "../../hooks/post/usePostTemps";
 import { useGetTemps } from "../../hooks/post/useGetTemps";
 import { useGetDetails } from "../../hooks/useGetDetail";
+import api from "../../api";
 
 const PostPage = () => {
   const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [tags, setTags] = useState<string[]>([""]);
   const [isModalOpel, setIsModal] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get("id");
+  const { data, refetch } = useGetTemps();
+  const tempsList = data?.data;
 
   const handleSuccess = () => {
     navigate(`/`);
@@ -27,6 +31,10 @@ const PostPage = () => {
 
   const handleSaveSuccess = () => {
     setIsModal(true);
+
+    setTimeout(() => {
+      setIsModal(false);
+    }, 2000); // 2000ms = 2초
   };
 
   const handleError = (error: unknown) => {
@@ -35,8 +43,6 @@ const PostPage = () => {
 
   const { mutate: submitPost } = usePost(handleSuccess, handleError);
   const { mutate: savePost } = usePostTemps(handleSaveSuccess, handleError);
-  const tempsData = useGetTemps();
-  const tempsList = tempsData?.data.data;
 
   // const { data: detailData } = useGetDetails(
   //   selectedId ? Number(searchParams.get("id")) : 1
@@ -46,7 +52,6 @@ const PostPage = () => {
     setTitle(event.target.value);
   };
 
-  console.log(text);
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -69,14 +74,20 @@ const PostPage = () => {
     submitPost({ title, content: text, tagNameList: tags });
   };
 
-  const handleSaveTemp = () => {
-    savePost({ title, content: text, tagNameList: tags });
+  const handleSaveTemp = async () => {
+    await savePost({ title, content: text, tagNameList: tags });
+    await refetch();
   };
 
-  const handleSetTemp = () => {
-    // setTitle(temp.title);
-    // setText(temp.content);
-    // setTags(temp.tagNameList);
+  const handleSetTemp = async () => {
+    const response = await api.get(`/posts/temps/details/${selectedId}`);
+    setTitle(response.data.data.title);
+    setText(response.data.data.content);
+    setTags(response.data.data.tagNameList);
+  };
+
+  const handleTempRefetch = async () => {
+    await refetch();
   };
 
   return (
@@ -87,6 +98,7 @@ const PostPage = () => {
         temps={tempsList}
         isClear={hasDuplicateTags(tags)}
         setTemp={handleSetTemp}
+        refetch={handleTempRefetch}
       />
       <div className="saveModal"> {isModalOpel && <SaveModalSvg />}</div>
       <div className="postContainer">
@@ -95,9 +107,10 @@ const PostPage = () => {
           placeholder="제목을 입력하세요"
           className="inputBox"
           onChange={handleTitleChange}
+          value={title}
         />
 
-        <AutoTextArea onChange={handleContentChange} />
+        <AutoTextArea onChange={handleContentChange} value={text} />
         <div className="tagContainer">
           {tags.map((tag, index) => (
             <TagInput
