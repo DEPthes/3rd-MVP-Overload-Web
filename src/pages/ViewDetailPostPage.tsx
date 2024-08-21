@@ -133,19 +133,18 @@ const ViewDetailPost: React.FC = () => {
         {
           <div className="detail-mycomment">
             <MyComment
-              profile={member?.avatar || defaultProfile}
+              profile={post.writerInfo.avatar}
               name={member?.memberName || ""}
               postId={Number(postId)}
               refreshComments={fetchComments}
             />
           </div>
         }
-
         <div className="detail-comment">
           <ul>
             <Comment
               comments={comments || []}
-              myProfile={member?.avatar || defaultProfile}
+              myProfile={post.writerInfo.avatar}
               myName={member?.memberName || ""}
               postId={Number(postId)}
               refreshComments={fetchComments}

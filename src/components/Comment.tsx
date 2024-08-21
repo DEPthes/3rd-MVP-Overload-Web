@@ -39,6 +39,7 @@ import nose7 from "../assets/avatar/nose7.svg";
 import nose8 from "../assets/avatar/nose8.svg";
 import api from "../api";
 import AvatarComponent from "./avatarPage/AvatarComponent";
+import { getImageByString } from "../util/getImageByString";
 
 // 이미지 매핑 객체
 const avatarImages: any = {
@@ -118,11 +119,11 @@ const Comment: React.FC<CommentProps> = (props) => {
                       <AvatarComponent
                         height="112px"
                         width="112px"
-                        face={comment.avatar.avatarFace}
-                        body={comment.avatar.avatarBody}
-                        eyes={comment.avatar.avatarEyes}
-                        nose={comment.avatar.avatarNose}
-                        mouth={comment.avatar.avatarMouth}
+                        face={getImageByString(comment.avatar.avatarFace)}
+                        body={getImageByString(comment.avatar.avatarBody)}
+                        eyes={getImageByString(comment.avatar.avatarEyes)}
+                        nose={getImageByString(comment.avatar.avatarNose)}
+                        mouth={getImageByString(comment.avatar.avatarMouth)}
                       />
                     </div>
                   ) : (
