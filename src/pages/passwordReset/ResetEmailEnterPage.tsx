@@ -43,9 +43,6 @@ const ResetEmailEnterPage: React.FC = () => {
                 <div className={styles.titleContainer}>
                     <label className={styles.title}>{constants.sendMailButtonText}</label>
                 </div>
-                <div className={styles.subtitleContainer}>
-                    <label className={styles.subtitle}>{email + constants.verifyEmailSubtitle} <br /> {constants.verifyEmailSubtitle2}</label>
-                </div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <div className={styles.labelContainer}>

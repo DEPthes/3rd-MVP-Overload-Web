@@ -59,12 +59,12 @@
   font-weight: 400;
   line-height: 45.49px;
   font-family: 'Noto Sans KR', sans-serif;
-  color: rgba(118, 118, 118, 1) !important;
+  color: black;
 }
 
 .searchInput::placeholder {
-  color: rgba(118, 118, 118, 1); 
-  opacity: 1; 
+  color: rgba(118, 118, 118, 1) !important;
+  opacity: 100% !important; 
 }
 
 .closeButton {

@@ -38,7 +38,7 @@
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newPassword = e.target.value;
       setPassword(newPassword);
-      setPasswordError(validatePassword(newPassword) ? "" : constants.passwordError);
+      setPasswordError(validatePassword(newPassword) || newPassword === '' ? "" : constants.passwordError);
       setIsPasswordValid(validatePassword(newPassword)); 
     };
 
