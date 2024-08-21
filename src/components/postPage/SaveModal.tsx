@@ -3,6 +3,8 @@ import "../../style/postPage/saveModal.css";
 import { Temp } from "../../types/temps";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import api from "../../api";
+import { getPostDetail } from "../../api/Detail";
 
 const SaveModal = ({
   onClick,
@@ -23,8 +25,19 @@ const SaveModal = ({
     }
   }, [searchParams, setSearchParams, id]);
 
-  const handleLoadClick = () => {
+  const findItemById = (id: string | null) => {
+    const newId = Number(id);
+    return temps.find((item) => item.id === newId);
+  };
+
+  const handleLoadClick = async () => {
     setTemp();
+    const response = await getPostDetail({ id: Number(id) });
+    await api.put(`/posts/publishing/${id}`, {
+      title: response.data.title,
+      content: response.data.content,
+      tagNameList: response.data.tagNameList,
+    });
 
     onClick();
   };
