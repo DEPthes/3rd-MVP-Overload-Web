@@ -53,6 +53,7 @@ const AvatarPage = () => {
         Math.floor(Math.random() * AVATARANIMALLIST.nose.length)
       ],
     });
+    console.log(avatar);
   };
 
   const handleSelectAvatar = (value: string) => {
@@ -70,6 +71,8 @@ const AvatarPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
+  console.log("avatar", avatar);
+
   const selectedImages =
     AVATARANIMALLISTSTRING[matchAvatarHeader(avatarHeader)];
   const maxPage = Math.ceil(selectedImages.length / ITEMS_PER_PAGE) - 1;
@@ -82,14 +85,15 @@ const AvatarPage = () => {
   const isImageSelected = (image: string): boolean => {
     return Object.values(avatar).includes(image);
   };
+
   const handleSubmitAvatar = async () => {
     try {
       const response = await putAvatar({
-        avatarFace: avatar.face.toString(),
-        avatarBody: avatar.body.toString(),
-        avatarEyes: avatar.eyes.toString(),
-        avatarNose: avatar.nose.toString(),
-        avatarMouth: avatar.mouth.toString(),
+        avatarFace: avatar.face,
+        avatarBody: avatar.body,
+        avatarEyes: avatar.eyes,
+        avatarNose: avatar.nose,
+        avatarMouth: avatar.mouth,
       });
       navigate("/MyPage");
     } catch (error) {
