@@ -23,6 +23,8 @@ const MyPage = () => {
   const [isExitModal, setIsExitModal] = useState<boolean>(false);
   const memberData = useMember();
 
+  console.log(data.data.dataList);
+
   const { mutate: logout } = useMutation({
     mutationFn: async () => {
       let accessToken = localStorage.getItem("token");
