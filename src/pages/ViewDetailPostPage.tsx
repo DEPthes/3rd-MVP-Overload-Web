@@ -147,7 +147,7 @@ const ViewDetailPost: React.FC = () => {
           <ul>
             <Comment
               comments={comments || []}
-              myProfile={post.writerInfo.avatar}
+              myProfile={member?.avatar||""}
               myName={member?.memberName || ""}
               postId={Number(postId)}
               refreshComments={fetchComments}
