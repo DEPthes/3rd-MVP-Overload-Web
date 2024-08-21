@@ -12,6 +12,8 @@ import AuthModa from "../../components/AuthModa";
 import { useMutation } from "@tanstack/react-query";
 import { ExitReq } from "../../api/Exit";
 import { useMember } from "../../hooks/useMember";
+import Nav from "../../components/Nav";
+import SearchModal from "../../components/search/SearchModal";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ const MyPage = () => {
   const totalPage = data.data.pageInfo.totalPage;
   const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
   const [isExitModal, setIsExitModal] = useState<boolean>(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
   const memberData = useMember();
 
   console.log(data.data.dataList);
@@ -123,10 +126,20 @@ const MyPage = () => {
       setIsExitModal(false);
     }
   };
+  const handleSearch = (term: string) => {
+    setIsSearchModalOpen(false);
+  };
 
   return (
     <>
-      <MyPageNav />
+      {/* <MyPageNav /> */}
+      <Nav onSearchClick={() => setIsSearchModalOpen(true)} />
+      {isSearchModalOpen && (
+        <SearchModal
+          onClose={() => setIsSearchModalOpen(false)}
+          onSearch={handleSearch}
+        />
+      )}
       {isLogoutModal && <div className="authoverlay" />}
       {isExitModal && <div className="authoverlay" />}
       {isLogoutModal && (
