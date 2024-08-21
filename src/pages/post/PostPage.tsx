@@ -38,9 +38,9 @@ const PostPage = () => {
   const tempsData = useGetTemps();
   const tempsList = tempsData?.data.data;
 
-  const { data: detailData } = useGetDetails(
-    selectedId ? Number(searchParams.get("id")) : 1
-  );
+  // const { data: detailData } = useGetDetails(
+  //   selectedId ? Number(searchParams.get("id")) : 1
+  // );
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -77,7 +77,6 @@ const PostPage = () => {
     // setTitle(temp.title);
     // setText(temp.content);
     // setTags(temp.tagNameList);
-    console.log(detailData.data);
   };
 
   return (
