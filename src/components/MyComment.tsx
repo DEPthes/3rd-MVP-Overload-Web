@@ -92,17 +92,27 @@ const MyComment: React.FC<MyComment> = (props) => {
             onChange={handleCommentChange}
           ></textarea>
           <div className="mycomment-writerinfo">
-            {props.profile?.avatarBody !== null && isToken ? (
+            {props.profile ? (
               <div>
-                <AvatarComponent
-                  height="112px"
-                  width="112px"
-                  face={getImageByString(props.profile!.avatarFace)}
-                  body={getImageByString(props.profile!.avatarBody)}
-                  eyes={getImageByString(props.profile!.avatarEyes)}
-                  nose={getImageByString(props.profile!.avatarNose)}
-                  mouth={getImageByString(props.profile!.avatarMouth)}
-                />
+                {props.profile?.avatarBody !== null ? (
+                  <div>
+                    <AvatarComponent
+                      height="112px"
+                      width="112px"
+                      face={getImageByString(props.profile!.avatarFace)}
+                      body={getImageByString(props.profile!.avatarBody)}
+                      eyes={getImageByString(props.profile!.avatarEyes)}
+                      nose={getImageByString(props.profile!.avatarNose)}
+                      mouth={getImageByString(props.profile!.avatarMouth)}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    className="mycomment-default-profile"
+                    src={defaultProfile}
+                    style={{ width: "112px", height: "112px" }}
+                  />
+                )}
               </div>
             ) : (
               <img
@@ -111,6 +121,7 @@ const MyComment: React.FC<MyComment> = (props) => {
                 style={{ width: "112px", height: "112px" }}
               />
             )}
+
             <div className="mycomment-writerinfo-nickname">
               {isToken ? (
                 selectedBox ? (
