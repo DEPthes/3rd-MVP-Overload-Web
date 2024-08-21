@@ -56,6 +56,7 @@ const refreshToken = async () => {
         console.log("500 오류 발생: 로그아웃 처리 및 페이지 새로고침.");
         localStorage.clear();
         sessionStorage.clear();
+        location.href = "/";
       }
     } else {
       console.error("예상치 못한 오류가 발생했습니다:", error);
