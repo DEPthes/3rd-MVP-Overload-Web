@@ -80,6 +80,7 @@ const MyComment: React.FC<MyComment> = (props) => {
     }
   };
 
+  console.log("test", props.profile);
   return (
     <>
       {
@@ -92,23 +93,25 @@ const MyComment: React.FC<MyComment> = (props) => {
             onChange={handleCommentChange}
           ></textarea>
           <div className="mycomment-writerinfo">
-            {props.profile?.avatarFace && isToken ? (
+            {props.profile?.avatarBody !== null ? (
+
               <div>
                 <AvatarComponent
                   height="112px"
                   width="112px"
-                  face={getImageByString(props.profile.avatarFace)}
-                  body={getImageByString(props.profile.avatarBody)}
-                  eyes={getImageByString(props.profile.avatarEyes)}
-                  nose={getImageByString(props.profile.avatarNose)}
-                  mouth={getImageByString(props.profile.avatarMouth)}
+                  face={getImageByString(props.profile!.avatarFace)}
+                  body={getImageByString(props.profile!.avatarBody)}
+                  eyes={getImageByString(props.profile!.avatarEyes)}
+                  nose={getImageByString(props.profile!.avatarNose)}
+                  mouth={getImageByString(props.profile!.avatarMouth)}
                 />
               </div>
             ) : (
               <img
                 className="mycomment-default-profile"
                 src={defaultProfile}
-                // style={{ marginLeft: "19px" }}
+                style={{ width: "112px", height: "112px" }}
+
               />
             )}
             <div className="mycomment-writerinfo-nickname">
