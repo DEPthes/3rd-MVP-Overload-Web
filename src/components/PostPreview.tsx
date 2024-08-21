@@ -65,7 +65,7 @@ const PostPreview: React.FC<postPreview> = (props) => {
 
         <div className="preview-middle">
           <div>{props.date}</div>
-          {props.avatar !== null ? (
+          {props.avatar.avatarBody !== null ? (
             <div style={{ marginLeft: "19px" }}>
               <CircleAvatarComponent
                 width={"25px"}
