@@ -28,3 +28,12 @@ export interface ApiDtail {
 export interface DetailResponse {
   data: ApiDtail;
 }
+
+export interface DetailPostResponse {
+  data: {
+    postId: number;
+    title: string;
+    content: string;
+    tagNameList: string[];
+  };
+}

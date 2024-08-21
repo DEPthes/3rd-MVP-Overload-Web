@@ -4,6 +4,7 @@ import { SaveFolder } from "../../assets";
 import { useState } from "react";
 import SaveModal from "./SaveModal";
 import { Temp } from "../../types/temps";
+import { useGetTemps } from "../../hooks/post/useGetTemps";
 
 interface PostNavProp {
   onClick: () => void;
@@ -11,21 +12,16 @@ interface PostNavProp {
   temps?: Temp[] | any;
   isClear: boolean;
   setTemp?: (() => void) | any;
-  refetch: () => void;
 }
 
-const PostNav = ({
-  onClick,
-  onSave,
-  temps,
-  isClear,
-  setTemp,
-  refetch,
-}: PostNavProp) => {
+const PostNav = ({ onClick, onSave, temps, isClear, setTemp }: PostNavProp) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const { data, refetch } = useGetTemps();
+  const tempsList = data?.data;
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
+    refetch();
   };
   const handleCloseModal = () => {
     setIsOpenModal(false);
@@ -33,7 +29,6 @@ const PostNav = ({
 
   const handleOnSave = async () => {
     await onSave();
-    await refetch();
   };
 
   return (
@@ -59,7 +54,11 @@ const PostNav = ({
         </button>
       </div>
       {isOpenModal && (
-        <SaveModal onClick={handleCloseModal} temps={temps} setTemp={setTemp} />
+        <SaveModal
+          onClick={handleCloseModal}
+          temps={tempsList}
+          setTemp={setTemp}
+        />
       )}
     </nav>
   );
