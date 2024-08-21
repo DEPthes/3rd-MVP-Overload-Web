@@ -17,6 +17,7 @@ import api from "../api";
 import CircleAvatarComponent from "./CircleAvatarComponent";
 import AvatarCard from "./avatarPage/AvatarCard";
 import AvatarComponent from "./avatarPage/AvatarComponent";
+import { getImageByString } from "../util/getImageByString";
 
 type Avatar = {
   avatarFace?: string;
@@ -253,11 +254,11 @@ const PostDetailView: React.FC<post> = (props) => {
             <AvatarComponent
               height="112px"
               width="112px"
-              face={props.avatar.avatarFace}
-              body={props.avatar.avatarBody}
-              eyes={props.avatar.avatarEyes}
-              nose={props.avatar.avatarNose}
-              mouth={props.avatar.avatarMouth}
+              face={getImageByString(props.avatar.avatarFace)}
+              body={getImageByString(props.avatar.avatarBody)}
+              eyes={getImageByString(props.avatar.avatarEyes)}
+              nose={getImageByString(props.avatar.avatarNose)}
+              mouth={getImageByString(props.avatar.avatarMouth)}
             />
           </div>
         ) : (
