@@ -154,7 +154,7 @@ const AvatarPage = () => {
             {currentImages.map((image, index) => (
               <AvatarCard
                 key={index}
-                image={getImageByString(image)}
+                image={image}
                 onclick={handleSelectAvatar}
                 selected={isImageSelected(image)}
               />
