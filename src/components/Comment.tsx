@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import doComment from "../images/doComment.png";
 import undoComment from "../images/undoComment.png";
 import MyComment from "../components/MyComment";
-import defaultProfile from "../images/rectangleDefaultProfile.png";
+import recDefaultProfile from "../images/rectangleDefaultProfile.png";
 import "../style/comment.css";
 
 import body1 from "../assets/avatar/body1.svg";
@@ -103,7 +103,7 @@ const Comment: React.FC<CommentProps> = (props) => {
       [commentId]: !prev[commentId],
     }));
   };
-
+console.log(props.comments);
   return (
     <>
       {/* 댓글 배열을 정순으로 정렬 */}
@@ -128,7 +128,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                   ) : (
                     <img
                       className="profile-icon"
-                      src={defaultProfile}
+                      src={recDefaultProfile}
                       style={{
                         width: "112px",
                         height: "112px",
@@ -174,7 +174,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                         <div key={replyIndex}>
                           <div className="comment-top">
                             <div>
-                              {reply.avatar ? (
+                              {reply.avatar.avatarFace ? (
                                 <div style={{ marginRight: "20px" }}>
                                   <AvatarComponent
                                     height="112px"
@@ -189,7 +189,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                               ) : (
                                 <img
                                   className="profile-icon"
-                                  src={defaultProfile}
+                                  src={recDefaultProfile}
                                   style={{
                                     width: "112px",
                                     height: "112px",
