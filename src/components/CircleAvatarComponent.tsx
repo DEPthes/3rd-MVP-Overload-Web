@@ -2,6 +2,7 @@ import React from "react";
 import AvatarComponent from "./avatarPage/AvatarComponent";
 import { AvatarComponentProps } from "../types/avatar";
 import "../style/circleAvatarComponent.css";
+import { getImageByString } from "../util/getImageByString";
 
 const CircleAvatarComponent: React.FC<AvatarComponentProps> = ({
   width,
@@ -30,11 +31,11 @@ const CircleAvatarComponent: React.FC<AvatarComponentProps> = ({
         <AvatarComponent
           width={width}
           height={height}
-          face={face}
-          body={body}
-          eyes={eyes}
-          nose={nose}
-          mouth={mouth}
+          face={getImageByString(face)}
+          body={getImageByString(body)}
+          eyes={getImageByString(eyes)}
+          nose={getImageByString(nose)}
+          mouth={getImageByString(mouth)}
         />
       </div>
     </div>
