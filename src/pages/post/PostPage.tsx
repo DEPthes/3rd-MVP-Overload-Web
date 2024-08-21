@@ -11,6 +11,7 @@ import { SaveModalSvg } from "../../assets";
 import usePostTemps from "../../hooks/post/usePostTemps";
 import { useGetTemps } from "../../hooks/post/useGetTemps";
 import { useGetDetails } from "../../hooks/useGetDetail";
+import api from "../../api";
 
 const PostPage = () => {
   const [title, setTitle] = useState<string>("");
@@ -46,7 +47,6 @@ const PostPage = () => {
     setTitle(event.target.value);
   };
 
-  console.log(text);
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -73,10 +73,11 @@ const PostPage = () => {
     savePost({ title, content: text, tagNameList: tags });
   };
 
-  const handleSetTemp = () => {
-    // setTitle(temp.title);
-    // setText(temp.content);
-    // setTags(temp.tagNameList);
+  const handleSetTemp = async () => {
+    const response = await api.get(`/posts/temps/details/${selectedId}`);
+    setTitle(response.data.data.title);
+    setText(response.data.data.content);
+    setTags(response.data.data.tagNameList);
   };
 
   return (
@@ -95,9 +96,10 @@ const PostPage = () => {
           placeholder="제목을 입력하세요"
           className="inputBox"
           onChange={handleTitleChange}
+          value={title}
         />
 
-        <AutoTextArea onChange={handleContentChange} />
+        <AutoTextArea onChange={handleContentChange} value={text} />
         <div className="tagContainer">
           {tags.map((tag, index) => (
             <TagInput
