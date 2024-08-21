@@ -18,9 +18,12 @@ const PostPage = () => {
   const [text, setText] = useState<string>("");
   const [tags, setTags] = useState<string[]>([""]);
   const [isModalOpel, setIsModal] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get("id");
+  const { data, refetch } = useGetTemps();
+  const tempsList = data?.data;
 
   const handleSuccess = () => {
     navigate(`/`);
@@ -28,6 +31,10 @@ const PostPage = () => {
 
   const handleSaveSuccess = () => {
     setIsModal(true);
+
+    setTimeout(() => {
+      setIsModal(false);
+    }, 2000); // 2000ms = 2초
   };
 
   const handleError = (error: unknown) => {
@@ -36,8 +43,6 @@ const PostPage = () => {
 
   const { mutate: submitPost } = usePost(handleSuccess, handleError);
   const { mutate: savePost } = usePostTemps(handleSaveSuccess, handleError);
-  const tempsData = useGetTemps();
-  const tempsList = tempsData?.data.data;
 
   // const { data: detailData } = useGetDetails(
   //   selectedId ? Number(searchParams.get("id")) : 1
@@ -69,8 +74,9 @@ const PostPage = () => {
     submitPost({ title, content: text, tagNameList: tags });
   };
 
-  const handleSaveTemp = () => {
-    savePost({ title, content: text, tagNameList: tags });
+  const handleSaveTemp = async () => {
+    await savePost({ title, content: text, tagNameList: tags });
+    await refetch();
   };
 
   const handleSetTemp = async () => {
@@ -78,6 +84,10 @@ const PostPage = () => {
     setTitle(response.data.data.title);
     setText(response.data.data.content);
     setTags(response.data.data.tagNameList);
+  };
+
+  const handleTempRefetch = async () => {
+    await refetch();
   };
 
   return (
@@ -88,6 +98,7 @@ const PostPage = () => {
         temps={tempsList}
         isClear={hasDuplicateTags(tags)}
         setTemp={handleSetTemp}
+        refetch={handleTempRefetch}
       />
       <div className="saveModal"> {isModalOpel && <SaveModalSvg />}</div>
       <div className="postContainer">

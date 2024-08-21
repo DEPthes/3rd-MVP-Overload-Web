@@ -8,12 +8,20 @@ import { Temp } from "../../types/temps";
 interface PostNavProp {
   onClick: () => void;
   onSave: () => void;
-  temps?: Temp[]|any;
+  temps?: Temp[] | any;
   isClear: boolean;
-  setTemp?: (() => void)|any;
+  setTemp?: (() => void) | any;
+  refetch: () => void;
 }
 
-const PostNav = ({ onClick, onSave, temps, isClear, setTemp }: PostNavProp) => {
+const PostNav = ({
+  onClick,
+  onSave,
+  temps,
+  isClear,
+  setTemp,
+  refetch,
+}: PostNavProp) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => {
@@ -21,6 +29,11 @@ const PostNav = ({ onClick, onSave, temps, isClear, setTemp }: PostNavProp) => {
   };
   const handleCloseModal = () => {
     setIsOpenModal(false);
+  };
+
+  const handleOnSave = async () => {
+    await onSave();
+    await refetch();
   };
 
   return (
@@ -34,7 +47,7 @@ const PostNav = ({ onClick, onSave, temps, isClear, setTemp }: PostNavProp) => {
       <div className="navbar-right">
         <SaveFolder style={{ cursor: "pointer" }} onClick={handleOpenModal} />
         <div className="border"></div>
-        <button className="saveButton" onClick={onSave}>
+        <button className="saveButton" onClick={handleOnSave}>
           임시저장
         </button>
         <button
