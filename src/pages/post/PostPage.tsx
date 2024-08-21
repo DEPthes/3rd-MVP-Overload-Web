@@ -46,12 +46,12 @@ const PostPage = () => {
     setTitle(event.target.value);
   };
 
+  console.log(text);
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setText(event.target.value);
   };
-
   const handleTagChange = (
     index: number,
     event: React.ChangeEvent<HTMLInputElement>

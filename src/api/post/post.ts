@@ -12,6 +12,7 @@ export async function postPost({
   content,
   tagNameList,
 }: PostPostsProps): Promise<PostResponse> {
+  console.log(content);
   const response = await api.post("/posts", {
     title,
     content,
