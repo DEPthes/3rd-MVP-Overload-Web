@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import { Navigate } from "react-router-dom";
 import AvatarComponent from "./avatarPage/AvatarComponent";
+import { getImageByString } from "../util/getImageByString";
 
 type Avatar = {
   avatarFace?: string;
@@ -94,11 +95,11 @@ const MyComment: React.FC<MyComment> = (props) => {
                 <AvatarComponent
                   height="112px"
                   width="112px"
-                  face={props.profile.avatarFace}
-                  body={props.profile.avatarBody}
-                  eyes={props.profile.avatarEyes}
-                  nose={props.profile.avatarNose}
-                  mouth={props.profile.avatarMouth}
+                  face={getImageByString(props.profile.avatarFace)}
+                  body={getImageByString(props.profile.avatarBody)}
+                  eyes={getImageByString(props.profile.avatarEyes)}
+                  nose={getImageByString(props.profile.avatarNose)}
+                  mouth={getImageByString(props.profile.avatarMouth)}
                 />
               </div>
             ) : (
