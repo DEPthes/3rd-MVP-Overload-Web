@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   AVATARANIMALLIST,
+  AVATARANIMALLISTSTRING,
   AVATARHEADER,
   AVATARRANDOMBUTTONSPAN,
   ITEMS_PER_PAGE,
@@ -13,6 +14,7 @@ import AvatarNav from "../../components/avatarPage/AvatarNav";
 import { NextButton } from "../../assets";
 import { putAvatar } from "../../api/avatar";
 import { useNavigate } from "react-router-dom";
+import { getImageByString } from "../../util/getImageByString";
 
 const AvatarPage = () => {
   const navigate = useNavigate();
@@ -68,7 +70,8 @@ const AvatarPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
-  const selectedImages = AVATARANIMALLIST[matchAvatarHeader(avatarHeader)];
+  const selectedImages =
+    AVATARANIMALLISTSTRING[matchAvatarHeader(avatarHeader)];
   const maxPage = Math.ceil(selectedImages.length / ITEMS_PER_PAGE) - 1;
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const currentImages = selectedImages.slice(
@@ -76,12 +79,9 @@ const AvatarPage = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
-  console.log(currentImages, maxPage, currentPage);
-
   const isImageSelected = (image: string): boolean => {
     return Object.values(avatar).includes(image);
   };
-
   const handleSubmitAvatar = async () => {
     try {
       const response = await putAvatar({
@@ -149,7 +149,7 @@ const AvatarPage = () => {
             {currentImages.map((image, index) => (
               <AvatarCard
                 key={index}
-                image={image}
+                image={getImageByString(image)}
                 onclick={handleSelectAvatar}
                 selected={isImageSelected(image)}
               />
