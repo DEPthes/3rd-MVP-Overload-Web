@@ -63,7 +63,7 @@ const ResetEmailCheck: React.FC = () => {
         <div className={styles.titleContainer}><label className={styles.title}>{constants.verifyEmailTitle}</label></div>
         <div className={styles.subtitleContainer}>
           <label className={styles.subtitle}>
-            {email + constants.verifyEmailSubtitle} <br/> {constants.verifyEmailSubtitle2}
+            {email + constants.verifyEmailSubtitle3} <br/> {constants.verifyEmailSubtitle2}
           </label>
         </div>
         <div className={styles.buttonGroup}>
