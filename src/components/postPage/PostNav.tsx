@@ -8,9 +8,9 @@ import { Temp } from "../../types/temps";
 interface PostNavProp {
   onClick: () => void;
   onSave: () => void;
-  temps: Temp[];
+  temps?: Temp[]|any;
   isClear: boolean;
-  setTemp: () => void;
+  setTemp?: (() => void)|any;
 }
 
 const PostNav = ({ onClick, onSave, temps, isClear, setTemp }: PostNavProp) => {

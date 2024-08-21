@@ -4,10 +4,10 @@ import { InputAreaProps } from "../../types/post";
 import { AddImageButtonSvg } from "../../assets";
 import { postImage } from "../../api/post/post";
 
-const AutoTextArea: React.FC<InputAreaProps> = ({ onChange }) => {
+const AutoTextArea: React.FC<InputAreaProps> = ({ value, onChange }) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [buttonPosition, setButtonPosition] = useState<number>(0);
-  const [textareaValue, setTextareaValue] = useState<string>("");
+  const [textareaValue, setTextareaValue] = useState<string>(value||"");
 
   const TextareaAutoResize = useCallback(() => {
     if (textRef.current) {
@@ -17,6 +17,10 @@ const AutoTextArea: React.FC<InputAreaProps> = ({ onChange }) => {
       setButtonPosition(newHeight - 520);
     }
   }, []);
+
+  useEffect(() => {
+    setTextareaValue(value||"");
+  }, [value]);
 
   useEffect(() => {
     TextareaAutoResize();

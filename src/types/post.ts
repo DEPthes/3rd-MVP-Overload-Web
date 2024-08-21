@@ -5,6 +5,7 @@ export interface InputProps {
 }
 
 export interface InputAreaProps {
+  value?:string
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
