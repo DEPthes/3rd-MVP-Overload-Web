@@ -28,7 +28,7 @@ type MyComment = {
 const MyComment: React.FC<MyComment> = (props) => {
   const [selectedBox, setSelectedBox] = useState<boolean>();
   const [commentText, setCommentText] = useState<string>("");
-  const [nickname, setNickname] = useState<string>();
+  const [nickname, setNickname] = useState<string>("");
   const [isToken, setIsToken] = useState(false);
 
   useEffect(() => {
@@ -67,7 +67,9 @@ const MyComment: React.FC<MyComment> = (props) => {
       // 댓글 제출 후 textarea 초기화
       setCommentText("");
       setNickname("");
-      setSelectedBox(false);
+      if(isToken){
+        setSelectedBox(false);
+      }
       // 댓글 새로 고침 함수 호출
       if (props.refreshComments) {
         props.refreshComments();
@@ -78,6 +80,7 @@ const MyComment: React.FC<MyComment> = (props) => {
     }
   };
 
+  console.log("test", props.profile);
   return (
     <>
       {
@@ -90,35 +93,50 @@ const MyComment: React.FC<MyComment> = (props) => {
             onChange={handleCommentChange}
           ></textarea>
           <div className="mycomment-writerinfo">
-            {props.profile ? (
+            {props.profile?.avatarBody !== null ? (
+
               <div>
                 <AvatarComponent
                   height="112px"
                   width="112px"
-                  face={getImageByString(props.profile.avatarFace)}
-                  body={getImageByString(props.profile.avatarBody)}
-                  eyes={getImageByString(props.profile.avatarEyes)}
-                  nose={getImageByString(props.profile.avatarNose)}
-                  mouth={getImageByString(props.profile.avatarMouth)}
+                  face={getImageByString(props.profile!.avatarFace)}
+                  body={getImageByString(props.profile!.avatarBody)}
+                  eyes={getImageByString(props.profile!.avatarEyes)}
+                  nose={getImageByString(props.profile!.avatarNose)}
+                  mouth={getImageByString(props.profile!.avatarMouth)}
                 />
               </div>
             ) : (
               <img
-                className="profile-icon"
+                className="mycomment-default-profile"
                 src={defaultProfile}
-                style={{ marginLeft: "19px" }}
+                style={{ width: "112px", height: "112px" }}
+
               />
             )}
             <div className="mycomment-writerinfo-nickname">
-              {selectedBox ? (
+            {isToken ? (
+              selectedBox ? (
                 <textarea
-                  placeholder="이름"
+                  placeholder="닉네임을 입력하세요."
                   value={nickname}
                   onChange={handleNicknameChange}
                 ></textarea>
               ) : (
-                <textarea readOnly placeholder={props.name}></textarea>
-              )}
+                <textarea
+                  readOnly
+                  value={props.name}
+                  placeholder={props.name}
+                ></textarea>
+              )
+            ) : (
+              <textarea
+                placeholder="닉네임을 입력하세요."
+                value={nickname}
+                onChange={handleNicknameChange}
+              ></textarea>
+            )}
+
               <div className="mycomment-nickname">
                 {isToken ? (
                   <button

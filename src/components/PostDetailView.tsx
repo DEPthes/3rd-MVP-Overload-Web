@@ -264,7 +264,7 @@ const PostDetailView: React.FC<post> = (props) => {
         ) : (
           <img
             className="profile-icon"
-            src={defaultProfile}
+            src={recDefaultProfile}
             style={{ width: "112px", height: "112px", marginRight: "20px" }}
           />
         )}

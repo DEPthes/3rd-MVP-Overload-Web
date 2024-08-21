@@ -49,7 +49,19 @@ const refreshToken = async () => {
     }
   } catch (error) {
     console.error("토큰 갱신 중 오류가 발생했습니다:", error);
-    throw error;
+
+    // error가 AxiosError인지 확인하여 처리
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 500) {
+        console.log("500 오류 발생: 로그아웃 처리 및 페이지 새로고침.");
+        localStorage.clear();
+        sessionStorage.clear();
+      }
+    } else {
+      console.error("예상치 못한 오류가 발생했습니다:", error);
+    }
+
+    throw error; // 여전히 오류를 던짐
   }
 };
 
@@ -139,18 +151,6 @@ api.interceptors.response.use(
         return Promise.reject(tokenRefreshError);
       }
     }
-
-    if (error.response && error.response.status === 500) {
-      console.log("500 오류 발생: 로그아웃 처리 및 페이지 새로고침.");
-
-      // 로컬스토리지와 세션스토리지 비우기
-      localStorage.clear();
-      sessionStorage.clear();
-
-      // 페이지 새로고침
-      window.location.reload();
-    }
-
     return Promise.reject(error);
   }
 );

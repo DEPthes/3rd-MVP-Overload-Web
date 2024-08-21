@@ -7,7 +7,7 @@ import { postImage } from "../../api/post/post";
 const AutoTextArea: React.FC<InputAreaProps> = ({ value, onChange }) => {
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   const [buttonPosition, setButtonPosition] = useState<number>(0);
-  const [textareaValue, setTextareaValue] = useState<string>(value||"");
+  const [textareaValue, setTextareaValue] = useState<string>(value || "");
 
   const TextareaAutoResize = useCallback(() => {
     if (textRef.current) {
@@ -19,7 +19,7 @@ const AutoTextArea: React.FC<InputAreaProps> = ({ value, onChange }) => {
   }, []);
 
   useEffect(() => {
-    setTextareaValue(value||"");
+    setTextareaValue(value || "");
   }, [value]);
 
   useEffect(() => {
@@ -39,12 +39,21 @@ const AutoTextArea: React.FC<InputAreaProps> = ({ value, onChange }) => {
           const imageUrl = response.data.fileUrl;
           const markdownImage = `![이미지이름](${imageUrl})`;
 
-          // 텍스트 에어리어에 이미지 URL 추가
-          setTextareaValue((prevValue) => `${prevValue}\n${markdownImage}`);
+          // Update the textareaValue state and trigger onChange
+          const updatedValue = `${textareaValue}\n${markdownImage}`;
+          setTextareaValue(updatedValue);
+
+          // Trigger the onChange handler to update the parent state
+          if (onChange) {
+            onChange({
+              target: {
+                value: updatedValue,
+              },
+            } as React.ChangeEvent<HTMLTextAreaElement>);
+          }
 
           console.log("Uploaded Image URL:", imageUrl);
         } catch (error) {
-          // 업로드 실패 시 에러 출력
           console.error("Error uploading image:", error);
         }
       }

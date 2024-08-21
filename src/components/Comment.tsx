@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import doComment from "../images/doComment.png";
 import undoComment from "../images/undoComment.png";
 import MyComment from "../components/MyComment";
-import defaultProfile from "../images/rectangleDefaultProfile.png";
+import recDefaultProfile from "../images/rectangleDefaultProfile.png";
 import "../style/comment.css";
 
 import body1 from "../assets/avatar/body1.svg";
@@ -39,6 +39,7 @@ import nose7 from "../assets/avatar/nose7.svg";
 import nose8 from "../assets/avatar/nose8.svg";
 import api from "../api";
 import AvatarComponent from "./avatarPage/AvatarComponent";
+import { getImageByString } from "../util/getImageByString";
 
 // 이미지 매핑 객체
 const avatarImages: any = {
@@ -103,7 +104,7 @@ const Comment: React.FC<CommentProps> = (props) => {
       [commentId]: !prev[commentId],
     }));
   };
-
+console.log(props.comments);
   return (
     <>
       {/* 댓글 배열을 정순으로 정렬 */}
@@ -118,17 +119,17 @@ const Comment: React.FC<CommentProps> = (props) => {
                       <AvatarComponent
                         height="112px"
                         width="112px"
-                        face={comment.avatar.avatarFace}
-                        body={comment.avatar.avatarBody}
-                        eyes={comment.avatar.avatarEyes}
-                        nose={comment.avatar.avatarNose}
-                        mouth={comment.avatar.avatarMouth}
+                        face={getImageByString(comment.avatar.avatarFace)}
+                        body={getImageByString(comment.avatar.avatarBody)}
+                        eyes={getImageByString(comment.avatar.avatarEyes)}
+                        nose={getImageByString(comment.avatar.avatarNose)}
+                        mouth={getImageByString(comment.avatar.avatarMouth)}
                       />
                     </div>
                   ) : (
                     <img
                       className="profile-icon"
-                      src={defaultProfile}
+                      src={recDefaultProfile}
                       style={{
                         width: "112px",
                         height: "112px",
@@ -174,7 +175,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                         <div key={replyIndex}>
                           <div className="comment-top">
                             <div>
-                              {reply.avatar ? (
+                              {reply.avatar.avatarFace ? (
                                 <div style={{ marginRight: "20px" }}>
                                   <AvatarComponent
                                     height="112px"
@@ -189,7 +190,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                               ) : (
                                 <img
                                   className="profile-icon"
-                                  src={defaultProfile}
+                                  src={recDefaultProfile}
                                   style={{
                                     width: "112px",
                                     height: "112px",
