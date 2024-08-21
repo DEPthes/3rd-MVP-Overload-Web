@@ -22,8 +22,6 @@ const PostPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get("id");
-  const { data, refetch } = useGetTemps();
-  const tempsList = data?.data;
 
   const handleSuccess = () => {
     navigate(`/`);
@@ -76,7 +74,6 @@ const PostPage = () => {
 
   const handleSaveTemp = async () => {
     await savePost({ title, content: text, tagNameList: tags });
-    await refetch();
   };
 
   const handleSetTemp = async () => {
@@ -86,19 +83,13 @@ const PostPage = () => {
     setTags(response.data.data.tagNameList);
   };
 
-  const handleTempRefetch = async () => {
-    await refetch();
-  };
-
   return (
     <>
       <PostNav
         onClick={handleSubmitPost}
         onSave={handleSaveTemp}
-        temps={tempsList}
         isClear={hasDuplicateTags(tags)}
         setTemp={handleSetTemp}
-        refetch={handleTempRefetch}
       />
       <div className="saveModal"> {isModalOpel && <SaveModalSvg />}</div>
       <div className="postContainer">
