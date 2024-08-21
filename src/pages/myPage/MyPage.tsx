@@ -1,7 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import CircleAvatarComponent from "../../components/CircleAvatarComponent";
-import MyPageNav from "../../components/myPage/MyPageNav";
-import { AVATARANIMALLIST } from "../../constants/avatar";
 import "../../style/myPage/myPage.css";
 import { useGetScraps } from "../../hooks/useGetScraps";
 import { useState, useEffect } from "react";
@@ -14,6 +12,7 @@ import { ExitReq } from "../../api/Exit";
 import { useMember } from "../../hooks/useMember";
 import Nav from "../../components/Nav";
 import SearchModal from "../../components/search/SearchModal";
+import defaultProfile from "../../images/defaultProfile.png";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -160,15 +159,28 @@ const MyPage = () => {
         <div className="myInfoContainer">
           <div className="myPageLeftOption">
             {/* 아바타 */}
-            <CircleAvatarComponent
-              width="154px"
-              height="154px"
-              body={memberData.data.data.avatar.avatarBody}
-              eyes={memberData.data.data.avatar.avatarEyes}
-              face={memberData.data.data.avatar.avatarFace}
-              mouth={memberData.data.data.avatar.avatarMouth}
-              nose={memberData.data.data.avatar.avatarNose}
-            />
+            {memberData.data.data.avatar.avatarBody ? (
+              <CircleAvatarComponent
+                width="154px"
+                height="154px"
+                body={memberData.data.data.avatar.avatarBody}
+                eyes={memberData.data.data.avatar.avatarEyes}
+                face={memberData.data.data.avatar.avatarFace}
+                mouth={memberData.data.data.avatar.avatarMouth}
+                nose={memberData.data.data.avatar.avatarNose}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "154px",
+                  height: "154px",
+                  transform: "scale(1.1)  translateY(10%)",
+                }}
+              >
+                <img src={defaultProfile} />
+              </div>
+            )}
+
             <div className="myPageInfo">
               <span className="myPageName">
                 {memberData.data.data.memberName}
@@ -186,30 +198,38 @@ const MyPage = () => {
         <div className="myPageScrabListContainer">
           <div style={{ width: "100%" }}>
             <span className="scrabListSpan">스크랩 리스트</span>
-            {data.data.dataList.map((item) => (
-              <div key={item.id}>
-                <PostPreview
-                  id={item.id}
-                  title={item.title}
-                  content={item.previewContent}
-                  date={item.createdDate}
-                  writer={item.name}
-                  view={item.viewCount}
-                  like={item.likeCount}
-                  scrap={item.scrapCount}
-                  picture={""}
-                  avatar={item.avatar}
-                />
-                <div style={{ borderBottom: "0.5px solid #8C8C8C" }} />
+            {data.data.dataList.length < 1 ? (
+              <div className="noneScrabContainer">
+                <span>스크랩한 게시물이 없습니다.</span>
               </div>
-            ))}
+            ) : (
+              data.data.dataList.map((item) => (
+                <div key={item.id}>
+                  <PostPreview
+                    id={item.id}
+                    title={item.title}
+                    content={item.previewContent}
+                    date={item.createdDate}
+                    writer={item.name}
+                    view={item.viewCount}
+                    like={item.likeCount}
+                    scrap={item.scrapCount}
+                    picture={""}
+                    avatar={item.avatar}
+                  />
+                  <div style={{ borderBottom: "0.5px solid #8C8C8C" }} />
+                </div>
+              ))
+            )}
           </div>
           <div className="scrabPage">
-            <PageNextButton
-              onClick={() => handlePageChange(page - 1)}
-              stroke={page === 1 ? "#B8B8B8" : "#000000"}
-              style={{ cursor: "pointer" }}
-            />
+            {data.data.dataList.length > 0 && (
+              <PageNextButton
+                onClick={() => handlePageChange(page - 1)}
+                stroke={page === 1 ? "#B8B8B8" : "#000000"}
+                style={{ cursor: "pointer" }}
+              />
+            )}
             {pageList.map((pageNum) => (
               <div
                 key={pageNum}
@@ -222,11 +242,13 @@ const MyPage = () => {
                 {pageNum}
               </div>
             ))}
-            <PageNextButton
-              onClick={() => handlePageChange(page + 1)}
-              stroke={page === totalPage ? "#B8B8B8" : "#000000"}
-              style={{ transform: "rotate(180deg)", cursor: "pointer" }}
-            />
+            {data.data.dataList.length > 0 && (
+              <PageNextButton
+                onClick={() => handlePageChange(page + 1)}
+                stroke={page === totalPage ? "#B8B8B8" : "#000000"}
+                style={{ transform: "rotate(180deg)", cursor: "pointer" }}
+              />
+            )}
           </div>
         </div>
 

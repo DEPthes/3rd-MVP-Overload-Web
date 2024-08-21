@@ -215,3 +215,19 @@
   background: rgba(235, 235, 235, 0.8);
   z-index: 100;
 }
+
+.noneScrabContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.noneScrabContainer span {
+  color: #000;
+
+  /* Label/Medium */
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+}

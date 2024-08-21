@@ -27,7 +27,9 @@ const Nav: React.FC<nav> = (props) => {
   const [token, setToken] = useState<string>();
 
   useEffect(() => {
-    const token = localStorage.getItem("token") ? localStorage.getItem("token") : sessionStorage.getItem("token");
+    const token = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : sessionStorage.getItem("token");
     if (token) {
       setIsToken(true);
       setToken(token);
@@ -78,7 +80,7 @@ const Nav: React.FC<nav> = (props) => {
           />
         ) : null}
         {token ? (
-          props.profile && (
+          props.profile?.avatarBody ? (
             <div style={{ cursor: "pointer" }} onClick={handleMyPageClick}>
               <CircleAvatarComponent
                 width={"40px"}
@@ -90,6 +92,16 @@ const Nav: React.FC<nav> = (props) => {
                 mouth={props.profile.avatarMouth}
               />
             </div>
+          ) : (
+            <img
+              src={defaultProfile}
+              style={{
+                width: "40px",
+                height: "40px",
+                cursor: "pointer",
+              }}
+              onClick={handleMyPageClick}
+            />
           )
         ) : (
           <img
