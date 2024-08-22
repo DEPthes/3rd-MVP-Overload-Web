@@ -180,11 +180,11 @@ console.log(props.comments);
                                   <AvatarComponent
                                     height="112px"
                                     width="112px"
-                                    face={reply.avatar.avatarFace}
-                                    body={reply.avatar.avatarBody}
-                                    eyes={reply.avatar.avatarEyes}
-                                    nose={reply.avatar.avatarNose}
-                                    mouth={reply.avatar.avatarMouth}
+                                    face={getImageByString(reply.avatar.avatarFace)}
+                                    body={getImageByString(reply.avatar.avatarBody)}
+                                    eyes={getImageByString(reply.avatar.avatarEyes)}
+                                    nose={getImageByString(reply.avatar.avatarNose)}
+                                    mouth={getImageByString(reply.avatar.avatarMouth)}
                                   />
                                 </div>
                               ) : (
