@@ -35,12 +35,13 @@ const MyComment: React.FC<MyComment> = (props) => {
     const token = localStorage.getItem("token")
       ? localStorage.getItem("token")
       : sessionStorage.getItem("token");
-    if (token != null) {
+    if (props.name) {
       setIsToken(true);
       setSelectedBox(false);
     } else {
       setSelectedBox(true);
     }
+
   }, [props.postId]);
 
   const handleBoxClick = () => {
@@ -67,7 +68,7 @@ const MyComment: React.FC<MyComment> = (props) => {
       // 댓글 제출 후 textarea 초기화
       setCommentText("");
       setNickname("");
-      if (isToken) {
+      if (props.name) {
         setSelectedBox(false);
       }
       // 댓글 새로 고침 함수 호출
@@ -123,7 +124,7 @@ const MyComment: React.FC<MyComment> = (props) => {
             )}
 
             <div className="mycomment-writerinfo-nickname">
-              {isToken ? (
+              {props.name ? (
                 selectedBox ? (
                   <textarea
                     placeholder="닉네임을 입력하세요."
